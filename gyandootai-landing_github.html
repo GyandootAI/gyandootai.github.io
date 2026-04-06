@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="GyandootAI helps Indian teachers generate CBSE, ICSE and State Board question papers with complete answer keys in 60 seconds.">
+<title>GyandootAI — Question Papers in 60 Seconds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --saffron: #C25A1A;
+    --saffron-light: #FFF3E8;
+    --saffron-mid: #F5C4A0;
+    --navy: #1A2340;
+    --navy-mid: #2C3E6B;
+    --cream: #FDFBF7;
+    --white: #FFFFFF;
+    --gray: #6B7280;
+    --gray-light: #F3F4F6;
+    --border: rgba(0,0,0,0.08);
+    --text: #1A1A2E;
+    --text-muted: #6B7280;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(253,251,247,0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--navy);
+    text-decoration: none;
+  }
+
+  .logo span { color: var(--saffron); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--saffron);
+    color: #fff !important;
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: #A34A12 !important; color: #fff !important; }
+
+  /* HERO */
+  .hero {
+    padding: 6rem 2rem 5rem;
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--saffron-light);
+    color: var(--saffron);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--saffron-mid);
+    margin-bottom: 2rem;
+    letter-spacing: 0.02em;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--navy);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--saffron);
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 580px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--saffron);
+    color: #fff;
+    padding: 16px 36px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background: #A34A12;
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    background: transparent;
+    color: var(--saffron);
+    padding: 14px 36px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid var(--saffron);
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+
+  .btn-secondary:hover { background: var(--saffron-light); }
+
+  .hero-note {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--white);
+    margin: 0;
+  }
+
+  .stat-item {
+    padding: 2rem 1rem;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--saffron);
+    display: block;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* SECTIONS */
+  .section {
+    padding: 5rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--saffron);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .section-intro {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+
+  /* STEPS */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .step {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .step::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--saffron);
+  }
+
+  .step-num {
+    width: 36px;
+    height: 36px;
+    background: var(--saffron-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--saffron);
+    margin-bottom: 1.25rem;
+  }
+
+  .step h3 {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  .step p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* FEATURES */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .feature {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    transition: border-color 0.2s;
+  }
+
+  .feature:hover { border-color: var(--saffron-mid); }
+
+  .feature-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--saffron-light);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .feature h4 {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 5px;
+  }
+
+  .feature p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* SUBJECTS BAND */
+  .subjects-band {
+    background: var(--navy);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .subjects-band p {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .subjects-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .subject-tag {
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.8);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+
+  /* TESTIMONIAL */
+  .testimonial-section {
+    background: var(--saffron-light);
+    padding: 5rem 2rem;
+    border-top: 1px solid var(--saffron-mid);
+    border-bottom: 1px solid var(--saffron-mid);
+  }
+
+  .testimonial-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .quote-mark {
+    font-family: 'Playfair Display', serif;
+    font-size: 80px;
+    color: var(--saffron);
+    line-height: 0.5;
+    margin-bottom: 1.5rem;
+    display: block;
+    opacity: 0.4;
+  }
+
+  .testimonial-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 2.5vw, 24px);
+    color: var(--navy);
+    line-height: 1.5;
+    font-style: italic;
+    margin-bottom: 2rem;
+    font-weight: 400;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--saffron);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .author-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--navy);
+  }
+
+  .author-role {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* PRICING */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .price-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    transition: transform 0.2s;
+  }
+
+  .price-card:hover { transform: translateY(-4px); }
+
+  .price-card.popular {
+    border: 2px solid var(--saffron);
+  }
+
+  .popular-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--saffron);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .plan-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .plan-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    color: var(--navy);
+    font-weight: 500;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .plan-price span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .plan-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 1rem 0 1.5rem;
+    line-height: 1.5;
+    min-height: 40px;
+  }
+
+  .plan-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 1.25rem;
+  }
+
+  .plan-features {
+    list-style: none;
+    margin-bottom: 1.5rem;
+  }
+
+  .plan-features li {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 5px 0;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .check {
+    color: var(--saffron);
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .plan-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid var(--saffron);
+    background: transparent;
+    color: var(--saffron);
+    transition: background 0.2s;
+  }
+
+  .plan-btn:hover { background: var(--saffron-light); }
+
+  .plan-btn.filled {
+    background: var(--saffron);
+    color: #fff;
+    border: none;
+  }
+
+  .plan-btn.filled:hover { background: #A34A12; }
+
+  /* CTA SECTION */
+  .cta-section {
+    background: var(--navy);
+    padding: 6rem 2rem;
+    text-align: center;
+  }
+
+  .cta-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .cta-section h2 em {
+    color: var(--saffron);
+    font-style: italic;
+  }
+
+  .cta-section p {
+    color: rgba(255,255,255,0.6);
+    font-size: 16px;
+    margin-bottom: 2.5rem;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .cta-note {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 1rem;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .footer-logo span { color: var(--saffron); }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    width: 100%;
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin-top: 0.5rem;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .stat-item:nth-child(2) { border-right: none; }
+    .stat-item:nth-child(3) { border-top: 1px solid var(--border); }
+    .stat-item:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+    .steps { grid-template-columns: 1fr; }
+    .features { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+    .hero { padding: 4rem 1.5rem 3rem; }
+    .section { padding: 3.5rem 1.5rem; }
+  }
+
+  @media (max-width: 480px) {
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+    .hero-actions { width: 100%; }
+    .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Gyandoot<span>AI</span></a>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">How it works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSck6Ud_Tnj2KiNSSGKYG06m6SybZf4HhGzl6N7G3hWXleQgnQ/viewform" class="nav-cta">Request free paper</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">✦ For Indian teachers — CBSE · ICSE · State Board · UPSC</div>
+  <h1>Generate exam-ready question papers<br>in <em>60 seconds</em></h1>
+  <p class="hero-sub">Stop spending Sunday evenings making question papers. GyandootAI creates complete, board-standard exam papers with full answer keys — automatically, instantly, professionally.</p>
+  <div class="hero-actions">
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSck6Ud_Tnj2KiNSSGKYG06m6SybZf4HhGzl6N7G3hWXleQgnQ/viewform" class="btn-primary">Get your first paper free →</a>
+    <p class="hero-note">No credit card required · Delivered to your email in minutes</p>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-num">60s</span>
+    <span class="stat-label">Average generation time</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">4+</span>
+    <span class="stat-label">Boards supported</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">Class 6–12</span>
+    <span class="stat-label">All classes covered</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">2 docs</span>
+    <span class="stat-label">Student paper + answer key</span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how-it-works">
+  <div class="section-tag">How it works</div>
+  <h2>Three steps to a complete question paper</h2>
+  <p class="section-intro">No technical knowledge needed. No complicated software. Fill a simple form and receive your paper.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Fill the form</h3>
+      <p>Tell us your subject, class, board, topic, total marks and difficulty level. Takes under two minutes.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>AI generates instantly</h3>
+      <p>GyandootAI creates a complete paper with MCQs, short answers, long answers, value questions and a full answer key.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Receive by email</h3>
+      <p>Two separate Google Docs arrive in your inbox — student paper and confidential teacher answer key. Edit, print, or download as PDF.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <div class="section-tag">Features</div>
+  <h2>Everything a teacher needs, nothing they don't</h2>
+  <p class="section-intro">Built specifically for Indian teachers across all boards and subjects. Practical, professional, and ready to use.</p>
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">📄</div>
+      <div>
+        <h4>Separate student paper and answer key</h4>
+        <p>Two documents automatically — one clean student copy and one confidential teacher answer key with model answers and marking schemes.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🎯</div>
+      <div>
+        <h4>Board-standard format every time</h4>
+        <p>CBSE, ICSE, State Board and UPSC examination patterns followed automatically. Correct sections, correct mark distribution, correct question types.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">⚡</div>
+      <div>
+        <h4>Any marks, any topic</h4>
+        <p>20 marks to 100 marks. Any chapter, any subject, any class from 6 to 12. MCQs only, long answers only, or a full paper — your choice.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">✏️</div>
+      <div>
+        <h4>Fully editable Google Docs</h4>
+        <p>Every paper arrives as a Google Doc. Edit questions, adjust marks, download as PDF or Word, or print directly from your browser.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">✅</div>
+      <div>
+        <h4>Quality verified before delivery</h4>
+        <p>Every paper includes a quality checklist confirming marks add up correctly, difficulty is appropriate, and board pattern is followed.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🌐</div>
+      <div>
+        <h4>Hindi support coming soon</h4>
+        <p>English medium papers available now. Hindi and regional language support — Tamil, Telugu, Marathi, Bengali — arriving in our next update.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUBJECTS BAND -->
+<div class="subjects-band">
+  <p>Subjects supported</p>
+  <div class="subjects-grid">
+    <span class="subject-tag">English</span>
+    <span class="subject-tag">Hindi</span>
+    <span class="subject-tag">Mathematics</span>
+    <span class="subject-tag">Physics</span>
+    <span class="subject-tag">Chemistry</span>
+    <span class="subject-tag">Biology</span>
+    <span class="subject-tag">History</span>
+    <span class="subject-tag">Geography</span>
+    <span class="subject-tag">Political Science</span>
+    <span class="subject-tag">Economics</span>
+    <span class="subject-tag">Accountancy</span>
+    <span class="subject-tag">Business Studies</span>
+    <span class="subject-tag">Psychology</span>
+    <span class="subject-tag">Sociology</span>
+    <span class="subject-tag">UPSC</span>
+  </div>
+</div>
+
+<!-- TESTIMONIAL -->
+<div class="testimonial-section">
+  <div class="testimonial-inner">
+    <span class="quote-mark">"</span>
+    <p class="testimonial-text">I used to spend Sunday evenings making question papers for Monday. Now I generate them in under a minute. The answer key alone saves me two hours every week.</p>
+    <div class="testimonial-author">
+      <div class="avatar">PM</div>
+      <div>
+        <p class="author-name">Priya Mehta</p>
+        <p class="author-role">English Teacher · Class 11 & 12 · CBSE School, Pune</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="section-tag">Pricing</div>
+  <h2>Simple, honest pricing</h2>
+  <p class="section-intro">Start free. Upgrade when you are ready. No hidden fees, no contracts, cancel anytime.</p>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <p class="plan-name">Basic</p>
+      <p class="plan-price">₹199 <span>/month</span></p>
+      <p class="plan-desc">For individual teachers getting started with AI content generation.</p>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span> 10 papers per month</li>
+        <li><span class="check">✓</span> All subjects and boards</li>
+        <li><span class="check">✓</span> Student paper + answer key</li>
+        <li><span class="check">✓</span> Email delivery</li>
+        <li><span class="check">✓</span> Google Docs format</li>
+      </ul>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSck6Ud_Tnj2KiNSSGKYG06m6SybZf4HhGzl6N7G3hWXleQgnQ/viewform" class="plan-btn">Get started free</a>
+    </div>
+    <div class="price-card popular">
+      <div class="popular-badge">Most popular</div>
+      <p class="plan-name">Pro</p>
+      <p class="plan-price">₹499 <span>/month</span></p>
+      <p class="plan-desc">For active teachers who need unlimited papers across multiple classes.</p>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span> Unlimited papers</li>
+        <li><span class="check">✓</span> All subjects and boards</li>
+        <li><span class="check">✓</span> Student paper + answer key</li>
+        <li><span class="check">✓</span> Revision summaries</li>
+        <li><span class="check">✓</span> Priority delivery</li>
+        <li><span class="check">✓</span> MCQs and short answer packs</li>
+      </ul>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSck6Ud_Tnj2KiNSSGKYG06m6SybZf4HhGzl6N7G3hWXleQgnQ/viewform" class="plan-btn filled">Get started free</a>
+    </div>
+    <div class="price-card">
+      <p class="plan-name">Institute</p>
+      <p class="plan-price">₹1,999 <span>/month</span></p>
+      <p class="plan-desc">For coaching centres and schools with multiple teachers and subjects.</p>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span> Up to 10 teachers</li>
+        <li><span class="check">✓</span> All subjects and boards</li>
+        <li><span class="check">✓</span> Centralised dashboard</li>
+        <li><span class="check">✓</span> Custom branding</li>
+        <li><span class="check">✓</span> Dedicated support</li>
+        <li><span class="check">✓</span> Usage analytics</li>
+      </ul>
+      <a href="mailto:gyandootai@gmail.com" class="plan-btn">Contact us</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section">
+  <h2>Ready to save <em>hours</em> every week?</h2>
+  <p>Join teachers across India who are already using GyandootAI. Your first paper is completely free — no credit card required.</p>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSck6Ud_Tnj2KiNSSGKYG06m6SybZf4HhGzl6N7G3hWXleQgnQ/viewform" class="btn-primary">Request your free paper now →</a>
+  <p class="cta-note">Delivered to your email in minutes · No technical knowledge needed</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Gyandoot<span>AI</span></a>
+  <ul class="footer-links">
+    <li><a href="#how-it-works">How it works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="mailto:gyandootai@gmail.com">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 GyandootAI · Saving teachers time, one paper at a time 🙏 · gyandootai@gmail.com</p>
+</footer>
+
+</body>
+</html>
