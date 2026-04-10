@@ -1,0 +1,1979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="GyandootAI helps Indian teachers generate CBSE, ICSE and State Board question papers with complete answer keys in 60 seconds. Free to try — no credit card.">
+<title>GyandootAI — Question Papers in 60 Seconds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN DIRECTION: Indian editorial luxury — warm saffron,
+   deep navy, clean cream. Feels like a trusted institution,
+   not a startup. Welcoming and professional simultaneously.
+   ============================================================ */
+:root {
+  --saffron: #C25A1A;
+  --saffron-dark: #A34A12;
+  --saffron-light: #FFF3E8;
+  --saffron-mid: #F5C4A0;
+  --saffron-glow: rgba(194,90,26,0.12);
+  --navy: #1A2340;
+  --navy-light: #243059;
+  --cream: #FDFBF7;
+  --cream-dark: #F5F0E8;
+  --white: #FFFFFF;
+  --border: rgba(0,0,0,0.08);
+  --border-warm: rgba(194,90,26,0.15);
+  --text: #1A1A2E;
+  --text-muted: #6B7280;
+  --text-light: #9CA3AF;
+  --success: #16A34A;
+  --error: #DC2626;
+  --green: #16A34A;
+  --green-light: #F0FDF4;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   ANNOUNCEMENT BAR — new CTO addition
+   ============================================================ */
+.announcement-bar {
+  background: var(--navy);
+  color: rgba(255,255,255,0.9);
+  text-align: center;
+  padding: 10px 2rem;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+}
+.announcement-bar a {
+  color: var(--saffron-mid);
+  text-decoration: none;
+  font-weight: 500;
+  margin-left: 6px;
+}
+.announcement-bar a:hover { text-decoration: underline; }
+
+/* ============================================================
+   NAV
+   ============================================================ */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(253,251,247,0.97);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--navy);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+.logo span { color: var(--saffron); }
+.nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+.nav-links a {
+  font-size: 14px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+  font-weight: 400;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-cta {
+  background: var(--saffron) !important;
+  color: #fff !important;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.2s !important;
+}
+.nav-cta:hover { background: var(--saffron-dark) !important; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  padding: 5rem 2rem 4.5rem;
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--saffron-light);
+  color: var(--saffron);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--saffron-mid);
+  margin-bottom: 2rem;
+  letter-spacing: 0.03em;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(30px, 5vw, 52px);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--navy);
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+.hero h1 em { font-style: italic; color: var(--saffron); }
+.hero-sub {
+  font-size: 18px;
+  color: var(--text-muted);
+  max-width: 560px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* Hero CTA group */
+.hero-cta-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 2.5rem;
+}
+.btn-primary {
+  display: inline-block;
+  background: var(--saffron);
+  color: #fff;
+  padding: 16px 36px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(194,90,26,0.25);
+}
+.btn-primary:hover {
+  background: var(--saffron-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(194,90,26,0.3);
+}
+.hero-note {
+  font-size: 12px;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.hero-note span::before { content: '·'; margin-right: 12px; color: var(--text-light); }
+.hero-note span:first-child::before { display: none; }
+
+/* Trust logos row — CTO addition */
+.trust-row {
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.trust-row p {
+  font-size: 11px;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+.trust-items {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.trust-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); }
+
+/* ============================================================
+   STATS BAR
+   ============================================================ */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+.stat-item {
+  padding: 2rem 1rem;
+  text-align: center;
+  border-right: 1px solid var(--border);
+  transition: background 0.2s;
+}
+.stat-item:hover { background: var(--saffron-light); }
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--saffron);
+  display: block;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.stat-label { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+
+/* ============================================================
+   HOW IT WORKS — PROBLEM SECTION (CTO addition)
+   ============================================================ */
+.problem-section {
+  background: var(--cream-dark);
+  padding: 4rem 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.problem-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+.problem-text .section-tag { margin-bottom: 0.75rem; }
+.problem-text h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 2.5vw, 30px);
+  color: var(--navy);
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+.problem-text p {
+  font-size: 15px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  font-weight: 300;
+}
+.problem-pains {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pain-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.pain-emoji { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+.pain-item p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+.pain-item strong { color: var(--text); display: block; font-size: 13px; margin-bottom: 2px; }
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+.section { padding: 5rem 2rem; max-width: 900px; margin: 0 auto; }
+.section-tag {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--saffron);
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+.section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 500;
+  color: var(--navy);
+  margin-bottom: 1rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+.section-intro {
+  font-size: 16px;
+  color: var(--text-muted);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 3rem;
+  font-weight: 300;
+}
+.divider { height: 1px; background: var(--border); max-width: 900px; margin: 0 auto; }
+
+/* ============================================================
+   STEPS
+   ============================================================ */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.step {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.step:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.07); }
+.step::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--saffron);
+}
+.step-num {
+  width: 36px; height: 36px;
+  background: var(--saffron-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--saffron);
+  margin-bottom: 1.25rem;
+}
+.step h3 { font-size: 15px; font-weight: 500; color: var(--navy); margin-bottom: 8px; }
+.step p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+/* ============================================================
+   FEATURES
+   ============================================================ */
+.features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+.feature {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.feature:hover { border-color: var(--saffron-mid); transform: translateY(-2px); }
+.feature-icon {
+  width: 40px; height: 40px;
+  background: var(--saffron-light);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.feature h4 { font-size: 14px; font-weight: 500; color: var(--navy); margin-bottom: 5px; }
+.feature p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+/* ============================================================
+   SUBJECTS BAND
+   ============================================================ */
+.subjects-band { background: var(--navy); padding: 3rem 2rem; text-align: center; }
+.subjects-band > p {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.subjects-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.subject-tag {
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.75);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: background 0.2s;
+}
+.subject-tag:hover { background: rgba(255,255,255,0.12); }
+
+/* ============================================================
+   TESTIMONIALS — CTO Enhancement: 2 testimonials
+   ============================================================ */
+.testimonial-section {
+  background: var(--saffron-light);
+  padding: 5rem 2rem;
+  border-top: 1px solid var(--saffron-mid);
+  border-bottom: 1px solid var(--saffron-mid);
+}
+.testimonials-grid {
+  max-width: 860px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.testimonial-card {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid var(--saffron-mid);
+  position: relative;
+}
+.testimonial-card::before {
+  content: '"';
+  font-family: 'Playfair Display', serif;
+  font-size: 60px;
+  color: var(--saffron);
+  opacity: 0.3;
+  position: absolute;
+  top: 12px;
+  left: 20px;
+  line-height: 1;
+}
+.testimonial-card p {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  color: var(--navy);
+  line-height: 1.6;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  padding-top: 1rem;
+}
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--saffron);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.author-name { font-size: 13px; font-weight: 500; color: var(--navy); }
+.author-role { font-size: 11px; color: var(--text-muted); line-height: 1.4; margin-top: 1px; }
+.testimonial-section-header {
+  text-align: center;
+  max-width: 860px;
+  margin: 0 auto 2.5rem;
+}
+.testimonial-section-header .section-tag { display: block; margin-bottom: 0.5rem; }
+.testimonial-section-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 2.5vw, 30px);
+  color: var(--navy);
+}
+
+/* ============================================================
+   PRICING — Enhanced with free tier clearly shown
+   ============================================================ */
+.pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.price-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.75rem;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.price-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+.price-card.popular {
+  border: 2px solid var(--saffron);
+  background: linear-gradient(180deg, var(--saffron-light) 0%, var(--white) 100%);
+}
+.price-card.free-tier { border: 1px solid var(--border); background: var(--cream-dark); }
+.popular-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--saffron);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.free-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--navy);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 4px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.plan-name {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+.plan-price {
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  color: var(--navy);
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.plan-price span {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.plan-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0.75rem 0 1.25rem;
+  line-height: 1.5;
+  min-height: 36px;
+}
+.plan-divider { height: 1px; background: var(--border); margin-bottom: 1.25rem; }
+.plan-features { list-style: none; margin-bottom: 1.25rem; }
+.plan-features li {
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 4px 0;
+  display: flex;
+  gap: 7px;
+  align-items: flex-start;
+  line-height: 1.4;
+}
+.check { color: var(--saffron); font-weight: 600; flex-shrink: 0; font-size: 11px; }
+.check-green { color: var(--success); font-weight: 600; flex-shrink: 0; font-size: 11px; }
+.plan-btn {
+  display: block;
+  width: 100%;
+  padding: 11px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid var(--saffron);
+  background: transparent;
+  color: var(--saffron);
+  transition: background 0.2s;
+}
+.plan-btn:hover { background: var(--saffron-light); }
+.plan-btn.filled {
+  background: var(--saffron);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(194,90,26,0.25);
+}
+.plan-btn.filled:hover { background: var(--saffron-dark); }
+.plan-btn.outline-navy {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+.plan-btn.outline-navy:hover { background: var(--navy); color: #fff; }
+
+/* Pricing note */
+.pricing-note {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 13px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pricing-note span { color: var(--success); }
+
+/* ============================================================
+   FAQ SECTION — CTO addition (builds trust, reduces friction)
+   ============================================================ */
+.faq-section { padding: 5rem 2rem; max-width: 700px; margin: 0 auto; }
+.faq-list { display: flex; flex-direction: column; gap: 0; margin-top: 2.5rem; }
+.faq-item {
+  border-bottom: 1px solid var(--border);
+}
+.faq-item:first-child { border-top: 1px solid var(--border); }
+.faq-q {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 0;
+  cursor: pointer;
+  gap: 1rem;
+}
+.faq-q p {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--navy);
+  line-height: 1.4;
+}
+.faq-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--saffron-light);
+  border: 1px solid var(--saffron-mid);
+  color: var(--saffron);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+  font-weight: 400;
+}
+.faq-item.open .faq-icon { transform: rotate(45deg); }
+.faq-a {
+  display: none;
+  padding: 0 0 1.25rem;
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+.faq-item.open .faq-a { display: block; }
+
+/* ============================================================
+   FORM SECTION
+   ============================================================ */
+.form-section {
+  background: var(--navy);
+  padding: 6rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.form-section::before {
+  content: '';
+  position: absolute;
+  top: -120px; right: -120px;
+  width: 500px; height: 500px;
+  background: rgba(194,90,26,0.06);
+  border-radius: 50%;
+}
+.form-section::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: -80px;
+  width: 300px; height: 300px;
+  background: rgba(194,90,26,0.04);
+  border-radius: 50%;
+}
+.form-container { max-width: 660px; margin: 0 auto; position: relative; z-index: 1; }
+.form-header { text-align: center; margin-bottom: 2.5rem; }
+.form-header .section-tag { color: var(--saffron-mid); margin-bottom: 0.5rem; }
+.form-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(24px, 3vw, 36px);
+  color: #fff;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+.form-header h2 em { color: var(--saffron-mid); font-style: italic; }
+.form-header p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+.free-trial-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(194,90,26,0.2);
+  border: 1px solid rgba(194,90,26,0.35);
+  color: var(--saffron-mid);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-top: 1rem;
+}
+
+/* Progress */
+.form-progress { margin-bottom: 1.5rem; }
+.progress-bar {
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--saffron);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+  width: 9%;
+}
+.progress-text {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.05em;
+}
+
+/* Form Card */
+.form-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 2.5rem;
+  backdrop-filter: blur(4px);
+}
+.question-slide { display: none; }
+.question-slide.active {
+  display: block;
+  animation: slideIn 0.25s ease;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.question-number {
+  font-size: 11px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.question-label {
+  font-size: 20px;
+  color: #fff;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  line-height: 1.35;
+}
+.question-hint {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+.optional-badge {
+  font-size: 10px;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.4);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 400;
+  vertical-align: middle;
+  margin-left: 6px;
+  letter-spacing: 0.04em;
+}
+.form-input {
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 15px;
+  color: #fff;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  font-family: 'DM Sans', sans-serif;
+  margin-bottom: 1.25rem;
+}
+.form-input::placeholder { color: rgba(255,255,255,0.25); }
+.form-input:focus {
+  border-color: rgba(194,90,26,0.5);
+  background: rgba(255,255,255,0.08);
+}
+select.form-input { cursor: pointer; }
+select.form-input option { background: var(--navy); color: #fff; }
+textarea.form-input { min-height: 100px; resize: vertical; }
+.form-input.error { border-color: rgba(220,38,38,0.6); }
+.error-msg {
+  color: #f87171;
+  font-size: 12px;
+  margin-top: -12px;
+  margin-bottom: 12px;
+  display: none;
+}
+
+/* Choices */
+.choices { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 1.25rem; }
+.choices.three-col { grid-template-columns: repeat(3, 1fr); }
+.choice-btn {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 12px 10px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.3;
+}
+.choice-btn:hover {
+  background: rgba(194,90,26,0.15);
+  border-color: rgba(194,90,26,0.4);
+  color: #fff;
+}
+.choice-btn.selected {
+  background: rgba(194,90,26,0.2);
+  border-color: var(--saffron);
+  color: #fff;
+  font-weight: 500;
+}
+.hidden-input { display: none; }
+
+/* Form nav */
+.form-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  gap: 1rem;
+}
+.btn-back {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.5);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+}
+.btn-back:hover { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.8); }
+.btn-next {
+  background: var(--saffron);
+  border: none;
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: background 0.2s, transform 0.1s;
+  flex: 1;
+  max-width: 200px;
+}
+.btn-next:hover { background: var(--saffron-dark); transform: translateY(-1px); }
+.btn-skip {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.3);
+  font-size: 12px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  text-decoration: underline;
+  padding: 0;
+}
+.btn-skip:hover { color: rgba(255,255,255,0.5); }
+
+/* ============================================================
+   SUCCESS SCREENS
+   ============================================================ */
+.success-screen {
+  text-align: center;
+  padding: 1rem 0;
+  display: none;
+}
+.success-icon { font-size: 52px; margin-bottom: 1rem; }
+.success-screen h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  color: #fff;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+.success-screen > p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.success-detail {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 1.5rem;
+  display: inline-block;
+}
+.success-detail span { color: var(--saffron-mid); font-weight: 500; }
+
+/* Paper counter badge */
+.paper-counter {
+  background: rgba(194,90,26,0.15);
+  border: 1px solid rgba(194,90,26,0.3);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  max-width: 360px;
+  margin: 0 auto 1rem;
+  text-align: center;
+}
+.paper-counter p { font-size: 13px; color: var(--saffron-mid); font-weight: 500; margin-bottom: 8px; }
+.counter-dots { display: flex; justify-content: center; gap: 8px; margin: 8px 0; }
+.counter-dot { width: 14px; height: 14px; border-radius: 50%; background: rgba(255,255,255,0.15); transition: background 0.3s; }
+.counter-dot.filled { background: var(--saffron); }
+.counter-sub { font-size: 12px; color: rgba(255,255,255,0.4); }
+
+/* Upgrade nudge */
+.upgrade-nudge {
+  display: none;
+  background: rgba(194,90,26,0.1);
+  border: 1.5px solid rgba(194,90,26,0.4);
+  border-radius: 12px;
+  padding: 1.25rem;
+  max-width: 380px;
+  margin: 0.75rem auto 0;
+  text-align: center;
+}
+.upgrade-nudge p { font-size: 14px; color: #fff; font-weight: 500; margin-bottom: 4px; }
+.upgrade-nudge small { font-size: 12px; color: rgba(255,255,255,0.5); display: block; margin-bottom: 12px; line-height: 1.5; }
+.btn-upgrade-wa {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #25D366;
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.btn-upgrade-wa:hover { background: #1EBD5A; }
+
+/* Limit reached box */
+.limit-reached-box {
+  display: none;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 400px;
+  margin: 0.75rem auto 0;
+  text-align: center;
+}
+.limit-reached-box p { color: rgba(255,255,255,0.7); font-size: 12px; margin-bottom: 12px; line-height: 1.5; }
+
+/* Limit gate — shown before form if limit reached */
+#limitGate {
+  display: none;
+  text-align: center;
+  padding: 2rem 0;
+}
+#limitGate .gate-icon { font-size: 48px; margin-bottom: 1rem; }
+#limitGate h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+#limitGate p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7; max-width: 380px; margin: 0 auto 1.5rem; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: var(--navy);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 3rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.footer-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  font-weight: 500;
+}
+.footer-logo span { color: var(--saffron-mid); }
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  flex-wrap: wrap;
+}
+.footer-links a { font-size: 13px; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: rgba(255,255,255,0.7); }
+.footer-copy { font-size: 12px; color: rgba(255,255,255,0.25); line-height: 1.5; }
+.footer-copy a { color: rgba(255,255,255,0.4); text-decoration: none; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .stat-item:nth-child(2) { border-right: none; }
+  .stat-item:nth-child(3), .stat-item:nth-child(4) { border-top: 1px solid var(--border); }
+  .stat-item:nth-child(4) { border-right: none; }
+  .steps, .features { grid-template-columns: 1fr; }
+  .pricing-grid { grid-template-columns: 1fr 1fr; }
+  .problem-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .form-card { padding: 1.5rem; }
+  .question-label { font-size: 18px; }
+  .choices { grid-template-columns: 1fr; }
+  .choices.three-col { grid-template-columns: 1fr 1fr; }
+  footer { flex-direction: column; text-align: center; }
+  .footer-links { justify-content: center; }
+  .trust-row { flex-direction: column; gap: 1rem; }
+}
+@media (max-width: 480px) {
+  .pricing-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR — rotate messages, builds urgency -->
+<div class="announcement-bar">
+  🎉 New: Commerce stream now supported — Accountancy, Business Studies, Economics
+  <a href="#request">Try it free →</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Gyandoot<span>AI</span></a>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">How it works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#request" class="nav-cta">Get free paper</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">✦ For Indian teachers — CBSE · ICSE · State Board · UPSC</div>
+  <h1>Question papers that used to take<br><em>3 hours</em> — done in 60 seconds</h1>
+  <p class="hero-sub">GyandootAI creates complete, board-standard exam papers with full answer keys — automatically. So you can spend Sunday evening with your family, not making question papers.</p>
+
+  <div class="hero-cta-group">
+    <a href="#request" class="btn-primary">Get your first 3 papers free →</a>
+    <div class="hero-note">
+      <span>No credit card required</span>
+      <span>Delivered in under 2 minutes</span>
+      <span>Cancel anytime</span>
+    </div>
+  </div>
+
+  <!-- Trust signals -->
+  <div class="trust-row">
+    <p>Trusted by teachers across</p>
+    <div class="trust-items">
+      <div class="trust-item"><div class="trust-dot"></div>CBSE schools</div>
+      <div class="trust-item"><div class="trust-dot"></div>ICSE schools</div>
+      <div class="trust-item"><div class="trust-dot"></div>State Board schools</div>
+      <div class="trust-item"><div class="trust-dot"></div>Coaching centres</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item"><span class="stat-num">60s</span><span class="stat-label">Average generation time</span></div>
+  <div class="stat-item"><span class="stat-num">4+</span><span class="stat-label">Boards supported</span></div>
+  <div class="stat-item"><span class="stat-num">6–12</span><span class="stat-label">All classes covered</span></div>
+  <div class="stat-item"><span class="stat-num">2 docs</span><span class="stat-label">Student paper + answer key</span></div>
+</div>
+
+<!-- PROBLEM SECTION — empathy before solution -->
+<div class="problem-section">
+  <div class="problem-inner">
+    <div class="problem-text">
+      <span class="section-tag">Sound familiar?</span>
+      <h2>Teachers spend too many hours on paperwork that AI can handle</h2>
+      <p>Every week, thousands of Indian teachers spend 2–4 hours creating question papers by hand. Hours that could go toward actually teaching, mentoring, or simply resting.</p>
+    </div>
+    <div class="problem-pains">
+      <div class="pain-item">
+        <div class="pain-emoji">😓</div>
+        <div><strong>Sunday evening, again</strong><p>Making tomorrow's test when you should be with your family.</p></div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-emoji">📝</div>
+        <div><strong>Answer key takes longer than the paper</strong><p>Writing model answers and marking schemes for every question.</p></div>
+      </div>
+      <div class="pain-item">
+        <div class="pain-emoji">🔄</div>
+        <div><strong>Same topics, different formats — every term</strong><p>Recreating similar papers slightly differently for periodic tests.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how-it-works">
+  <span class="section-tag">How it works</span>
+  <h2>Three steps to a complete question paper</h2>
+  <p class="section-intro">No technical knowledge needed. Fill a simple form and receive your paper.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Fill the form</h3>
+      <p>Tell us your subject, class, board, topic, total marks and difficulty. Takes under two minutes — right here on this page.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>AI generates instantly</h3>
+      <p>GyandootAI creates a complete paper — MCQs, short answers, long answers — plus a full answer key with marking scheme.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Receive by email</h3>
+      <p>Two separate Google Docs arrive in minutes — clean student paper and confidential teacher answer key. Edit, print, or download as PDF.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+<section class="section" id="features">
+  <span class="section-tag">Features</span>
+  <h2>Everything a teacher needs, nothing they don't</h2>
+  <p class="section-intro">Built specifically for Indian teachers across all boards and subjects.</p>
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">📄</div>
+      <div>
+        <h4>Separate student paper and answer key</h4>
+        <p>Two documents automatically — one clean student copy and one confidential teacher answer key with model answers and marking schemes.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🎯</div>
+      <div>
+        <h4>Board-standard format every time</h4>
+        <p>CBSE, ICSE, State Board and UPSC examination patterns followed precisely. Correct sections, correct mark distribution, correct question types.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">⚡</div>
+      <div>
+        <h4>Any marks, any topic, any class</h4>
+        <p>20 marks to 100 marks. Any chapter, any subject, Class 6 to 12. MCQs only, long answers only, or a fully balanced paper.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">✏️</div>
+      <div>
+        <h4>Fully editable Google Docs</h4>
+        <p>Every paper arrives as a Google Doc. Edit questions, adjust marks, download as PDF or Word, or print directly from your browser.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📚</div>
+      <div>
+        <h4>Science, Commerce, and Arts streams</h4>
+        <p>Physics, Chemistry, Biology, Maths, Accountancy, Business Studies, Economics, History, Geography, Political Science, Sociology, Psychology and more.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">✅</div>
+      <div>
+        <h4>Quality checklist with every paper</h4>
+        <p>Every paper includes a checklist confirming marks, difficulty level and board pattern are all correct before you print.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUBJECTS BAND -->
+<div class="subjects-band">
+  <p>Subjects supported</p>
+  <div class="subjects-grid">
+    <span class="subject-tag">English</span>
+    <span class="subject-tag">Hindi</span>
+    <span class="subject-tag">Mathematics</span>
+    <span class="subject-tag">Physics</span>
+    <span class="subject-tag">Chemistry</span>
+    <span class="subject-tag">Biology</span>
+    <span class="subject-tag">Accountancy</span>
+    <span class="subject-tag">Business Studies</span>
+    <span class="subject-tag">Economics</span>
+    <span class="subject-tag">History</span>
+    <span class="subject-tag">Geography</span>
+    <span class="subject-tag">Political Science</span>
+    <span class="subject-tag">Sociology</span>
+    <span class="subject-tag">Psychology</span>
+    <span class="subject-tag">Statistics</span>
+    <span class="subject-tag">UPSC GS</span>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="testimonial-section">
+  <div class="testimonial-section-header">
+    <span class="section-tag">What teachers say</span>
+    <h2>Real teachers, real results</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <p>I used to spend Sunday evenings making question papers for Monday. Now I generate them in under a minute. The answer key alone saves me two hours every week.</p>
+      <div class="testimonial-author">
+        <div class="avatar">PM</div>
+        <div>
+          <p class="author-name">Priya Mehta</p>
+          <p class="author-role">English Teacher · Class 11 & 12<br>CBSE School, Pune</p>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <p>My Accountancy paper for Class 12 came out perfect — right format, right marks distribution, proper balance of company accounts questions. Exactly what the board expects.</p>
+      <div class="testimonial-author">
+        <div class="avatar">BB</div>
+        <div>
+          <p class="author-name">Bibhuti B. Nayak</p>
+          <p class="author-role">English & Commerce Teacher · Class 11<br>CBSE School, Odisha</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING — now includes Free tier clearly -->
+<section class="section" id="pricing">
+  <span class="section-tag">Pricing</span>
+  <h2>Start free. Pay only when you love it.</h2>
+  <p class="section-intro">No credit card needed to start. Your first 3 papers are completely free — then choose the plan that fits your teaching load.</p>
+  <div class="pricing-grid">
+
+    <!-- Free tier -->
+    <div class="price-card free-tier">
+      <div class="free-badge">Start here</div>
+      <p class="plan-name">Free Trial</p>
+      <p class="plan-price">₹0</p>
+      <p class="plan-desc">Try GyandootAI with no commitment.</p>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="check-green">✓</span> 3 papers total</li>
+        <li><span class="check-green">✓</span> All subjects and boards</li>
+        <li><span class="check-green">✓</span> Student paper + answer key</li>
+        <li><span class="check-green">✓</span> No credit card required</li>
+      </ul>
+      <a href="#request" class="plan-btn outline-navy">Get started free</a>
+    </div>
+
+    <!-- Basic -->
+    <div class="price-card">
+      <p class="plan-name">Basic</p>
+      <p class="plan-price">₹199 <span>/month</span></p>
+      <p class="plan-desc">For teachers starting with AI papers.</p>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span> 15 papers per month</li>
+        <li><span class="check">✓</span> All subjects and boards</li>
+        <li><span class="check">✓</span> Student paper + answer key</li>
+        <li><span class="check">✓</span> Email delivery</li>
+      </ul>
+      <a href="#request" class="plan-btn">Get started</a>
+    </div>
+
+    <!-- Pro -->
+    <div class="price-card popular">
+      <div class="popular-badge">Most popular</div>
+      <p class="plan-name">Pro</p>
+      <p class="plan-price">₹499 <span>/month</span></p>
+      <p class="plan-desc">For active teachers who need papers regularly.</p>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span> 50 papers per month</li>
+        <li><span class="check">✓</span> All subjects and boards</li>
+        <li><span class="check">✓</span> Student paper + answer key</li>
+        <li><span class="check">✓</span> Priority delivery</li>
+        <li><span class="check">✓</span> WhatsApp support</li>
+      </ul>
+      <a href="#request" class="plan-btn filled">Get started</a>
+    </div>
+
+    <!-- Institute -->
+    <div class="price-card">
+      <p class="plan-name">Institute</p>
+      <p class="plan-price">₹1,999 <span>/month</span></p>
+      <p class="plan-desc">For coaching centres and schools.</p>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li><span class="check">✓</span> Up to 10 teachers</li>
+        <li><span class="check">✓</span> Unlimited papers</li>
+        <li><span class="check">✓</span> All subjects and boards</li>
+        <li><span class="check">✓</span> Custom school branding</li>
+        <li><span class="check">✓</span> Dedicated support</li>
+      </ul>
+      <a href="/cdn-cgi/l/email-protection#d0b7a9b1beb4bfbfa4b1b990b7bdb1b9bcfeb3bfbd" class="plan-btn">Contact us</a>
+    </div>
+  </div>
+
+  <p class="pricing-note">
+    <span>✓</span> All plans include student paper + teacher answer key &nbsp;·&nbsp;
+    <span>✓</span> Cancel anytime &nbsp;·&nbsp;
+    <span>✓</span> No hidden charges
+  </p>
+</section>
+
+<!-- FAQ SECTION -->
+<div class="faq-section" id="faq">
+  <span class="section-tag">Frequently asked questions</span>
+  <h2 style="font-family:'Playfair Display',serif;font-size:clamp(22px,2.5vw,30px);color:var(--navy);margin-bottom:0.5rem;">Honest answers to common questions</h2>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <p>Is the paper really generated in 60 seconds?</p>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-a">Yes. Once you submit the form, our system sends your requirements to the AI and delivers two Google Docs to your email — typically within 1 to 3 minutes. The 60 seconds refers to the AI generation time itself. If your email is slow, it may take a few minutes longer.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <p>How accurate is the board format?</p>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-a">Very accurate. The AI is trained on CBSE, ICSE, and major state board question paper patterns. It follows the correct section structure, question types, and mark distribution for each board. That said, we always recommend reviewing the paper before printing — the teacher knows their class best.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <p>What happens after my 3 free papers?</p>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-a">You will see an upgrade prompt. You can WhatsApp or email us to upgrade to any paid plan. We will set you up within minutes. No automatic charges — you only pay when you choose to upgrade.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <p>Can I edit the generated paper?</p>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-a">Absolutely. Every paper arrives as a Google Doc which you have full edit access to. Change questions, adjust marks, add your school name and logo, or rearrange sections. Download as PDF or Word when ready. The paper is yours.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <p>Which subjects and boards are supported?</p>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-a">CBSE, ICSE, and major state boards (Maharashtra, Tamil Nadu, Karnataka, Andhra Pradesh, Telangana, Rajasthan, West Bengal, Kerala, Himachal Pradesh) for Classes 6 to 12. All Science, Commerce, and Arts subjects. UPSC General Studies also supported.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <p>Is my data safe? Who sees my request?</p>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-a">Your name, email, and subject request are stored securely in our database. We never share your information with anyone. The paper is sent only to your email. We do not store the generated papers.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <p>How do I pay after the free trial?</p>
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-a">WhatsApp us at the number shown on the upgrade screen, or email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1a7d637b747e75756e7b735a7d777b737634797577">[email&#160;protected]</a>. We send you a secure Razorpay payment link. Takes 2 minutes. We activate your account immediately after payment.</div>
+    </div>
+  </div>
+</div>
+
+<!-- FORM SECTION -->
+<section class="form-section" id="request">
+  <div class="form-container">
+    <div class="form-header">
+      <div class="section-tag">Request your paper</div>
+      <h2>Get your first paper <em>free</em></h2>
+      <p>Fill in the details below. Your complete question paper with answer key arrives in your inbox within minutes.</p>
+      <div class="free-trial-badge">✨ First 3 papers completely free — no credit card</div>
+    </div>
+
+    <!-- Progress -->
+    <div class="form-progress">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-text" id="progressText">Step 1 of 11</span>
+    </div>
+
+    <!-- Form Card -->
+    <div class="form-card">
+
+      <!-- LIMIT GATE — shown if email already used all 3 papers -->
+      <div id="limitGate">
+        <div class="gate-icon">🔒</div>
+        <h3>You've used all 3 free papers</h3>
+        <p>Your papers have been great! Upgrade to Pro for ₹499/month and get 50 papers every month — all subjects, all boards.</p>
+        <a href="https://wa.me/91XXXXXXXXXX?text=Hi%20Mihir%2C%20I%20want%20to%20upgrade%20to%20GyandootAI%20Pro"
+           target="_blank" class="btn-upgrade-wa">
+          <span>💬</span> WhatsApp to Upgrade
+        </a>
+        <p style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.3);">or email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c9aeb0a8a7ada6a6bda8a089aea4a8a0a5e7aaa6a4">[email&#160;protected]</a></p>
+      </div>
+
+      <!-- Q1: Name -->
+      <div class="question-slide active" data-question="1">
+        <p class="question-number">Question 1 of 11</p>
+        <p class="question-label">What is your name?</p>
+        <p class="question-hint">This helps us personalise your paper and correspondence.</p>
+        <input type="text" class="form-input" id="q1" placeholder="e.g. Priya Sharma" autocomplete="name">
+        <div class="form-nav">
+          <div></div>
+          <button class="btn-next" onclick="nextQuestion(1)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Q2: Email -->
+      <div class="question-slide" data-question="2">
+        <p class="question-number">Question 2 of 11</p>
+        <p class="question-label">Your email address?</p>
+        <p class="question-hint">Your paper will be delivered here as two Google Docs.</p>
+        <input type="email" class="form-input" id="q2" placeholder="e.g. priya@school.com" autocomplete="email">
+        <div class="error-msg" id="q2-error">Please enter a valid email address.</div>
+        <div class="form-nav">
+          <button class="btn-back" onclick="prevQuestion(2)">← Back</button>
+          <button class="btn-next" onclick="nextQuestion(2)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Q3: Subject -->
+      <div class="question-slide" data-question="3">
+        <p class="question-number">Question 3 of 11</p>
+        <p class="question-label">Which subject?</p>
+        <p class="question-hint">Select the subject for which you need the question paper.</p>
+        <select class="form-input" id="q3">
+          <option value="">Select subject...</option>
+          <optgroup label="Languages">
+            <option>English</option><option>Hindi</option><option>Sanskrit</option>
+          </optgroup>
+          <optgroup label="Science">
+            <option>Mathematics</option><option>Physics</option><option>Chemistry</option>
+            <option>Biology</option><option>Science (Combined)</option>
+          </optgroup>
+          <optgroup label="Commerce">
+            <option>Accountancy</option><option>Business Studies</option>
+            <option>Economics</option><option>Statistics</option>
+          </optgroup>
+          <optgroup label="Humanities & Arts">
+            <option>History</option><option>Geography</option>
+            <option>Political Science</option><option>Sociology</option>
+            <option>Psychology</option><option>Social Science (Combined)</option>
+          </optgroup>
+          <optgroup label="Competitive">
+            <option>UPSC General Studies</option>
+          </optgroup>
+        </select>
+        <div class="form-nav">
+          <button class="btn-back" onclick="prevQuestion(3)">← Back</button>
+          <button class="btn-next" onclick="nextQuestion(3)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Q4: Class -->
+      <div class="question-slide" data-question="4">
+        <p class="question-number">Question 4 of 11</p>
+        <p class="question-label">Which class?</p>
+        <input type="hidden" id="q4">
+        <div class="choices three-col">
+          <button class="choice-btn" onclick="selectChoice('q4','Class 6',this)">Class 6</button>
+          <button class="choice-btn" onclick="selectChoice('q4','Class 7',this)">Class 7</button>
+          <button class="choice-btn" onclick="selectChoice('q4','Class 8',this)">Class 8</button>
+          <button class="choice-btn" onclick="selectChoice('q4','Class 9',this)">Class 9</button>
+          <button class="choice-btn" onclick="selectChoice('q4','Class 10',this)">Class 10</button>
+          <button class="choice-btn" onclick="selectChoice('q4','Class 11',this)">Class 11 / PUC 1</button>
+          <button class="choice-btn" onclick="selectChoice('q4','Class 12',this)">Class 12 / PUC 2</button>
+          <button class="choice-btn" onclick="selectChoice('q4','UPSC',this)">UPSC</button>
+        </div>
+        <div class="error-msg" id="q4-error">Please select a class.</div>
+        <div class="form-nav">
+          <button class="btn-back" onclick="prevQuestion(4)">← Back</button>
+          <button class="btn-next" onclick="nextQuestion(4)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Q5: Board -->
+      <div class="question-slide" data-question="5">
+        <p class="question-number">Question 5 of 11</p>
+        <p class="question-label">Which board?</p>
+        <input type="hidden" id="q5">
+        <div class="choices">
+          <button class="choice-btn" onclick="selectChoice('q5','CBSE',this)">CBSE</button>
+          <button class="choice-btn" onclick="selectChoice('q5','ICSE',this)">ICSE / ISC</button>
+          <button class="choice-btn" onclick="selectChoice('q5','Maharashtra Board',this)">Maharashtra</button>
+          <button class="choice-btn" onclick="selectChoice('q5','Tamil Nadu Board',this)">Tamil Nadu</button>
+          <button class="choice-btn" onclick="selectChoice('q5','Karnataka Board',this)">Karnataka (PUC)</button>
+          <button class="choice-btn" onclick="selectChoice('q5','Andhra Pradesh Board',this)">Andhra Pradesh</button>
+          <button class="choice-btn" onclick="selectChoice('q5','Telangana Board',this)">Telangana</button>
+          <button class="choice-btn" onclick="selectChoice('q5','Rajasthan Board',this)">Rajasthan</button>
+          <button class="choice-btn" onclick="selectChoice('q5','West Bengal Board',this)">West Bengal</button>
+          <button class="choice-btn" onclick="selectChoice('q5','Other State Board',this)">Other State Board</button>
+        </div>
+        <div class="error-msg" id="q5-error">Please select a board.</div>
+        <div class="form-nav">
+          <button class="btn-back" onclick="prevQuestion(5)">← Back</button>
+          <button class="btn-next" onclick="nextQuestion(5)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Q6: Topic -->
+      <div class="question-slide" data-question="6">
+        <p class="question-number">Question 6 of 11</p>
+        <p class="question-label">Topic or chapter name?</p>
+        <p class="question-hint">e.g. "The Portrait of a Lady", "Thermodynamics", "Partnership Accounts", "French Revolution"</p>
+        <input type="text" class="form-input" id="q6" placeholder="Enter topic or chapter name...">
+        <div class="form-nav">
+          <button class="btn-back" onclick="prevQuestion(6)">← Back</button>
+          <button class="btn-next" onclick="nextQuestion(6)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Q7: Paper type -->
+      <div class="question-slide" data-question="7">
+        <p class="question-number">Question 7 of 11</p>
+        <p class="question-label">What type of paper?</p>
+        <input type="hidden" id="q7">
+        <div class="choices">
+          <button class="choice-btn" onclick="selectChoice('q7','Full question paper with all question types',this)">Full question paper</button>
+          <button class="choice-btn" onclick="selectChoice('q7','MCQ only',this)">MCQ only</button>
+          <button class="choice-btn" onclick="selectChoice('q7','Short and long answers only (no MCQ)',this)">Short & long answers</button>
+          <button class="choice-btn" onclick="selectChoice('q7','Revision worksheet',this)">Revision worksheet</button>
+        </div>
+        <div class="error-msg" id="q7-error">Please select a paper type.</div>
+        <div class="form-nav">
+          <button class="btn-back" onclick="prevQuestion(7)">← Back</button>
+          <button class="btn-next" onclick="nextQuestion(7)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Q8: Total marks -->
+      <div class="question-slide" data-question="8">
+        <p class="question-number">Question 8 of 11</p>
+        <p class="question-label">Total marks for the paper?</p>
+        <input type="hidden" id="q8">
+        <div class="choices three-col">
+          <button class="choice-btn" onclick="selectChoice('q8','20 marks',this)">20 marks</button>
+          <button class="choice-btn" onclick="selectChoice('q8','25 marks',this)">25 marks</button>
+          <button class="choice-btn" onclick="selectChoice('q8','30 marks',this)">30 marks</button>
+          <button class="choice-btn" onclick="selectChoice('q8','40 marks',this)">40 marks</button>
+          <button class="choice-btn" onclick="selectChoice('q8','50 marks',this)">50 marks</button>
+          <button class="choice-btn" onclick="selectChoice('q8','80 marks',this)">80 marks</button>
+          <button class="choice-btn" onclick="selectChoice('q8','100 marks',this)">100 marks</button>
+        </div>
+        <div class="error-msg" id="q8-error">Please select total marks.</div>
+        <div class="form-nav">
+          <button class="btn-back" onclick="prevQuestion(8)">← Back</button>
+          <button class="btn-next" onclick="nextQuestion(8)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Q9: Distribution (Optional) -->
+      <div class="question-slide" data-question="9">
+        <p class="question-number">Question 9 of 11</p>
+        <p class="question-label">Question distribution preference <span class="optional-badge">Optional</span></p>
+        <p class="question-hint">Leave blank and we'll follow standard board pattern. Or specify e.g. "10 MCQ + 5 short + 2 long"</p>
+        <input type="text" class="form-input" id="q9" placeholder="e.g. 10 MCQ + 5 short answer + 2 long answer">
+        <div class="form-nav">
+          <button class="btn-back" onclick="prevQuestion(9)">← Back</button>
+          <button class="btn-skip" onclick="skipQuestion(9)">Skip →</button>
+          <button class="btn-next" onclick="nextQuestion(9)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Q10: Difficulty -->
+      <div class="question-slide" data-question="10">
+        <p class="question-number">Question 10 of 11</p>
+        <p class="question-label">Difficulty level?</p>
+        <input type="hidden" id="q10">
+        <div class="choices three-col">
+          <button class="choice-btn" onclick="selectChoice('q10','Easy — class test / revision',this)">Easy<br><small style="opacity:0.6">Class test / revision</small></button>
+          <button class="choice-btn" onclick="selectChoice('q10','Medium — standard board level',this)">Medium<br><small style="opacity:0.6">Standard board level</small></button>
+          <button class="choice-btn" onclick="selectChoice('q10','Challenging — competitive / board topper level',this)">Hard<br><small style="opacity:0.6">Competitive / topper level</small></button>
+        </div>
+        <div class="error-msg" id="q10-error">Please select difficulty level.</div>
+        <div class="form-nav">
+          <button class="btn-back" onclick="prevQuestion(10)">← Back</button>
+          <button class="btn-next" onclick="nextQuestion(10)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Q11: Special instructions (Optional) -->
+      <div class="question-slide" data-question="11">
+        <p class="question-number">Question 11 of 11</p>
+        <p class="question-label">Any special instructions? <span class="optional-badge">Optional</span></p>
+        <p class="question-hint">e.g. "Focus more on poetry", "Include a passage-based question", "Avoid Chapter 2", "Include value-based questions"</p>
+        <textarea class="form-input" id="q11" placeholder="Leave blank if no special requirements..."></textarea>
+        <div class="form-nav">
+          <button class="btn-back" onclick="prevQuestion(11)">← Back</button>
+          <button class="btn-next" onclick="submitForm()" style="background:var(--saffron);max-width:none;flex:1;">Submit request 🙏</button>
+        </div>
+      </div>
+
+      <!-- SUCCESS SCREEN -->
+      <div class="success-screen" id="successScreen">
+        <div class="success-icon">🎉</div>
+        <h3>Request received!</h3>
+        <p>Your question paper is being generated right now. You will receive two documents in your email within the next 15 minutes.</p>
+        <div class="success-detail">📧 Sending to <span id="successEmail"></span></div>
+
+        <!-- Paper counter -->
+        <div class="paper-counter" id="paperCounter">
+          <p>📋 You have used <strong><span id="papersUsed">1</span> of 3</strong> free papers</p>
+          <div class="counter-dots">
+            <div class="counter-dot" id="dot1"></div>
+            <div class="counter-dot" id="dot2"></div>
+            <div class="counter-dot" id="dot3"></div>
+          </div>
+          <p class="counter-sub" id="counterSub">2 more free papers remaining</p>
+        </div>
+
+        <!-- 1 paper left nudge -->
+        <div class="upgrade-nudge" id="upgradeNudge">
+          <p>⚡ Only 1 free paper left!</p>
+          <small>Upgrade to Pro for ₹499/month — 50 papers, all subjects, all boards, priority support.</small>
+          <a href="https://wa.me/91XXXXXXXXXX?text=Hi%20Mihir%2C%20I%20want%20to%20upgrade%20to%20GyandootAI%20Pro"
+             target="_blank" class="btn-upgrade-wa">
+            <span>💬</span> WhatsApp to Upgrade
+          </a>
+        </div>
+
+        <!-- All 3 used -->
+        <div class="limit-reached-box" id="limitReachedBox">
+          <p>You have used all 3 free papers. Upgrade to Pro for ₹499/month to continue.</p>
+          <a href="https://wa.me/91XXXXXXXXXX?text=Hi%20Mihir%2C%20I%20want%20to%20upgrade%20to%20GyandootAI%20Pro"
+             target="_blank" class="btn-upgrade-wa" style="margin:0 auto;display:inline-flex;">
+            <span>💬</span> WhatsApp Mihir to Upgrade
+          </a>
+        </div>
+
+        <p style="margin-top:1.5rem;font-size:13px;color:rgba(255,255,255,0.35);">
+          Questions? <a href="/cdn-cgi/l/email-protection#781f0119161c17170c1911381f15191114561b1715" style="color:var(--saffron-mid);text-decoration:none;"><span class="__cf_email__" data-cfemail="e18698808f858e8e958088a1868c80888dcf828e8c">[email&#160;protected]</span></a>
+        </p>
+      </div>
+
+    </div><!-- /form-card -->
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Gyandoot<span>AI</span></a>
+  <ul class="footer-links">
+    <li><a href="#how-it-works">How it works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="/cdn-cgi/l/email-protection#56312f373832393922373f16313b373f3a7835393b">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 GyandootAI · Saving teachers time, one paper at a time 🙏<br><a href="/cdn-cgi/l/email-protection#9afde3fbf4fef5f5eefbf3dafdf7fbf3f6b4f9f5f7"><span class="__cf_email__" data-cfemail="8aedf3ebe4eee5e5feebe3caede7ebe3e6a4e9e5e7">[email&#160;protected]</span></a></p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ============================================================
+   CONFIGURATION — EDIT THESE TWO LINES
+   ============================================================ */
+const WEBHOOK_URL  = 'https://hook.us2.make.com/yurmgjtrwxfz9kmdgocnfindwx9lvo9m';
+// Replace with your WhatsApp number: country code + number, no + or spaces
+// Example: India number +91 98765 43210 → '919876543210'
+const WA_NUMBER    = '91XXXXXXXXXX';
+
+/* ============================================================
+   DUAL-LAYER TRACKING: Email + Device Fingerprint
+   -------------------------------------------------------
+   Layer 1 — Email count (primary, Make.com verifies backend)
+   Layer 2 — Device fingerprint (catches same device, new email)
+
+   THRESHOLDS:
+   Email >= 3    hard block always
+   Device >= 5   soft nudge (shared devices in India are common)
+   Device >= 8   hard block (clear abuse pattern)
+
+   Fingerprint uses: screen, timezone, language, GPU canvas,
+   hardware — works across incognito and browser cache clears.
+   Zero external APIs. Zero server cost. Fully private.
+   ============================================================ */
+const FREE_LIMIT    = 3;   // email hard limit
+const FP_SOFT_WARN  = 5;   // device soft warning
+const FP_HARD_LIMIT = 8;   // device hard block
+
+/* -- Lightweight fingerprint (no library needed) ------------ */
+function buildFingerprint() {
+  const cv = document.createElement('canvas');
+  const cx = cv.getContext('2d');
+  cx.textBaseline = 'top';
+  cx.font = '14px Arial';
+  cx.fillStyle = '#f60';
+  cx.fillRect(125, 1, 62, 20);
+  cx.fillStyle = '#069';
+  cx.fillText('Gyandoot', 2, 15);
+  cx.fillStyle = 'rgba(102,204,0,0.7)';
+  cx.fillText('Gyandoot', 4, 17);
+  const cv2 = cv.toDataURL().slice(-60);
+  const parts = [
+    navigator.language || '',
+    screen.colorDepth || '',
+    screen.width + 'x' + screen.height,
+    new Date().getTimezoneOffset(),
+    navigator.hardwareConcurrency || '',
+    navigator.platform || '',
+    (navigator.plugins || []).length,
+    cv2
+  ].join('|');
+  let h = 5381;
+  for (let i = 0; i < parts.length; i++) {
+    h = ((h << 5) + h) ^ parts.charCodeAt(i);
+  }
+  return 'fp' + Math.abs(h).toString(36);
+}
+
+let _fp = null;
+function getFingerprint() {
+  if (!_fp) {
+    _fp = localStorage.getItem('gai_fp');
+    if (!_fp) { _fp = buildFingerprint(); localStorage.setItem('gai_fp', _fp); }
+  }
+  return _fp;
+}
+
+/* -- Email counter ------------------------------------------ */
+function getEmailCount(email) {
+  return parseInt(localStorage.getItem('gai_e_' + email.toLowerCase()) || '0', 10);
+}
+function incEmail(email) {
+  const n = getEmailCount(email) + 1;
+  localStorage.setItem('gai_e_' + email.toLowerCase(), n);
+  return n;
+}
+
+/* -- Device fingerprint counter ----------------------------- */
+function getFpCount() {
+  return parseInt(localStorage.getItem('gai_f_' + getFingerprint()) || '0', 10);
+}
+function incFp() {
+  const n = getFpCount() + 1;
+  localStorage.setItem('gai_f_' + getFingerprint(), n);
+  return n;
+}
+
+/* -- Combined block checks ---------------------------------- */
+function isBlocked(email) {
+  if (getEmailCount(email) >= FREE_LIMIT) return true;   // email at limit
+  if (getFpCount() >= FP_HARD_LIMIT)      return true;   // device abuse
+  return false;
+}
+function isSoftWarn(email) {
+  // Same device, different email — soft nudge only
+  const fp = getFpCount();
+  return fp >= FP_SOFT_WARN && fp < FP_HARD_LIMIT && getEmailCount(email) < FREE_LIMIT;
+}
+
+/* -- Increment both counters on submit ---------------------- */
+function addCount(email) {
+  incFp();
+  return incEmail(email);   // returns email count for badge display
+}
+
+function updateBadge(count) {
+  // Update dots
+  for (let i = 1; i <= 3; i++) {
+    document.getElementById('dot' + i).classList.toggle('filled', i <= count);
+  }
+  document.getElementById('papersUsed').textContent = count;
+  const remaining = FREE_LIMIT - count;
+  document.getElementById('counterSub').textContent =
+    remaining > 0
+      ? remaining + ' more free paper' + (remaining !== 1 ? 's' : '') + ' remaining'
+      : 'All free papers used';
+
+  // Show/hide upgrade elements
+  document.getElementById('upgradeNudge').style.display     = remaining === 1 ? 'block' : 'none';
+  document.getElementById('limitReachedBox').style.display  = remaining <= 0  ? 'block' : 'none';
+  document.getElementById('paperCounter').style.display     = remaining <= 0  ? 'none'  : 'block';
+}
+
+/* ============================================================
+   FORM STATE
+   ============================================================ */
+let currentQuestion = 1;
+const totalQuestions = 11;
+
+function updateProgress() {
+  const pct = Math.round((currentQuestion / totalQuestions) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = 'Step ' + currentQuestion + ' of ' + totalQuestions;
+}
+
+function showQuestion(n) {
+  document.querySelectorAll('.question-slide').forEach(s => s.classList.remove('active'));
+  const slide = document.querySelector('[data-question="' + n + '"]');
+  if (slide) { slide.classList.add('active'); }
+  currentQuestion = n;
+  updateProgress();
+  window.scrollTo({ top: document.getElementById('request').offsetTop - 80, behavior: 'smooth' });
+}
+
+function selectChoice(fieldId, value, btn) {
+  btn.closest('.choices').querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById(fieldId).value = value;
+  const err = document.getElementById(fieldId + '-error');
+  if (err) err.style.display = 'none';
+}
+
+function validateQuestion(n) {
+  const optional = ['q9', 'q11'];
+  if (optional.includes('q' + n)) return true;
+
+  const field = document.getElementById('q' + n);
+  if (!field) return true;
+  const val = field.value.trim();
+
+  if (n === 2) {
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    if (!ok) {
+      document.getElementById('q2-error').style.display = 'block';
+      field.classList.add('error');
+      return false;
+    }
+    // Check limit on email entry
+    if (isBlocked(val)) {
+      showLimitGate(val);
+      return false;
+    }
+    field.classList.remove('error');
+    document.getElementById('q2-error').style.display = 'none';
+    return true;
+  }
+
+  if (!val) {
+    const err = document.getElementById('q' + n + '-error');
+    if (err) err.style.display = 'block';
+    field.classList.add && field.classList.add('error');
+    return false;
+  }
+  const err = document.getElementById('q' + n + '-error');
+  if (err) err.style.display = 'none';
+  field.classList.remove && field.classList.remove('error');
+  return true;
+}
+
+function nextQuestion(n) {
+  if (!validateQuestion(n)) return;
+  if (n < totalQuestions) showQuestion(n + 1);
+}
+function prevQuestion(n) { if (n > 1) showQuestion(n - 1); }
+function skipQuestion(n) {
+  document.getElementById('q' + n).value = '';
+  if (n < totalQuestions) showQuestion(n + 1);
+}
+
+/* ============================================================
+   SHOW LIMIT GATE
+   ============================================================ */
+function showLimitGate(email) {
+  // Update WhatsApp links with current number
+  document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
+    a.href = 'https://wa.me/' + WA_NUMBER + '?text=Hi%20Mihir%2C%20I%20want%20to%20upgrade%20to%20GyandootAI%20Pro';
+  });
+
+  document.querySelectorAll('.question-slide').forEach(s => s.style.display = 'none');
+  document.getElementById('successScreen').style.display = 'none';
+  document.getElementById('limitGate').style.display = 'block';
+  window.scrollTo({ top: document.getElementById('request').offsetTop - 80, behavior: 'smooth' });
+}
+
+/* ============================================================
+   SUBMIT FORM
+   ============================================================ */
+function submitForm() {
+  const email = document.getElementById('q2').value.trim();
+
+  // Final check
+  if (isBlocked(email)) {
+    showLimitGate(email);
+    return;
+  }
+
+  const data = {
+    'Your Full Name':                  document.getElementById('q1').value.trim(),
+    'Your Email Address':              email,
+    'Subject':                         document.getElementById('q3').value,
+    'Class':                           document.getElementById('q4').value,
+    'Board':                           document.getElementById('q5').value,
+    'Topic or Chapter Name':           document.getElementById('q6').value.trim(),
+    'What do you need':                document.getElementById('q7').value,
+    'Total Marks for the Paper':       document.getElementById('q8').value,
+    'Question Distribution Preference':document.getElementById('q9').value,
+    'Difficulty Level':                document.getElementById('q10').value,
+    'Any special instructions':        document.getElementById('q11').value.trim()
+  };
+
+  // Add fingerprint to webhook payload so Make.com can track device-level too
+  data['Device_Fingerprint'] = getFingerprint();
+  data['Email_Paper_Count']  = getEmailCount(email) + 1;  // count after this one
+  data['Device_Paper_Count'] = getFpCount() + 1;
+
+  // Soft warning — same device, different email — note it but allow
+  if (isSoftWarn(email)) {
+    console.log('[GyandootAI] Soft warning: device fingerprint at', getFpCount() + 1, 'uses');
+  }
+
+  fetch(WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).catch(err => console.log('Webhook error:', err));
+
+  // Increment count and show success
+  const newCount = addCount(email);
+
+  document.querySelectorAll('.question-slide').forEach(s => s.style.display = 'none');
+  document.getElementById('limitGate').style.display    = 'none';
+  document.getElementById('successScreen').style.display = 'block';
+  document.getElementById('successEmail').textContent    = email;
+  updateBadge(newCount);
+
+  window.scrollTo({ top: document.getElementById('request').offsetTop - 80, behavior: 'smooth' });
+}
+
+/* ============================================================
+   FAQ TOGGLE
+   ========================
