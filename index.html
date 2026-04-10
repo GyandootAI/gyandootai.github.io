@@ -1462,7 +1462,7 @@ footer {
     <!-- Progress -->
     <div class="form-progress">
       <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-      <span class="progress-text" id="progressText">Step 1 of 11</span>
+      <span class="progress-text" id="progressText">Step 1 of 12</span>
     </div>
 
     <!-- Form Card -->
@@ -1473,18 +1473,18 @@ footer {
         <div class="gate-icon">🔒</div>
         <h3>You've used all 3 free papers</h3>
         <p>Your papers have been great! Upgrade to Pro for ₹499/month and get 50 papers every month — all subjects, all boards.</p>
-        <a href="https://wa.me/91XXXXXXXXXX?text=Hi%20Mihir%2C%20I%20want%20to%20upgrade%20to%20GyandootAI%20Pro"
+        <a href="https://wa.me/91XXXXXXXXXX?text=Hi%20GyandootAI%20Team%2C%20I%20want%20to%20upgrade%20to%20Pro"
            target="_blank" class="btn-upgrade-wa">
           <span>💬</span> WhatsApp to Upgrade
         </a>
-        <p style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.3);">or email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c9aeb0a8a7ada6a6bda8a089aea4a8a0a5e7aaa6a4">[email&#160;protected]</a></p>
+        <p style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.3);">or email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="74130d151a101b1b00151d341319151d185a171b19">[email&#160;protected]</a></p>
       </div>
 
       <!-- Q1: Name -->
       <div class="question-slide active" data-question="1">
-        <p class="question-number">Question 1 of 11</p>
+        <p class="question-number">Question 1 of 12</p>
         <p class="question-label">What is your name?</p>
-        <p class="question-hint">This helps us personalise your paper and correspondence.</p>
+        <p class="question-hint">This appears on your paper as the authorising teacher.</p>
         <input type="text" class="form-input" id="q1" placeholder="e.g. Priya Sharma" autocomplete="name">
         <div class="error-msg" id="q1-error">Please enter your name.</div>
         <div class="form-nav">
@@ -1495,9 +1495,9 @@ footer {
 
       <!-- Q2: Email -->
       <div class="question-slide" data-question="2">
-        <p class="question-number">Question 2 of 11</p>
+        <p class="question-number">Question 2 of 12</p>
         <p class="question-label">Your email address?</p>
-        <p class="question-hint">Your paper will be delivered here as two Google Docs.</p>
+        <p class="question-hint">Your paper will be delivered here as two Google Docs within minutes.</p>
         <input type="email" class="form-input" id="q2" placeholder="e.g. priya@school.com" autocomplete="email">
         <div class="error-msg" id="q2-error">Please enter a valid email address.</div>
         <div class="form-nav">
@@ -1506,174 +1506,197 @@ footer {
         </div>
       </div>
 
-      <!-- Q3: Subject -->
+      <!-- Q3: School Name (Optional) -->
       <div class="question-slide" data-question="3">
-        <p class="question-number">Question 3 of 11</p>
-        <p class="question-label">Which subject?</p>
-        <p class="question-hint">Select the subject for which you need the question paper.</p>
-        <select class="form-input" id="q3">
-          <option value="">Select subject...</option>
-          <optgroup label="Languages">
-            <option>English</option><option>Hindi</option><option>Sanskrit</option>
-          </optgroup>
-          <optgroup label="Science">
-            <option>Mathematics</option><option>Physics</option><option>Chemistry</option>
-            <option>Biology</option><option>Science (Combined)</option>
-          </optgroup>
-          <optgroup label="Commerce">
-            <option>Accountancy</option><option>Business Studies</option>
-            <option>Economics</option><option>Statistics</option>
-          </optgroup>
-          <optgroup label="Humanities & Arts">
-            <option>History</option><option>Geography</option>
-            <option>Political Science</option><option>Sociology</option>
-            <option>Psychology</option><option>Social Science (Combined)</option>
-          </optgroup>
-          <optgroup label="Competitive">
-            <option>UPSC General Studies</option>
-          </optgroup>
-        </select>
-        <div class="error-msg" id="q3-error">Please select a subject.</div>
+        <p class="question-number">Question 3 of 12</p>
+        <p class="question-label">Your school name <span class="optional-badge">Optional</span></p>
+        <p class="question-hint">We will print this on your paper header. Leave blank if not needed.</p>
+        <input type="text" class="form-input" id="q3" placeholder="e.g. Delhi Public School, Pune">
         <div class="form-nav">
           <button class="btn-back" onclick="prevQuestion(3)">← Back</button>
+          <button class="btn-skip" onclick="skipQuestion(3)">Skip →</button>
           <button class="btn-next" onclick="nextQuestion(3)">Continue →</button>
         </div>
       </div>
 
-      <!-- Q4: Class -->
+      <!-- Q4: Board — FIRST before Class and Subject -->
       <div class="question-slide" data-question="4">
-        <p class="question-number">Question 4 of 11</p>
-        <p class="question-label">Which class?</p>
+        <p class="question-number">Question 4 of 12</p>
+        <p class="question-label">Which board?</p>
+        <p class="question-hint">Select the examination board your school follows.</p>
         <input type="hidden" id="q4">
-        <div class="choices three-col">
-          <button class="choice-btn" onclick="selectChoice('q4','Class 6',this)">Class 6</button>
-          <button class="choice-btn" onclick="selectChoice('q4','Class 7',this)">Class 7</button>
-          <button class="choice-btn" onclick="selectChoice('q4','Class 8',this)">Class 8</button>
-          <button class="choice-btn" onclick="selectChoice('q4','Class 9',this)">Class 9</button>
-          <button class="choice-btn" onclick="selectChoice('q4','Class 10',this)">Class 10</button>
-          <button class="choice-btn" onclick="selectChoice('q4','Class 11',this)">Class 11 / PUC 1</button>
-          <button class="choice-btn" onclick="selectChoice('q4','Class 12',this)">Class 12 / PUC 2</button>
-          <button class="choice-btn" onclick="selectChoice('q4','UPSC',this)">UPSC</button>
+        <div class="choices">
+          <button class="choice-btn" onclick="selectChoice('q4','CBSE',this)">CBSE</button>
+          <button class="choice-btn" onclick="selectChoice('q4','ICSE / ISC',this)">ICSE / ISC</button>
+          <button class="choice-btn" onclick="selectChoice('q4','Maharashtra Board',this)">Maharashtra</button>
+          <button class="choice-btn" onclick="selectChoice('q4','Tamil Nadu Board',this)">Tamil Nadu</button>
+          <button class="choice-btn" onclick="selectChoice('q4','Karnataka Board (PUC)',this)">Karnataka (PUC)</button>
+          <button class="choice-btn" onclick="selectChoice('q4','Andhra Pradesh Board',this)">Andhra Pradesh</button>
+          <button class="choice-btn" onclick="selectChoice('q4','Telangana Board',this)">Telangana</button>
+          <button class="choice-btn" onclick="selectChoice('q4','Rajasthan Board',this)">Rajasthan</button>
+          <button class="choice-btn" onclick="selectChoice('q4','West Bengal Board',this)">West Bengal</button>
+          <button class="choice-btn" onclick="selectChoice('q4','Other State Board',this)">Other State Board</button>
         </div>
-        <div class="error-msg" id="q4-error">Please select a class.</div>
+        <div class="error-msg" id="q4-error">Please select a board.</div>
         <div class="form-nav">
           <button class="btn-back" onclick="prevQuestion(4)">← Back</button>
           <button class="btn-next" onclick="nextQuestion(4)">Continue →</button>
         </div>
       </div>
 
-      <!-- Q5: Board -->
+      <!-- Q5: Class — after Board -->
       <div class="question-slide" data-question="5">
-        <p class="question-number">Question 5 of 11</p>
-        <p class="question-label">Which board?</p>
+        <p class="question-number">Question 5 of 12</p>
+        <p class="question-label">Which class?</p>
         <input type="hidden" id="q5">
-        <div class="choices">
-          <button class="choice-btn" onclick="selectChoice('q5','CBSE',this)">CBSE</button>
-          <button class="choice-btn" onclick="selectChoice('q5','ICSE',this)">ICSE / ISC</button>
-          <button class="choice-btn" onclick="selectChoice('q5','Maharashtra Board',this)">Maharashtra</button>
-          <button class="choice-btn" onclick="selectChoice('q5','Tamil Nadu Board',this)">Tamil Nadu</button>
-          <button class="choice-btn" onclick="selectChoice('q5','Karnataka Board',this)">Karnataka (PUC)</button>
-          <button class="choice-btn" onclick="selectChoice('q5','Andhra Pradesh Board',this)">Andhra Pradesh</button>
-          <button class="choice-btn" onclick="selectChoice('q5','Telangana Board',this)">Telangana</button>
-          <button class="choice-btn" onclick="selectChoice('q5','Rajasthan Board',this)">Rajasthan</button>
-          <button class="choice-btn" onclick="selectChoice('q5','West Bengal Board',this)">West Bengal</button>
-          <button class="choice-btn" onclick="selectChoice('q5','Other State Board',this)">Other State Board</button>
+        <div class="choices three-col">
+          <button class="choice-btn" onclick="selectChoice('q5','Class 6',this)">Class 6</button>
+          <button class="choice-btn" onclick="selectChoice('q5','Class 7',this)">Class 7</button>
+          <button class="choice-btn" onclick="selectChoice('q5','Class 8',this)">Class 8</button>
+          <button class="choice-btn" onclick="selectChoice('q5','Class 9',this)">Class 9</button>
+          <button class="choice-btn" onclick="selectChoice('q5','Class 10',this)">Class 10</button>
+          <button class="choice-btn" onclick="selectChoice('q5','Class 11 / PUC 1',this)">Class 11 / PUC 1</button>
+          <button class="choice-btn" onclick="selectChoice('q5','Class 12 / PUC 2',this)">Class 12 / PUC 2</button>
+          <button class="choice-btn" onclick="selectChoice('q5','UPSC',this)">UPSC</button>
         </div>
-        <div class="error-msg" id="q5-error">Please select a board.</div>
+        <div class="error-msg" id="q5-error">Please select a class.</div>
         <div class="form-nav">
           <button class="btn-back" onclick="prevQuestion(5)">← Back</button>
           <button class="btn-next" onclick="nextQuestion(5)">Continue →</button>
         </div>
       </div>
 
-      <!-- Q6: Topic -->
+      <!-- Q6: Subject — after Board + Class -->
       <div class="question-slide" data-question="6">
-        <p class="question-number">Question 6 of 11</p>
-        <p class="question-label">Topic or chapter name?</p>
-        <p class="question-hint">e.g. "The Portrait of a Lady", "Thermodynamics", "Partnership Accounts", "French Revolution"</p>
-        <input type="text" class="form-input" id="q6" placeholder="Enter topic or chapter name...">
-        <div class="error-msg" id="q6-error">Please enter a topic or chapter name.</div>
+        <p class="question-number">Question 6 of 12</p>
+        <p class="question-label">Which subject?</p>
+        <input type="hidden" id="q6">
+        <div class="choices">
+          <button class="choice-btn" onclick="selectChoice('q6','English',this)">English</button>
+          <button class="choice-btn" onclick="selectChoice('q6','Hindi',this)">Hindi</button>
+          <button class="choice-btn" onclick="selectChoice('q6','Mathematics',this)">Mathematics</button>
+          <button class="choice-btn" onclick="selectChoice('q6','Physics',this)">Physics</button>
+          <button class="choice-btn" onclick="selectChoice('q6','Chemistry',this)">Chemistry</button>
+          <button class="choice-btn" onclick="selectChoice('q6','Biology',this)">Biology</button>
+          <button class="choice-btn" onclick="selectChoice('q6','Science (Combined)',this)">Science (Combined)</button>
+          <button class="choice-btn" onclick="selectChoice('q6','Accountancy',this)">Accountancy</button>
+          <button class="choice-btn" onclick="selectChoice('q6','Business Studies',this)">Business Studies</button>
+          <button class="choice-btn" onclick="selectChoice('q6','Economics',this)">Economics</button>
+          <button class="choice-btn" onclick="selectChoice('q6','History',this)">History</button>
+          <button class="choice-btn" onclick="selectChoice('q6','Geography',this)">Geography</button>
+          <button class="choice-btn" onclick="selectChoice('q6','Political Science',this)">Political Science</button>
+          <button class="choice-btn" onclick="selectChoice('q6','Sociology',this)">Sociology</button>
+          <button class="choice-btn" onclick="selectChoice('q6','Psychology',this)">Psychology</button>
+          <button class="choice-btn" onclick="selectChoice('q6','Social Science (Combined)',this)">Social Science</button>
+          <button class="choice-btn" onclick="selectChoice('q6','Statistics',this)">Statistics</button>
+          <button class="choice-btn" onclick="selectChoice('q6','Sanskrit',this)">Sanskrit</button>
+          <button class="choice-btn" onclick="selectChoice('q6','Computer Science',this)">Computer Science</button>
+          <button class="choice-btn" onclick="selectChoice('q6','UPSC General Studies',this)">UPSC GS</button>
+        </div>
+        <div class="error-msg" id="q6-error">Please select a subject.</div>
         <div class="form-nav">
           <button class="btn-back" onclick="prevQuestion(6)">← Back</button>
           <button class="btn-next" onclick="nextQuestion(6)">Continue →</button>
         </div>
       </div>
 
-      <!-- Q7: Paper type -->
+      <!-- Q7: Medium of Instruction — new, important for India -->
       <div class="question-slide" data-question="7">
-        <p class="question-number">Question 7 of 11</p>
-        <p class="question-label">What type of paper?</p>
+        <p class="question-number">Question 7 of 12</p>
+        <p class="question-label">Medium of instruction?</p>
+        <p class="question-hint">The language in which your paper should be written.</p>
         <input type="hidden" id="q7">
-        <div class="choices">
-          <button class="choice-btn" onclick="selectChoice('q7','Full question paper with all question types',this)">Full question paper</button>
-          <button class="choice-btn" onclick="selectChoice('q7','MCQ only',this)">MCQ only</button>
-          <button class="choice-btn" onclick="selectChoice('q7','Short and long answers only (no MCQ)',this)">Short & long answers</button>
-          <button class="choice-btn" onclick="selectChoice('q7','Revision worksheet',this)">Revision worksheet</button>
+        <div class="choices three-col">
+          <button class="choice-btn" onclick="selectChoice('q7','English Medium',this)">English</button>
+          <button class="choice-btn" onclick="selectChoice('q7','Hindi Medium',this)">Hindi</button>
+          <button class="choice-btn" onclick="selectChoice('q7','Bilingual (English + Hindi)',this)">Bilingual</button>
         </div>
-        <div class="error-msg" id="q7-error">Please select a paper type.</div>
+        <div class="error-msg" id="q7-error">Please select medium of instruction.</div>
         <div class="form-nav">
           <button class="btn-back" onclick="prevQuestion(7)">← Back</button>
           <button class="btn-next" onclick="nextQuestion(7)">Continue →</button>
         </div>
       </div>
 
-      <!-- Q8: Total marks -->
+      <!-- Q8: Topic -->
       <div class="question-slide" data-question="8">
-        <p class="question-number">Question 8 of 11</p>
-        <p class="question-label">Total marks for the paper?</p>
-        <input type="hidden" id="q8">
-        <div class="choices three-col">
-          <button class="choice-btn" onclick="selectChoice('q8','20 marks',this)">20 marks</button>
-          <button class="choice-btn" onclick="selectChoice('q8','25 marks',this)">25 marks</button>
-          <button class="choice-btn" onclick="selectChoice('q8','30 marks',this)">30 marks</button>
-          <button class="choice-btn" onclick="selectChoice('q8','40 marks',this)">40 marks</button>
-          <button class="choice-btn" onclick="selectChoice('q8','50 marks',this)">50 marks</button>
-          <button class="choice-btn" onclick="selectChoice('q8','80 marks',this)">80 marks</button>
-          <button class="choice-btn" onclick="selectChoice('q8','100 marks',this)">100 marks</button>
-        </div>
-        <div class="error-msg" id="q8-error">Please select total marks.</div>
+        <p class="question-number">Question 8 of 12</p>
+        <p class="question-label">Topic or chapter name?</p>
+        <p class="question-hint">e.g. "The Portrait of a Lady", "Thermodynamics", "Partnership Accounts", "French Revolution"</p>
+        <input type="text" class="form-input" id="q8" placeholder="Enter topic or chapter name...">
+        <div class="error-msg" id="q8-error">Please enter a topic or chapter name.</div>
         <div class="form-nav">
           <button class="btn-back" onclick="prevQuestion(8)">← Back</button>
           <button class="btn-next" onclick="nextQuestion(8)">Continue →</button>
         </div>
       </div>
 
-      <!-- Q9: Distribution (Optional) -->
+      <!-- Q9: Paper type -->
       <div class="question-slide" data-question="9">
-        <p class="question-number">Question 9 of 11</p>
-        <p class="question-label">Question distribution preference <span class="optional-badge">Optional</span></p>
-        <p class="question-hint">Leave blank and we'll follow standard board pattern. Or specify e.g. "10 MCQ + 5 short + 2 long"</p>
-        <input type="text" class="form-input" id="q9" placeholder="e.g. 10 MCQ + 5 short answer + 2 long answer">
+        <p class="question-number">Question 9 of 12</p>
+        <p class="question-label">What do you need?</p>
+        <input type="hidden" id="q9">
+        <div class="choices">
+          <button class="choice-btn" onclick="selectChoice('q9','Full Question Paper with Answer Key',this)">📄 Full Question Paper<br><small style="opacity:0.6">All sections + answer key</small></button>
+          <button class="choice-btn" onclick="selectChoice('q9','MCQs Only',this)">🔤 MCQs Only<br><small style="opacity:0.6">Multiple choice questions</small></button>
+          <button class="choice-btn" onclick="selectChoice('q9','Short Answer Questions Only',this)">✏️ Short Answers Only<br><small style="opacity:0.6">2–5 mark questions</small></button>
+          <button class="choice-btn" onclick="selectChoice('q9','Long Answer Questions Only',this)">📝 Long Answers Only<br><small style="opacity:0.6">5–6 mark questions</small></button>
+          <button class="choice-btn" onclick="selectChoice('q9','Revision Summary',this)">📚 Revision Summary<br><small style="opacity:0.6">Key concepts + tips</small></button>
+        </div>
+        <div class="error-msg" id="q9-error">Please select what you need.</div>
         <div class="form-nav">
           <button class="btn-back" onclick="prevQuestion(9)">← Back</button>
-          <button class="btn-skip" onclick="skipQuestion(9)">Skip →</button>
           <button class="btn-next" onclick="nextQuestion(9)">Continue →</button>
         </div>
       </div>
 
-      <!-- Q10: Difficulty -->
+      <!-- Q10: Total marks -->
       <div class="question-slide" data-question="10">
-        <p class="question-number">Question 10 of 11</p>
-        <p class="question-label">Difficulty level?</p>
+        <p class="question-number">Question 10 of 12</p>
+        <p class="question-label">Total marks for the paper?</p>
         <input type="hidden" id="q10">
         <div class="choices three-col">
-          <button class="choice-btn" onclick="selectChoice('q10','Easy — class test / revision',this)">Easy<br><small style="opacity:0.6">Class test / revision</small></button>
-          <button class="choice-btn" onclick="selectChoice('q10','Medium — standard board level',this)">Medium<br><small style="opacity:0.6">Standard board level</small></button>
-          <button class="choice-btn" onclick="selectChoice('q10','Challenging — competitive / board topper level',this)">Hard<br><small style="opacity:0.6">Competitive / topper level</small></button>
+          <button class="choice-btn" onclick="selectChoice('q10','20 marks',this)">20 marks</button>
+          <button class="choice-btn" onclick="selectChoice('q10','25 marks',this)">25 marks</button>
+          <button class="choice-btn" onclick="selectChoice('q10','30 marks',this)">30 marks</button>
+          <button class="choice-btn" onclick="selectChoice('q10','35 marks',this)">35 marks</button>
+          <button class="choice-btn" onclick="selectChoice('q10','40 marks',this)">40 marks</button>
+          <button class="choice-btn" onclick="selectChoice('q10','50 marks',this)">50 marks</button>
+          <button class="choice-btn" onclick="selectChoice('q10','60 marks',this)">60 marks</button>
+          <button class="choice-btn" onclick="selectChoice('q10','80 marks',this)">80 marks</button>
+          <button class="choice-btn" onclick="selectChoice('q10','100 marks',this)">100 marks</button>
         </div>
-        <div class="error-msg" id="q10-error">Please select difficulty level.</div>
+        <div class="error-msg" id="q10-error">Please select total marks.</div>
         <div class="form-nav">
           <button class="btn-back" onclick="prevQuestion(10)">← Back</button>
           <button class="btn-next" onclick="nextQuestion(10)">Continue →</button>
         </div>
       </div>
 
-      <!-- Q11: Special instructions (Optional) -->
+      <!-- Q11: Difficulty -->
       <div class="question-slide" data-question="11">
-        <p class="question-number">Question 11 of 11</p>
+        <p class="question-number">Question 11 of 12</p>
+        <p class="question-label">Difficulty level?</p>
+        <input type="hidden" id="q11">
+        <div class="choices">
+          <button class="choice-btn" onclick="selectChoice('q11','Easy — class test / revision',this)">🟢 Easy<br><small style="opacity:0.6">Class test / revision</small></button>
+          <button class="choice-btn" onclick="selectChoice('q11','Medium — standard board level',this)">🟡 Medium<br><small style="opacity:0.6">Standard board level</small></button>
+          <button class="choice-btn" onclick="selectChoice('q11','Hard — competitive / board topper level',this)">🔴 Hard<br><small style="opacity:0.6">Competitive / topper level</small></button>
+          <button class="choice-btn" onclick="selectChoice('q11','Mixed — balanced combination',this)">🔀 Mixed<br><small style="opacity:0.6">Balanced combination</small></button>
+        </div>
+        <div class="error-msg" id="q11-error">Please select difficulty level.</div>
+        <div class="form-nav">
+          <button class="btn-back" onclick="prevQuestion(11)">← Back</button>
+          <button class="btn-next" onclick="nextQuestion(11)">Continue →</button>
+        </div>
+      </div>
+
+      <!-- Q12: Special instructions (Optional) -->
+      <div class="question-slide" data-question="12">
+        <p class="question-number">Question 12 of 12</p>
         <p class="question-label">Any special instructions? <span class="optional-badge">Optional</span></p>
-        <p class="question-hint">e.g. "Focus more on poetry", "Include a passage-based question", "Avoid Chapter 2", "Include value-based questions"</p>
-        <textarea class="form-input" id="q11" placeholder="Leave blank if no special requirements..."></textarea>
+        <p class="question-hint">Examples: "15 MCQ and 5 short answers only" · "Focus more on the French Revolution causes" · "Avoid numericals, only theory" · "Include a case study question" · "HOTS questions only" · "Include a passage-based comprehension" · "More application questions, less recall" · "Avoid Chapter 3, focus on Chapters 1 and 2"</p>
+        <textarea class="form-input" id="q12" placeholder="e.g. 15 MCQ and 5 short answers only, or focus more on causes of World War 2..."></textarea>
         <label style="display:flex;align-items:flex-start;gap:10px;margin-bottom:1.25rem;cursor:pointer;">
           <input type="checkbox" id="termsCheck" style="margin-top:3px;accent-color:var(--saffron);flex-shrink:0;">
           <span style="font-size:12px;color:rgba(255,255,255,0.45);line-height:1.5;">
@@ -1683,16 +1706,14 @@ footer {
             and <a href="/privacy.html" target="_blank" style="color:var(--saffron-mid);">Privacy Policy</a>.
           </span>
         </label>
-        <div class="error-msg" id="terms-error" style="color:#f87171;font-size:12px;display:none;margin-bottom:8px;">
-          Please tick the checkbox to continue.
-        </div>
+        <div class="error-msg" id="terms-error" style="display:none;">Please tick the checkbox to continue.</div>
         <div class="form-nav">
-          <button class="btn-back" onclick="prevQuestion(11)">← Back</button>
+          <button class="btn-back" onclick="prevQuestion(12)">← Back</button>
           <button class="btn-next" onclick="submitForm()" style="background:var(--saffron);max-width:none;flex:1;">Submit request 🙏</button>
         </div>
       </div>
 
-      <!-- SUCCESS SCREEN -->
+            <!-- SUCCESS SCREEN -->
       <div class="success-screen" id="successScreen">
         <div class="success-icon">🎉</div>
         <h3>Request received!</h3>
@@ -1769,7 +1790,7 @@ footer {
   </p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ============================================================
    CONFIGURATION — EDIT THESE TWO LINES
    ============================================================ */
@@ -1896,7 +1917,7 @@ function updateBadge(count) {
    FORM STATE
    ============================================================ */
 let currentQuestion = 1;
-const totalQuestions = 11;
+const totalQuestions = 12;
 
 function updateProgress() {
   const pct = Math.round((currentQuestion / totalQuestions) * 100);
@@ -1932,7 +1953,7 @@ function selectChoice(fieldId, value, btn) {
 }
 
 function validateQuestion(n) {
-  const optional = ['q9', 'q11'];
+  const optional = ['q3', 'q12'];  // q3=school name, q12=special instructions — both optional
   if (optional.includes('q' + n)) return true;
 
   // Choice buttons (q4, q5, q7, q8, q10) — check hidden input
@@ -2018,17 +2039,18 @@ function submitForm() {
   }
 
   const data = {
-    'Your Full Name':                  document.getElementById('q1').value.trim(),
-    'Your Email Address':              email,
-    'Subject':                         document.getElementById('q3').value,
-    'Class':                           document.getElementById('q4').value,
-    'Board':                           document.getElementById('q5').value,
-    'Topic or Chapter Name':           document.getElementById('q6').value.trim(),
-    'What do you need':                document.getElementById('q7').value,
-    'Total Marks for the Paper':       document.getElementById('q8').value,
-    'Question Distribution Preference':document.getElementById('q9').value,
-    'Difficulty Level':                document.getElementById('q10').value,
-    'Any special instructions':        document.getElementById('q11').value.trim()
+    'Teacher Name':           document.getElementById('q1').value.trim(),
+    'Teacher Email':          email,
+    'School Name':            document.getElementById('q3').value.trim(),
+    'Board':                  document.getElementById('q4').value,
+    'Class':                  document.getElementById('q5').value,
+    'Subject':                document.getElementById('q6').value,
+    'Medium of Instruction':  document.getElementById('q7').value,
+    'Topic or Chapter':       document.getElementById('q8').value.trim(),
+    'Content Requested':      document.getElementById('q9').value,
+    'Total Marks':            document.getElementById('q10').value,
+    'Difficulty Level':       document.getElementById('q11').value,
+    'Special Instructions':   document.getElementById('q12').value.trim()
   };
 
   // Add fingerprint to webhook payload so Make.com can track device-level too
