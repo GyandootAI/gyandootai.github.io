@@ -1044,6 +1044,30 @@ footer {
 .footer-links a { font-size: 13px; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
 .footer-links a:hover { color: rgba(255,255,255,0.7); }
 .footer-copy { font-size: 12px; color: rgba(255,255,255,0.25); line-height: 1.5; }
+.footer-storage-note {
+  font-size: 11px;
+  color: rgba(255,255,255,0.18);
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  width: 100%;
+  text-align: center;
+  line-height: 1.6;
+}
+.footer-storage-note a { color: rgba(255,255,255,0.3); text-decoration: none; }
+.footer-storage-note a:hover { color: rgba(255,255,255,0.5); }
+.footer-disclaimer {
+  font-size: 11px;
+  color: rgba(255,255,255,0.2);
+  line-height: 1.6;
+  max-width: 700px;
+  text-align: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.footer-disclaimer a { color: rgba(255,255,255,0.35); text-decoration: none; }
+.footer-disclaimer a:hover { color: rgba(255,255,255,0.6); }
 .footer-copy a { color: rgba(255,255,255,0.4); text-decoration: none; }
 
 /* ============================================================
@@ -1427,6 +1451,12 @@ footer {
       <h2>Get your first paper <em>free</em></h2>
       <p>Fill in the details below. Your complete question paper with answer key arrives in your inbox within minutes.</p>
       <div class="free-trial-badge">✨ First 3 papers completely free — no credit card</div>
+      <p style="margin-top:10px;font-size:11px;color:rgba(255,255,255,0.35);line-height:1.6;">
+        By submitting this form you agree to our 
+        <a href="/terms.html" target="_blank" style="color:var(--saffron-mid);text-decoration:none;">Terms of Service</a> 
+        and 
+        <a href="/privacy.html" target="_blank" style="color:var(--saffron-mid);text-decoration:none;">Privacy Policy</a>
+      </p>
     </div>
 
     <!-- Progress -->
@@ -1439,7 +1469,7 @@ footer {
     <div class="form-card">
 
       <!-- LIMIT GATE — shown if email already used all 3 papers -->
-      <div id="limitGate">
+      <div id="limitGate" style="display:none;">
         <div class="gate-icon">🔒</div>
         <h3>You've used all 3 free papers</h3>
         <p>Your papers have been great! Upgrade to Pro for ₹499/month and get 50 papers every month — all subjects, all boards.</p>
@@ -1456,6 +1486,7 @@ footer {
         <p class="question-label">What is your name?</p>
         <p class="question-hint">This helps us personalise your paper and correspondence.</p>
         <input type="text" class="form-input" id="q1" placeholder="e.g. Priya Sharma" autocomplete="name">
+        <div class="error-msg" id="q1-error">Please enter your name.</div>
         <div class="form-nav">
           <div></div>
           <button class="btn-next" onclick="nextQuestion(1)">Continue →</button>
@@ -1502,6 +1533,7 @@ footer {
             <option>UPSC General Studies</option>
           </optgroup>
         </select>
+        <div class="error-msg" id="q3-error">Please select a subject.</div>
         <div class="form-nav">
           <button class="btn-back" onclick="prevQuestion(3)">← Back</button>
           <button class="btn-next" onclick="nextQuestion(3)">Continue →</button>
@@ -1560,6 +1592,7 @@ footer {
         <p class="question-label">Topic or chapter name?</p>
         <p class="question-hint">e.g. "The Portrait of a Lady", "Thermodynamics", "Partnership Accounts", "French Revolution"</p>
         <input type="text" class="form-input" id="q6" placeholder="Enter topic or chapter name...">
+        <div class="error-msg" id="q6-error">Please enter a topic or chapter name.</div>
         <div class="form-nav">
           <button class="btn-back" onclick="prevQuestion(6)">← Back</button>
           <button class="btn-next" onclick="nextQuestion(6)">Continue →</button>
@@ -1641,6 +1674,18 @@ footer {
         <p class="question-label">Any special instructions? <span class="optional-badge">Optional</span></p>
         <p class="question-hint">e.g. "Focus more on poetry", "Include a passage-based question", "Avoid Chapter 2", "Include value-based questions"</p>
         <textarea class="form-input" id="q11" placeholder="Leave blank if no special requirements..."></textarea>
+        <label style="display:flex;align-items:flex-start;gap:10px;margin-bottom:1.25rem;cursor:pointer;">
+          <input type="checkbox" id="termsCheck" style="margin-top:3px;accent-color:var(--saffron);flex-shrink:0;">
+          <span style="font-size:12px;color:rgba(255,255,255,0.45);line-height:1.5;">
+            I understand this is an AI-generated practice paper, not an official board paper.
+            I will review it before use. I agree to the
+            <a href="/terms.html" target="_blank" style="color:var(--saffron-mid);">Terms of Service</a>
+            and <a href="/privacy.html" target="_blank" style="color:var(--saffron-mid);">Privacy Policy</a>.
+          </span>
+        </label>
+        <div class="error-msg" id="terms-error" style="color:#f87171;font-size:12px;display:none;margin-bottom:8px;">
+          Please tick the checkbox to continue.
+        </div>
         <div class="form-nav">
           <button class="btn-back" onclick="prevQuestion(11)">← Back</button>
           <button class="btn-next" onclick="submitForm()" style="background:var(--saffron);max-width:none;flex:1;">Submit request 🙏</button>
@@ -1684,7 +1729,14 @@ footer {
           </a>
         </div>
 
-        <p style="margin-top:1.5rem;font-size:13px;color:rgba(255,255,255,0.35);">
+        <div style="margin:1.5rem auto 0;max-width:420px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 16px;text-align:left;">
+          <p style="font-size:11px;color:rgba(255,255,255,0.35);line-height:1.6;margin:0;">
+            ⚠️ <strong style="color:rgba(255,255,255,0.5);">Please review before use.</strong>
+            This is an AI-generated practice paper — not an official board paper.
+            Always verify content before printing or distributing to students.
+          </p>
+        </div>
+        <p style="margin-top:1rem;font-size:13px;color:rgba(255,255,255,0.35);">
           Questions? <a href="/cdn-cgi/l/email-protection#781f0119161c17170c1911381f15191114561b1715" style="color:var(--saffron-mid);text-decoration:none;"><span class="__cf_email__" data-cfemail="e18698808f858e8e958088a1868c80888dcf828e8c">[email&#160;protected]</span></a>
         </p>
       </div>
@@ -1703,10 +1755,21 @@ footer {
     <li><a href="#faq">FAQ</a></li>
     <li><a href="/cdn-cgi/l/email-protection#56312f373832393922373f16313b373f3a7835393b">Contact</a></li>
   </ul>
-  <p class="footer-copy">© 2026 GyandootAI · Saving teachers time, one paper at a time 🙏<br><a href="/cdn-cgi/l/email-protection#9afde3fbf4fef5f5eefbf3dafdf7fbf3f6b4f9f5f7"><span class="__cf_email__" data-cfemail="8aedf3ebe4eee5e5feebe3caede7ebe3e6a4e9e5e7">[email&#160;protected]</span></a></p>
+  <p class="footer-copy">© 2026 GyandootAI · Saving teachers time, one paper at a time 🙏<br>
+    <a href="/cdn-cgi/l/email-protection#baddc3dbd4ded5d5cedbd3faddd7dbd3d694d9d5d7"><span class="__cf_email__" data-cfemail="781f0119161c17170c1911381f15191114561b1715">[email&#160;protected]</span></a>
+  </p>
+  <p class="footer-disclaimer">
+    GyandootAI is an independent AI tool for educational assistance. Papers generated are not official CBSE, ICSE, or State Board question papers. GyandootAI is not affiliated with, endorsed by, or connected to any educational board, NCERT, or government body. Teachers should review all generated content before use.<br>
+    <a href="/terms.html">Terms of Service</a> &nbsp;·&nbsp; <a href="/privacy.html">Privacy Policy</a>
+  </p>
+  <p class="footer-storage-note">
+    🔒 No tracking cookies. This site uses browser storage only to manage your free trial limit. 
+    &nbsp;·&nbsp; <a href="/privacy.html">Privacy Policy</a> 
+    &nbsp;·&nbsp; <a href="/terms.html">Terms of Service</a>
+  </p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ============================================================
    CONFIGURATION — EDIT THESE TWO LINES
    ============================================================ */
@@ -1842,9 +1905,19 @@ function updateProgress() {
 }
 
 function showQuestion(n) {
-  document.querySelectorAll('.question-slide').forEach(s => s.classList.remove('active'));
+  // Use style.display consistently — classList alone cannot override inline styles
+  document.querySelectorAll('.question-slide').forEach(s => {
+    s.style.display = 'none';
+    s.classList.remove('active');
+  });
   const slide = document.querySelector('[data-question="' + n + '"]');
-  if (slide) { slide.classList.add('active'); }
+  if (slide) {
+    slide.style.display = 'block';
+    slide.classList.add('active');
+  }
+  // Hide all other screens
+  document.getElementById('successScreen').style.display = 'none';
+  document.getElementById('limitGate').style.display = 'none';
   currentQuestion = n;
   updateProgress();
   window.scrollTo({ top: document.getElementById('request').offsetTop - 80, behavior: 'smooth' });
@@ -1861,6 +1934,10 @@ function selectChoice(fieldId, value, btn) {
 function validateQuestion(n) {
   const optional = ['q9', 'q11'];
   if (optional.includes('q' + n)) return true;
+
+  // Choice buttons (q4, q5, q7, q8, q10) — check hidden input
+  // Text inputs (q1, q2, q3, q6) — check value
+  // q3 is a select — value is "" if not chosen
 
   const field = document.getElementById('q' + n);
   if (!field) return true;
@@ -1926,6 +2003,14 @@ function showLimitGate(email) {
 function submitForm() {
   const email = document.getElementById('q2').value.trim();
 
+  // Check terms checkbox
+  const termsCheck = document.getElementById('termsCheck');
+  if (termsCheck && !termsCheck.checked) {
+    document.getElementById('terms-error').style.display = 'block';
+    return;
+  }
+  if (termsCheck) document.getElementById('terms-error').style.display = 'none';
+
   // Final check
   if (isBlocked(email)) {
     showLimitGate(email);
@@ -1976,4 +2061,26 @@ function submitForm() {
 
 /* ============================================================
    FAQ TOGGLE
-   ========================
+   ============================================================ */
+function toggleFaq(el) {
+  const item = el.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialise — show first question properly
+  showQuestion(1);
+
+  // Update all WhatsApp links with configured number
+  document.querySelectorAll('a[href*="91XXXXXXXXXX"]').forEach(a => {
+    a.href = a.href.replace('91XXXXXXXXXX', WA_NUMBER);
+  });
+});
+</script>
+</body>
+</html>
