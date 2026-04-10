@@ -1815,13 +1815,14 @@ const WA_NUMBER    = '91XXXXXXXXXX';
    Zero external APIs. Zero server cost. Fully private.
    ============================================================ */
 const FREE_LIMIT    = 3;   // email hard limit
-   // WHITELIST — unlimited papers, never blocked
-const WHITELIST = [
-  'gyandootai@gmail.com'
-   'mihir.sahoo@artofliving.org'
-];
 const FP_SOFT_WARN  = 5;   // device soft warning
 const FP_HARD_LIMIT = 8;   // device hard block
+
+// WHITELIST — these emails are never blocked, unlimited papers
+// Add any email here for testing or admin use
+const WHITELIST = [
+  'gyandootai@gmail.com'
+];
 
 /* -- Lightweight fingerprint (no library needed) ------------ */
 function buildFingerprint() {
@@ -1884,12 +1885,13 @@ function incFp() {
 
 /* -- Combined block checks ---------------------------------- */
 function isBlocked(email) {
-  if (getEmailCount(email) >= FREE_LIMIT) return true;   // email at limit
-  if (getFpCount() >= FP_HARD_LIMIT)      return true;   // device abuse
+  if (WHITELIST.includes(email.toLowerCase())) return false; // whitelisted — unlimited
+  if (getEmailCount(email) >= FREE_LIMIT) return true;
+  if (getFpCount() >= FP_HARD_LIMIT)      return true;
   return false;
 }
 function isSoftWarn(email) {
-  // Same device, different email — soft nudge only
+  if (WHITELIST.includes(email.toLowerCase())) return false; // whitelisted — no warnings
   const fp = getFpCount();
   return fp >= FP_SOFT_WARN && fp < FP_HARD_LIMIT && getEmailCount(email) < FREE_LIMIT;
 }
@@ -1958,43 +1960,55 @@ function selectChoice(fieldId, value, btn) {
 }
 
 function validateQuestion(n) {
-  const optional = ['q3', 'q12'];  // q3=school name, q12=special instructions — both optional
-  if (optional.includes('q' + n)) return true;
-
-  // Choice buttons (q4, q5, q7, q8, q10) — check hidden input
-  // Text inputs (q1, q2, q3, q6) — check value
-  // q3 is a select — value is "" if not chosen
+  // Optional questions — always pass
+  const optional = [3, 12];
+  if (optional.includes(n)) return true;
 
   const field = document.getElementById('q' + n);
   if (!field) return true;
-  const val = field.value.trim();
 
+  // Q2 — Email: format check + limit check
   if (n === 2) {
+    const val = field.value.trim();
     const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    const errEl = document.getElementById('q2-error');
     if (!ok) {
-      document.getElementById('q2-error').style.display = 'block';
+      if (errEl) errEl.style.display = 'block';
       field.classList.add('error');
       return false;
     }
-    // Check limit on email entry
     if (isBlocked(val)) {
       showLimitGate(val);
       return false;
     }
+    if (errEl) errEl.style.display = 'none';
     field.classList.remove('error');
-    document.getElementById('q2-error').style.display = 'none';
     return true;
   }
 
-  if (!val) {
-    const err = document.getElementById('q' + n + '-error');
-    if (err) err.style.display = 'block';
-    field.classList.add && field.classList.add('error');
+  // Q1, Q8 — Text inputs: check not empty
+  if (n === 1 || n === 8) {
+    const val = field.value.trim();
+    const errEl = document.getElementById('q' + n + '-error');
+    if (!val) {
+      if (errEl) errEl.style.display = 'block';
+      field.classList.add('error');
+      return false;
+    }
+    if (errEl) errEl.style.display = 'none';
+    field.classList.remove('error');
+    return true;
+  }
+
+  // Q4,Q5,Q6,Q7,Q9,Q10,Q11 — Choice buttons with hidden inputs
+  // Check the hidden input has a value set by selectChoice()
+  const val = field.value;
+  const errEl = document.getElementById('q' + n + '-error');
+  if (!val || val.trim() === '') {
+    if (errEl) errEl.style.display = 'block';
     return false;
   }
-  const err = document.getElementById('q' + n + '-error');
-  if (err) err.style.display = 'none';
-  field.classList.remove && field.classList.remove('error');
+  if (errEl) errEl.style.display = 'none';
   return true;
 }
 
