@@ -1792,40 +1792,30 @@ footer {
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ============================================================
-   CONFIGURATION — EDIT THESE TWO LINES
+   CONFIGURATION
    ============================================================ */
-const WEBHOOK_URL  = 'https://hook.us2.make.com/yurmgjtrwxfz9kmdgocnfindwx9lvo9m';
-// Replace with your WhatsApp number: country code + number, no + or spaces
-// Example: India number +91 98765 43210 → '919876543210'
-const WA_NUMBER    = '91XXXXXXXXXX';
+const WEBHOOK_URL = 'https://hook.us2.make.com/yurmgjtrwxfz9kmdgocnfindwx9lvo9m';
+const WA_NUMBER   = '91XXXXXXXXXX';
 
 /* ============================================================
-   DUAL-LAYER TRACKING: Email + Device Fingerprint
-   -------------------------------------------------------
-   Layer 1 — Email count (primary, Make.com verifies backend)
-   Layer 2 — Device fingerprint (catches same device, new email)
-
-   THRESHOLDS:
-   Email >= 3    hard block always
-   Device >= 5   soft nudge (shared devices in India are common)
-   Device >= 8   hard block (clear abuse pattern)
-
-   Fingerprint uses: screen, timezone, language, GPU canvas,
-   hardware — works across incognito and browser cache clears.
-   Zero external APIs. Zero server cost. Fully private.
+   WHITELIST — unlimited papers, never blocked
    ============================================================ */
-const FREE_LIMIT    = 3;   // email hard limit
-const FP_SOFT_WARN  = 5;   // device soft warning
-const FP_HARD_LIMIT = 8;   // device hard block
-
-// WHITELIST — these emails are never blocked, unlimited papers
-// Add any email here for testing or admin use
 const WHITELIST = [
   'gyandootai@gmail.com',
   'mihir.sahoo@artofliving.org'
 ];
 
-/* -- Lightweight fingerprint (no library needed) ------------ */
+/* ============================================================
+   DUAL-LAYER TRACKING: Email + Device Fingerprint
+   Email >= 3    hard block (unless whitelisted)
+   Device >= 5   soft nudge
+   Device >= 8   hard block (unless whitelisted)
+   ============================================================ */
+const FREE_LIMIT    = 3;
+const FP_SOFT_WARN  = 5;
+const FP_HARD_LIMIT = 8;
+
+/* -- Fingerprint ------------------------------------------- */
 function buildFingerprint() {
   const cv = document.createElement('canvas');
   const cx = cv.getContext('2d');
@@ -1859,12 +1849,15 @@ let _fp = null;
 function getFingerprint() {
   if (!_fp) {
     _fp = localStorage.getItem('gai_fp');
-    if (!_fp) { _fp = buildFingerprint(); localStorage.setItem('gai_fp', _fp); }
+    if (!_fp) {
+      _fp = buildFingerprint();
+      localStorage.setItem('gai_fp', _fp);
+    }
   }
   return _fp;
 }
 
-/* -- Email counter ------------------------------------------ */
+/* -- Email counter ----------------------------------------- */
 function getEmailCount(email) {
   return parseInt(localStorage.getItem('gai_e_' + email.toLowerCase()) || '0', 10);
 }
@@ -1874,7 +1867,7 @@ function incEmail(email) {
   return n;
 }
 
-/* -- Device fingerprint counter ----------------------------- */
+/* -- Device fingerprint counter ---------------------------- */
 function getFpCount() {
   return parseInt(localStorage.getItem('gai_f_' + getFingerprint()) || '0', 10);
 }
@@ -1884,27 +1877,25 @@ function incFp() {
   return n;
 }
 
-/* -- Combined block checks ---------------------------------- */
+/* -- Block checks ------------------------------------------ */
 function isBlocked(email) {
-  if (WHITELIST.includes(email.toLowerCase())) return false; // whitelisted — unlimited
+  if (WHITELIST.includes(email.toLowerCase())) return false;
   if (getEmailCount(email) >= FREE_LIMIT) return true;
-  if (getFpCount() >= FP_HARD_LIMIT)      return true;
+  if (getFpCount() >= FP_HARD_LIMIT) return true;
   return false;
 }
 function isSoftWarn(email) {
-  if (WHITELIST.includes(email.toLowerCase())) return false; // whitelisted — no warnings
+  if (WHITELIST.includes(email.toLowerCase())) return false;
   const fp = getFpCount();
   return fp >= FP_SOFT_WARN && fp < FP_HARD_LIMIT && getEmailCount(email) < FREE_LIMIT;
 }
-
-/* -- Increment both counters on submit ---------------------- */
 function addCount(email) {
   incFp();
-  return incEmail(email);   // returns email count for badge display
+  return incEmail(email);
 }
 
+/* -- Badge update ------------------------------------------ */
 function updateBadge(count) {
-  // Update dots
   for (let i = 1; i <= 3; i++) {
     document.getElementById('dot' + i).classList.toggle('filled', i <= count);
   }
@@ -1914,11 +1905,9 @@ function updateBadge(count) {
     remaining > 0
       ? remaining + ' more free paper' + (remaining !== 1 ? 's' : '') + ' remaining'
       : 'All free papers used';
-
-  // Show/hide upgrade elements
-  document.getElementById('upgradeNudge').style.display     = remaining === 1 ? 'block' : 'none';
-  document.getElementById('limitReachedBox').style.display  = remaining <= 0  ? 'block' : 'none';
-  document.getElementById('paperCounter').style.display     = remaining <= 0  ? 'none'  : 'block';
+  document.getElementById('upgradeNudge').style.display    = remaining === 1 ? 'block' : 'none';
+  document.getElementById('limitReachedBox').style.display = remaining <= 0  ? 'block' : 'none';
+  document.getElementById('paperCounter').style.display    = remaining <= 0  ? 'none'  : 'block';
 }
 
 /* ============================================================
@@ -1934,8 +1923,7 @@ function updateProgress() {
 }
 
 function showQuestion(n) {
-  // Use style.display consistently — classList alone cannot override inline styles
-  document.querySelectorAll('.question-slide').forEach(s => {
+  document.querySelectorAll('.question-slide').forEach(function(s) {
     s.style.display = 'none';
     s.classList.remove('active');
   });
@@ -1944,12 +1932,10 @@ function showQuestion(n) {
     slide.style.display = 'block';
     slide.classList.add('active');
   }
-  // Hide all other screens
   document.getElementById('successScreen').style.display = 'none';
   document.getElementById('limitGate').style.display = 'none';
   currentQuestion = n;
   updateProgress();
-  // Smart scroll — scroll to form only when user is not already in the form area
   const formTop = document.getElementById('request').offsetTop - 80;
   const formBottom = formTop + document.getElementById('request').offsetHeight;
   const inForm = window.scrollY >= formTop && window.scrollY <= formBottom;
@@ -1959,7 +1945,9 @@ function showQuestion(n) {
 }
 
 function selectChoice(fieldId, value, btn) {
-  btn.closest('.choices').querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+  btn.closest('.choices').querySelectorAll('.choice-btn').forEach(function(b) {
+    b.classList.remove('selected');
+  });
   btn.classList.add('selected');
   document.getElementById(fieldId).value = value;
   const err = document.getElementById(fieldId + '-error');
@@ -1967,14 +1955,12 @@ function selectChoice(fieldId, value, btn) {
 }
 
 function validateQuestion(n) {
-  // Optional questions — always pass
   const optional = [3, 12];
   if (optional.includes(n)) return true;
 
   const field = document.getElementById('q' + n);
   if (!field) return true;
 
-  // Q2 — Email: format check + limit check
   if (n === 2) {
     const val = field.value.trim();
     const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
@@ -1993,7 +1979,6 @@ function validateQuestion(n) {
     return true;
   }
 
-  // Q1, Q8 — Text inputs: check not empty
   if (n === 1 || n === 8) {
     const val = field.value.trim();
     const errEl = document.getElementById('q' + n + '-error');
@@ -2007,8 +1992,6 @@ function validateQuestion(n) {
     return true;
   }
 
-  // Q4,Q5,Q6,Q7,Q9,Q10,Q11 — Choice buttons with hidden inputs
-  // Check the hidden input has a value set by selectChoice()
   const val = field.value;
   const errEl = document.getElementById('q' + n + '-error');
   if (!val || val.trim() === '') {
@@ -2023,7 +2006,9 @@ function nextQuestion(n) {
   if (!validateQuestion(n)) return;
   if (n < totalQuestions) showQuestion(n + 1);
 }
-function prevQuestion(n) { if (n > 1) showQuestion(n - 1); }
+function prevQuestion(n) {
+  if (n > 1) showQuestion(n - 1);
+}
 function skipQuestion(n) {
   document.getElementById('q' + n).value = '';
   if (n < totalQuestions) showQuestion(n + 1);
@@ -2033,12 +2018,12 @@ function skipQuestion(n) {
    SHOW LIMIT GATE
    ============================================================ */
 function showLimitGate(email) {
-  // Update WhatsApp links with current number
-  document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
+  document.querySelectorAll('a[href*="wa.me"]').forEach(function(a) {
     a.href = 'https://wa.me/' + WA_NUMBER + '?text=Hi%20GyandootAI%20Team%2C%20I%20want%20to%20upgrade%20to%20Pro';
   });
-
-  document.querySelectorAll('.question-slide').forEach(s => s.style.display = 'none');
+  document.querySelectorAll('.question-slide').forEach(function(s) {
+    s.style.display = 'none';
+  });
   document.getElementById('successScreen').style.display = 'none';
   document.getElementById('limitGate').style.display = 'block';
   window.scrollTo({ top: document.getElementById('request').offsetTop - 80, behavior: 'smooth' });
@@ -2050,7 +2035,6 @@ function showLimitGate(email) {
 function submitForm() {
   const email = document.getElementById('q2').value.trim();
 
-  // Check terms checkbox
   const termsCheck = document.getElementById('termsCheck');
   if (termsCheck && !termsCheck.checked) {
     document.getElementById('terms-error').style.display = 'block';
@@ -2058,50 +2042,47 @@ function submitForm() {
   }
   if (termsCheck) document.getElementById('terms-error').style.display = 'none';
 
-  // Final check
   if (isBlocked(email)) {
     showLimitGate(email);
     return;
   }
 
   const data = {
-    'Teacher Name':           document.getElementById('q1').value.trim(),
-    'Teacher Email':          email,
-    'School Name':            document.getElementById('q3').value.trim(),
-    'Board':                  document.getElementById('q4').value,
-    'Class':                  document.getElementById('q5').value,
-    'Subject':                document.getElementById('q6').value,
-    'Medium of Instruction':  document.getElementById('q7').value,
-    'Topic or Chapter':       document.getElementById('q8').value.trim(),
-    'Content Requested':      document.getElementById('q9').value,
-    'Total Marks':            document.getElementById('q10').value,
-    'Difficulty Level':       document.getElementById('q11').value,
-    'Special Instructions':   document.getElementById('q12').value.trim()
+    'Teacher Name':          document.getElementById('q1').value.trim(),
+    'Teacher Email':         email,
+    'School Name':           document.getElementById('q3').value.trim(),
+    'Board':                 document.getElementById('q4').value,
+    'Class':                 document.getElementById('q5').value,
+    'Subject':               document.getElementById('q6').value,
+    'Medium of Instruction': document.getElementById('q7').value,
+    'Topic or Chapter':      document.getElementById('q8').value.trim(),
+    'Content Requested':     document.getElementById('q9').value,
+    'Total Marks':           document.getElementById('q10').value,
+    'Difficulty Level':      document.getElementById('q11').value,
+    'Special Instructions':  document.getElementById('q12').value.trim(),
+    'Device_Fingerprint':    getFingerprint(),
+    'Email_Paper_Count':     getEmailCount(email) + 1,
+    'Device_Paper_Count':    getFpCount() + 1
   };
 
-  // Add fingerprint to webhook payload so Make.com can track device-level too
-  data['Device_Fingerprint'] = getFingerprint();
-  data['Email_Paper_Count']  = getEmailCount(email) + 1;  // count after this one
-  data['Device_Paper_Count'] = getFpCount() + 1;
-
-  // Soft warning — same device, different email — note it but allow
   if (isSoftWarn(email)) {
-    console.log('[GyandootAI] Soft warning: device fingerprint at', getFpCount() + 1, 'uses');
+    console.log('[GyandootAI] Soft warning: device at', getFpCount() + 1, 'uses');
   }
 
   fetch(WEBHOOK_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
-  }).catch(err => console.log('Webhook error:', err));
+  }).catch(function(err) { console.log('Webhook error:', err); });
 
-  // Increment count and show success
   const newCount = addCount(email);
 
-  document.querySelectorAll('.question-slide').forEach(s => s.style.display = 'none');
-  document.getElementById('limitGate').style.display    = 'none';
+  document.querySelectorAll('.question-slide').forEach(function(s) {
+    s.style.display = 'none';
+  });
+  document.getElementById('limitGate').style.display = 'none';
   document.getElementById('successScreen').style.display = 'block';
-  document.getElementById('successEmail').textContent    = email;
+  document.getElementById('successEmail').textContent = email;
   updateBadge(newCount);
 
   window.scrollTo({ top: document.getElementById('request').offsetTop - 80, behavior: 'smooth' });
@@ -2113,85 +2094,50 @@ function submitForm() {
 function toggleFaq(el) {
   const item = el.closest('.faq-item');
   const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  document.querySelectorAll('.faq-item').forEach(function(i) {
+    i.classList.remove('open');
+  });
   if (!isOpen) item.classList.add('open');
 }
 
 /* ============================================================
-   INIT
+   INIT — full reset on every page load
    ============================================================ */
-document.addEventListener('DOMContentLoaded', () => {
-  // Full reset on every page load — ensures clean state for repeat visitors
+document.addEventListener('DOMContentLoaded', function() {
   currentQuestion = 1;
 
-  // Hide success and gate screens
   document.getElementById('successScreen').style.display = 'none';
-  document.getElementById('limitGate').style.display    = 'none';
+  document.getElementById('limitGate').style.display = 'none';
 
-  // Hide all question slides cleanly
-  document.querySelectorAll('.question-slide').forEach(s => {
+  document.querySelectorAll('.question-slide').forEach(function(s) {
     s.style.display = 'none';
     s.classList.remove('active');
   });
 
-  // Clear all text/email/textarea inputs
-  document.querySelectorAll('.form-input').forEach(f => {
+  document.querySelectorAll('.form-input').forEach(function(f) {
     f.value = '';
     f.classList.remove('error');
   });
 
-  // Clear all choice button selections
-  document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.choice-btn').forEach(function(b) {
+    b.classList.remove('selected');
+  });
 
-  // Clear all hidden inputs used by choice buttons
-  ['q4','q5','q6','q7','q9','q10','q11'].forEach(id => {
+  ['q4','q5','q6','q7','q9','q10','q11'].forEach(function(id) {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
 
-  // Uncheck terms checkbox
   const tc = document.getElementById('termsCheck');
   if (tc) tc.checked = false;
 
-  // Hide all error messages
-  document.querySelectorAll('.error-msg').forEach(e => e.style.display = 'none');
+  document.querySelectorAll('.error-msg').forEach(function(e) {
+    e.style.display = 'none';
+  });
 
-  // Show Question 1
   showQuestion(1);
 
-  // Update all WhatsApp links with configured number
-  document.querySelectorAll('a[href*="91XXXXXXXXXX"]').forEach(a => {
-    a.href = a.href.replace('91XXXXXXXXXX', WA_NUMBER);
-  });
-});
-
-  // Clear all form inputs
-  document.querySelectorAll('.form-input').forEach(f => {
-    f.value = '';
-    f.classList.remove('error');
-  });
-
-  // Clear all choice button selections
-  document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
-
-  // Clear all hidden inputs
-  ['q4','q5','q6','q7','q9','q10','q11'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
-  });
-
-  // Uncheck terms checkbox
-  const tc = document.getElementById('termsCheck');
-  if (tc) tc.checked = false;
-
-  // Hide all error messages
-  document.querySelectorAll('.error-msg').forEach(e => e.style.display = 'none');
-
-  // Show question 1
-  showQuestion(1);
-
-  // Update all WhatsApp links with configured number
-  document.querySelectorAll('a[href*="91XXXXXXXXXX"]').forEach(a => {
+  document.querySelectorAll('a[href*="91XXXXXXXXXX"]').forEach(function(a) {
     a.href = a.href.replace('91XXXXXXXXXX', WA_NUMBER);
   });
 });
