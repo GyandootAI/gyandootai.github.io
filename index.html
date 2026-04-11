@@ -1922,7 +1922,7 @@ function updateProgress() {
   document.getElementById('progressText').textContent = 'Step ' + currentQuestion + ' of ' + totalQuestions;
 }
 
-function showQuestion(n) {
+function showQuestion(n, skipScroll) {
   document.querySelectorAll('.question-slide').forEach(function(s) {
     s.style.display = 'none';
     s.classList.remove('active');
@@ -1936,11 +1936,13 @@ function showQuestion(n) {
   document.getElementById('limitGate').style.display = 'none';
   currentQuestion = n;
   updateProgress();
-  const formTop = document.getElementById('request').offsetTop - 80;
-  const formBottom = formTop + document.getElementById('request').offsetHeight;
-  const inForm = window.scrollY >= formTop && window.scrollY <= formBottom;
-  if (!inForm) {
-    window.scrollTo({ top: formTop, behavior: 'smooth' });
+  if (!skipScroll) {
+    const formTop = document.getElementById('request').offsetTop - 80;
+    const formBottom = formTop + document.getElementById('request').offsetHeight;
+    const inForm = window.scrollY >= formTop && window.scrollY <= formBottom;
+    if (!inForm) {
+      window.scrollTo({ top: formTop, behavior: 'smooth' });
+    }
   }
 }
 
@@ -2135,7 +2137,7 @@ document.addEventListener('DOMContentLoaded', function() {
     e.style.display = 'none';
   });
 
-  showQuestion(1);
+  showQuestion(1, true); // skipScroll on initial load — stay at top of page
 
   document.querySelectorAll('a[href*="91XXXXXXXXXX"]').forEach(function(a) {
     a.href = a.href.replace('91XXXXXXXXXX', WA_NUMBER);
