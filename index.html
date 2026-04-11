@@ -1735,7 +1735,7 @@ footer {
         <div class="upgrade-nudge" id="upgradeNudge">
           <p>⚡ Only 1 free paper left!</p>
           <small>Upgrade to Pro for ₹499/month — 50 papers, all subjects, all boards, priority support.</small>
-          <a href="https://wa.me/91XXXXXXXXXX?text=Hi%20Mihir%2C%20I%20want%20to%20upgrade%20to%20GyandootAI%20Pro"
+          <a href="https://wa.me/91XXXXXXXXXX?text=Hi%20GyandootAI%20Team%2C%20I%20want%20to%20upgrade%20to%20Pro"
              target="_blank" class="btn-upgrade-wa">
             <span>💬</span> WhatsApp to Upgrade
           </a>
@@ -1744,7 +1744,7 @@ footer {
         <!-- All 3 used -->
         <div class="limit-reached-box" id="limitReachedBox">
           <p>You have used all 3 free papers. Upgrade to Pro for ₹499/month to continue.</p>
-          <a href="https://wa.me/91XXXXXXXXXX?text=Hi%20Mihir%2C%20I%20want%20to%20upgrade%20to%20GyandootAI%20Pro"
+          <a href="https://wa.me/91XXXXXXXXXX?text=Hi%20GyandootAI%20Team%2C%20I%20want%20to%20upgrade%20to%20Pro"
              target="_blank" class="btn-upgrade-wa" style="margin:0 auto;display:inline-flex;">
             <span>💬</span> WhatsApp Mihir to Upgrade
           </a>
@@ -1790,7 +1790,7 @@ footer {
   </p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ============================================================
    CONFIGURATION — EDIT THESE TWO LINES
    ============================================================ */
@@ -1822,7 +1822,7 @@ const FP_HARD_LIMIT = 8;   // device hard block
 // Add any email here for testing or admin use
 const WHITELIST = [
   'gyandootai@gmail.com',
-  'mihir.sahoo@artofliving.org' 
+  'mihir.sahoo@artofliving.org'
 ];
 
 /* -- Lightweight fingerprint (no library needed) ------------ */
@@ -1949,7 +1949,13 @@ function showQuestion(n) {
   document.getElementById('limitGate').style.display = 'none';
   currentQuestion = n;
   updateProgress();
-  window.scrollTo({ top: document.getElementById('request').offsetTop - 80, behavior: 'smooth' });
+  // Smart scroll — scroll to form only when user is not already in the form area
+  const formTop = document.getElementById('request').offsetTop - 80;
+  const formBottom = formTop + document.getElementById('request').offsetHeight;
+  const inForm = window.scrollY >= formTop && window.scrollY <= formBottom;
+  if (!inForm) {
+    window.scrollTo({ top: formTop, behavior: 'smooth' });
+  }
 }
 
 function selectChoice(fieldId, value, btn) {
@@ -2029,7 +2035,7 @@ function skipQuestion(n) {
 function showLimitGate(email) {
   // Update WhatsApp links with current number
   document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
-    a.href = 'https://wa.me/' + WA_NUMBER + '?text=Hi%20Mihir%2C%20I%20want%20to%20upgrade%20to%20GyandootAI%20Pro';
+    a.href = 'https://wa.me/' + WA_NUMBER + '?text=Hi%20GyandootAI%20Team%2C%20I%20want%20to%20upgrade%20to%20Pro';
   });
 
   document.querySelectorAll('.question-slide').forEach(s => s.style.display = 'none');
@@ -2115,7 +2121,73 @@ function toggleFaq(el) {
    INIT
    ============================================================ */
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialise — show first question properly
+  // Full reset on every page load — ensures clean state for repeat visitors
+  currentQuestion = 1;
+
+  // Hide success and gate screens
+  document.getElementById('successScreen').style.display = 'none';
+  document.getElementById('limitGate').style.display    = 'none';
+
+  // Hide all question slides cleanly
+  document.querySelectorAll('.question-slide').forEach(s => {
+    s.style.display = 'none';
+    s.classList.remove('active');
+  });
+
+  // Clear all text/email/textarea inputs
+  document.querySelectorAll('.form-input').forEach(f => {
+    f.value = '';
+    f.classList.remove('error');
+  });
+
+  // Clear all choice button selections
+  document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+
+  // Clear all hidden inputs used by choice buttons
+  ['q4','q5','q6','q7','q9','q10','q11'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+
+  // Uncheck terms checkbox
+  const tc = document.getElementById('termsCheck');
+  if (tc) tc.checked = false;
+
+  // Hide all error messages
+  document.querySelectorAll('.error-msg').forEach(e => e.style.display = 'none');
+
+  // Show Question 1
+  showQuestion(1);
+
+  // Update all WhatsApp links with configured number
+  document.querySelectorAll('a[href*="91XXXXXXXXXX"]').forEach(a => {
+    a.href = a.href.replace('91XXXXXXXXXX', WA_NUMBER);
+  });
+});
+
+  // Clear all form inputs
+  document.querySelectorAll('.form-input').forEach(f => {
+    f.value = '';
+    f.classList.remove('error');
+  });
+
+  // Clear all choice button selections
+  document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+
+  // Clear all hidden inputs
+  ['q4','q5','q6','q7','q9','q10','q11'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+
+  // Uncheck terms checkbox
+  const tc = document.getElementById('termsCheck');
+  if (tc) tc.checked = false;
+
+  // Hide all error messages
+  document.querySelectorAll('.error-msg').forEach(e => e.style.display = 'none');
+
+  // Show question 1
   showQuestion(1);
 
   // Update all WhatsApp links with configured number
