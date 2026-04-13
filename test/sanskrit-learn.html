@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sanskrit Vidyalaya — GyandootAI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Sanskrit:ital@0;1&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --saffron: #E8590C;
+  --saffron-light: #FFF4EE;
+  --gold: #C9932A;
+  --gold-light: #FEF9EE;
+  --deep: #1A0E00;
+  --forest: #1B3A2A;
+  --forest-light: #EDF5F0;
+  --text: #2C1A06;
+  --muted: #7A5C3A;
+  --border: #E8D9C5;
+  --bg: #FFFDF9;
+  --card: #FFFFFF;
+  --radius: 12px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Crimson Pro', Georgia, serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+/* NAV */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,253,249,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 60px;
+}
+.nav-brand { font-family: 'Tiro Devanagari Sanskrit', serif; font-size: 22px; color: var(--saffron); text-decoration: none; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; }
+.nav-links a:hover { color: var(--saffron); }
+.nav-cta { background: var(--saffron); color: white; border: none; padding: 8px 20px; border-radius: 6px; font-family: 'DM Mono', monospace; font-size: 12px; cursor: pointer; letter-spacing: 0.04em; }
+
+/* HERO */
+.hero {
+  min-height: 88vh;
+  display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+  gap: 48px; padding: 80px 64px;
+  background: linear-gradient(135deg, #FFFDF9 0%, #FFF4EE 50%, #FEF9EE 100%);
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: 'ॐ';
+  position: absolute; right: -40px; top: -60px;
+  font-family: 'Tiro Devanagari Sanskrit', serif;
+  font-size: 420px; color: rgba(232,89,12,0.04);
+  pointer-events: none; line-height: 1;
+}
+.hero-label {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: 0.12em; color: var(--saffron);
+  text-transform: uppercase; margin-bottom: 20px;
+  display: flex; align-items: center; gap: 8px;
+}
+.hero-label::before { content: ''; width: 24px; height: 1px; background: var(--saffron); display: inline-block; }
+h1 {
+  font-family: 'Tiro Devanagari Sanskrit', serif;
+  font-size: clamp(38px, 4vw, 60px);
+  line-height: 1.15; color: var(--deep);
+  margin-bottom: 12px;
+}
+h1 .devanagari { display: block; font-size: 0.7em; color: var(--saffron); margin-bottom: 4px; }
+.hero-sub { font-size: 19px; color: var(--muted); max-width: 480px; margin-bottom: 36px; line-height: 1.65; }
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--saffron); color: white; border: none;
+  padding: 14px 28px; border-radius: 8px; font-family: 'Crimson Pro', serif;
+  font-size: 17px; cursor: pointer; transition: all 0.2s;
+}
+.btn-primary:hover { background: #C24A08; transform: translateY(-1px); }
+.btn-ghost {
+  background: transparent; color: var(--saffron);
+  border: 1.5px solid var(--saffron); padding: 14px 28px;
+  border-radius: 8px; font-family: 'Crimson Pro', serif;
+  font-size: 17px; cursor: pointer; transition: all 0.2s;
+}
+.btn-ghost:hover { background: var(--saffron-light); }
+
+/* SHLOKA CARD */
+.shloka-demo {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 32px;
+  box-shadow: 0 4px 40px rgba(232,89,12,0.08);
+  position: relative;
+}
+.shloka-demo::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 4px; height: 100%; background: var(--saffron);
+  border-radius: 12px 0 0 12px;
+}
+.shloka-source { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 16px; }
+.shloka-text {
+  font-family: 'Tiro Devanagari Sanskrit', serif;
+  font-size: 24px; line-height: 1.8; color: var(--deep);
+  margin-bottom: 16px;
+}
+.shloka-transliteration { font-size: 15px; color: var(--muted); font-style: italic; margin-bottom: 20px; line-height: 1.6; }
+.shloka-translation { font-size: 16px; color: var(--text); border-top: 1px solid var(--border); padding-top: 16px; }
+.audio-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--forest-light); color: var(--forest);
+  border: 1px solid #C5DDD0; border-radius: 24px;
+  padding: 8px 18px; font-size: 14px; cursor: pointer;
+  transition: all 0.2s; margin-top: 16px; font-family: 'DM Mono', monospace;
+}
+.audio-btn:hover { background: #D4EBE0; }
+.audio-btn svg { width: 16px; height: 16px; }
+.word-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+.word-chip {
+  background: var(--gold-light); border: 1px solid #EDD89A;
+  border-radius: 4px; padding: 4px 10px;
+  font-family: 'Tiro Devanagari Sanskrit', serif; font-size: 14px;
+  cursor: pointer; transition: all 0.15s; color: #7A5000;
+}
+.word-chip:hover { background: #FDE9AA; border-color: var(--gold); }
+
+/* SECTION */
+section { padding: 80px 64px; }
+.section-label {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: 0.12em; color: var(--saffron);
+  text-transform: uppercase; margin-bottom: 12px;
+}
+h2 { font-family: 'Tiro Devanagari Sanskrit', serif; font-size: 38px; color: var(--deep); margin-bottom: 16px; }
+.section-sub { font-size: 18px; color: var(--muted); max-width: 540px; margin-bottom: 48px; }
+
+/* PATHS GRID */
+.paths-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.path-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 28px;
+  transition: all 0.25s; cursor: pointer;
+}
+.path-card:hover { border-color: var(--saffron); box-shadow: 0 8px 32px rgba(232,89,12,0.10); transform: translateY(-3px); }
+.path-icon { font-family: 'Tiro Devanagari Sanskrit', serif; font-size: 32px; margin-bottom: 14px; display: block; }
+.path-card h3 { font-family: 'Crimson Pro', serif; font-size: 22px; font-weight: 600; margin-bottom: 8px; }
+.path-card p { font-size: 15px; color: var(--muted); line-height: 1.6; }
+.path-tag {
+  display: inline-block; margin-top: 16px;
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  color: var(--saffron); letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--saffron); padding-bottom: 1px;
+}
+
+/* CHAT INTERFACE */
+.chat-section { background: var(--deep); color: white; }
+.chat-section h2 { color: white; }
+.chat-section .section-label { color: #E8A870; }
+.chat-section .section-sub { color: rgba(255,255,255,0.6); }
+.chat-container {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius); overflow: hidden; max-width: 720px;
+}
+.chat-header {
+  background: rgba(255,255,255,0.07); padding: 14px 20px;
+  display: flex; align-items: center; gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.chat-dot { width: 8px; height: 8px; border-radius: 50%; }
+.chat-messages { padding: 24px; display: flex; flex-direction: column; gap: 16px; min-height: 320px; }
+.msg {
+  max-width: 85%; padding: 14px 18px; border-radius: 12px;
+  font-size: 16px; line-height: 1.65;
+}
+.msg-user { background: var(--saffron); color: white; align-self: flex-end; border-radius: 12px 12px 4px 12px; }
+.msg-ai {
+  background: rgba(255,255,255,0.09); color: rgba(255,255,255,0.9);
+  align-self: flex-start; border-radius: 12px 12px 12px 4px;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.msg-ai .devanagari-inline { font-family: 'Tiro Devanagari Sanskrit', serif; color: #E8A870; font-size: 1.1em; }
+.chat-input-row {
+  padding: 16px 20px; border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex; gap: 10px;
+}
+.chat-input {
+  flex: 1; background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
+  padding: 12px 16px; color: white; font-family: 'Crimson Pro', serif;
+  font-size: 16px; outline: none;
+}
+.chat-input::placeholder { color: rgba(255,255,255,0.35); }
+.chat-send {
+  background: var(--saffron); border: none; border-radius: 8px;
+  width: 44px; height: 44px; cursor: pointer; color: white;
+  font-size: 18px; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.chat-send:hover { background: #C24A08; }
+
+/* AUDIO PIPELINE */
+.audio-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+.pipeline-steps { display: flex; flex-direction: column; gap: 16px; }
+.step {
+  display: flex; gap: 16px; align-items: flex-start;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px;
+}
+.step-num {
+  font-family: 'DM Mono', monospace; font-size: 12px;
+  color: white; background: var(--saffron); width: 28px; height: 28px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.step h4 { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+.step p { font-size: 14px; color: var(--muted); }
+
+/* PROGRESS */
+.progress-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 28px;
+}
+.progress-name { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+.progress-item { margin-bottom: 18px; }
+.progress-label { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 6px; }
+.progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--saffron), var(--gold)); border-radius: 3px; transition: width 0.8s ease; }
+.vocab-words { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
+.vocab-word {
+  font-family: 'Tiro Devanagari Sanskrit', serif;
+  background: var(--forest-light); color: var(--forest);
+  border: 1px solid #C5DDD0; border-radius: 4px;
+  padding: 4px 10px; font-size: 15px;
+}
+
+/* MAKE WORKFLOW */
+.workflow-section { background: var(--forest); color: white; }
+.workflow-section h2 { color: white; }
+.workflow-section .section-label { color: #8FD4A8; }
+.workflow-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+.wf-step {
+  padding: 24px 20px; position: relative;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+.wf-step:last-child { border-right: none; }
+.wf-step::after {
+  content: '→';
+  position: absolute; right: -14px; top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,0.3); font-size: 20px;
+  z-index: 1;
+}
+.wf-step:last-child::after { display: none; }
+.wf-icon { font-size: 28px; margin-bottom: 12px; }
+.wf-step h4 { font-size: 15px; font-weight: 600; color: white; margin-bottom: 6px; }
+.wf-step p { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+.wf-tag {
+  display: inline-block; margin-top: 10px;
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  background: rgba(255,255,255,0.1); color: #8FD4A8;
+  padding: 3px 8px; border-radius: 4px; letter-spacing: 0.04em;
+}
+
+/* DAY PLAN */
+.day-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 32px; }
+.day-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 16px 12px; text-align: center;
+}
+.day-num { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+.day-title { font-size: 14px; font-weight: 600; color: var(--deep); margin-bottom: 6px; }
+.day-tasks { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.day-card.phase-1 { border-top: 3px solid var(--saffron); }
+.day-card.phase-2 { border-top: 3px solid var(--gold); }
+.day-card.phase-3 { border-top: 3px solid var(--forest); }
+
+/* FOOTER */
+footer {
+  background: var(--deep); color: rgba(255,255,255,0.5);
+  padding: 40px 64px; font-size: 14px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+footer .footer-brand { font-family: 'Tiro Devanagari Sanskrit', serif; font-size: 20px; color: var(--saffron); }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; padding: 48px 24px; }
+  section { padding: 48px 24px; }
+  .paths-grid, .audio-grid { grid-template-columns: 1fr; }
+  .workflow-grid { grid-template-columns: 1fr 1fr; }
+  .day-grid { grid-template-columns: repeat(3, 1fr); }
+  nav { padding: 0 16px; }
+  .nav-links { display: none; }
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
+.fade-up { animation: fadeUp 0.6s ease both; }
+.fade-up-1 { animation-delay: 0.1s; }
+.fade-up-2 { animation-delay: 0.2s; }
+.fade-up-3 { animation-delay: 0.3s; }
+.live-dot { width: 8px; height: 8px; background: #22C55E; border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
+
+/* TYPING ANIMATION */
+@keyframes typing { from { opacity: 0; } to { opacity: 1; } }
+.typing-cursor::after { content: '|'; animation: pulse 1s infinite; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="/">GyandootAI</a>
+  <ul class="nav-links">
+    <li><a href="#learn">Learn</a></li>
+    <li><a href="#texts">Texts</a></li>
+    <li><a href="#audio">Audio</a></li>
+    <li><a href="#chat">Ask AI</a></li>
+    <li><a href="/index.html">Question Papers</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('chat-input').focus()">Start Learning →</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-label fade-up">Sanskrit Vidyalaya · GyandootAI</div>
+    <h1 class="fade-up fade-up-1">
+      <span class="devanagari">संस्कृतं शिक्षामहे</span>
+      Learn Sanskrit.<br/>From Script to Soul.
+    </h1>
+    <p class="hero-sub fade-up fade-up-2">
+      AI-powered Sanskrit learning — Devanagari script, Bhagavatam, Patanjali's Yoga Sutras, 
+      and authentic vedic pronunciation. Personalized to your pace.
+    </p>
+    <div class="hero-actions fade-up fade-up-3">
+      <button class="btn-primary" onclick="document.getElementById('chat').scrollIntoView({behavior:'smooth'})">Ask Your First Question</button>
+      <button class="btn-ghost" onclick="document.getElementById('learn').scrollIntoView({behavior:'smooth'})">Explore Paths</button>
+    </div>
+  </div>
+
+  <div class="shloka-demo fade-up fade-up-2">
+    <div class="shloka-source">BHAGAVAD GITA · CHAPTER 2, VERSE 47</div>
+    <div class="shloka-text">
+      कर्मण्येवाधिकारस्ते<br/>
+      मा फलेषु कदाचन।<br/>
+      मा कर्मफलहेतुर्भूः<br/>
+      मा ते सङ्गोऽस्त्वकर्मणि॥
+    </div>
+    <div class="shloka-transliteration">
+      Karmaṇyevādhikāraste mā phaleṣu kadācana<br/>
+      Mā karmaphalaheturbhūḥ mā te saṅgo'stvakarmaṇi
+    </div>
+    <div class="shloka-translation">
+      You have a right to perform your prescribed duties, but you are not entitled to the fruits of your actions. Never consider yourself the cause of the results, and never be attached to inaction.
+    </div>
+    <div class="word-chips">
+      <span class="word-chip" onclick="explainWord('कर्मण्य', 'Action/duty — from kṛ, to do. The field of righteous work.')">कर्मण्य</span>
+      <span class="word-chip" onclick="explainWord('अधिकार', 'Right/authority — adhi (over) + kāra (doing). Your domain.')">अधिकार</span>
+      <span class="word-chip" onclick="explainWord('फलेषु', 'Fruits/results — phala. The outcomes you cannot control.')">फलेषु</span>
+      <span class="word-chip" onclick="explainWord('सङ्ग', 'Attachment — saṅga. The root of all suffering per Gita.')">सङ्ग</span>
+    </div>
+    <button class="audio-btn" onclick="playAudio()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+      </svg>
+      <span id="audio-label">Listen: Vedic recitation</span>
+    </button>
+  </div>
+</section>
+
+<!-- LEARNING PATHS -->
+<section id="learn">
+  <div class="section-label">Curriculum</div>
+  <h2>Choose your path</h2>
+  <p class="section-sub">Three journeys, one destination — fluency in the language of the universe.</p>
+
+  <div class="paths-grid">
+    <div class="path-card" onclick="setPath('script')">
+      <span class="path-icon">अ</span>
+      <h3>Script & Phonetics</h3>
+      <p>Devanagari script, vowels (svaras), consonants (vyanjanas), sandhi rules, and correct pronunciation. The essential foundation.</p>
+      <span class="path-tag">Weeks 1–3 · Beginner</span>
+    </div>
+    <div class="path-card" onclick="setPath('grammar')">
+      <span class="path-icon">व्या</span>
+      <h3>Grammar & Roots</h3>
+      <p>Panini's Ashtadhyayi simplified — dhatus (verbal roots), vibhaktis (case endings), sandhi, and compound formation.</p>
+      <span class="path-tag">Weeks 4–8 · Intermediate</span>
+    </div>
+    <div class="path-card" onclick="setPath('texts')">
+      <span class="path-icon">भग</span>
+      <h3>Sacred Texts</h3>
+      <p>Read and understand Bhagavatam, Yoga Sutras of Patanjali, Upanishads, and Vedic hymns in original Sanskrit.</p>
+      <span class="path-tag">Weeks 9–15 · Advanced</span>
+    </div>
+  </div>
+</section>
+
+<!-- CHAT AI -->
+<section id="chat" class="chat-section">
+  <div class="section-label">Live AI Tutor</div>
+  <h2>Ask anything. In any language.</h2>
+  <p class="section-sub">Your AI guru who knows Sanskrit, Bhagavatam, Yoga Sutras, and Vedic grammar. Personalized to you.</p>
+
+  <div class="chat-container">
+    <div class="chat-header">
+      <div class="chat-dot" style="background:#FF5F57"></div>
+      <div class="chat-dot" style="background:#FFBD2E"></div>
+      <div class="chat-dot" style="background:#28CA41"></div>
+      <span style="font-family:'DM Mono',monospace;font-size:12px;color:rgba(255,255,255,0.5);margin-left:8px">Sanskrit AI Guru</span>
+      <span style="margin-left:auto;display:flex;align-items:center;gap:6px;font-family:'DM Mono',monospace;font-size:11px;color:#8FD4A8">
+        <span class="live-dot"></span> Online
+      </span>
+    </div>
+
+    <div class="chat-messages" id="chat-messages">
+      <div class="msg msg-ai">
+        🙏 Namaste! I am your Sanskrit AI Guru. I can help you learn Devanagari script, understand shlokas from the <span class="devanagari-inline">भगवद्गीता</span>, explain Patanjali's Yoga Sutras, or teach you grammar rules. What would you like to explore today?
+      </div>
+      <div class="msg msg-user">
+        What does "Yoga" actually mean in Sanskrit?
+      </div>
+      <div class="msg msg-ai">
+        Beautiful question! <span class="devanagari-inline">योग</span> (Yoga) comes from the root <span class="devanagari-inline">युज्</span> (yuj) meaning "to yoke, join, or unite." It shares its root with the English word "yoke."<br/><br/>
+        Patanjali defines it in Sutra 1.2: <span class="devanagari-inline">योगश्चित्तवृत्तिनिरोधः</span> — "Yoga is the cessation of the fluctuations of the mind." The word itself points to union — of individual consciousness with universal consciousness. Would you like to break down that sutra word by word?
+      </div>
+    </div>
+
+    <div class="chat-input-row">
+      <input class="chat-input" id="chat-input" type="text"
+        placeholder="Ask about a shloka, word meaning, grammar rule..."
+        onkeydown="if(event.key==='Enter')sendMessage()"/>
+      <button class="chat-send" onclick="sendMessage()">→</button>
+    </div>
+  </div>
+
+  <div style="margin-top:20px;display:flex;flex-wrap:wrap;gap:10px">
+    <button class="btn-ghost" style="font-size:14px;padding:8px 16px;color:white;border-color:rgba(255,255,255,0.3)" onclick="askSuggestion('Explain Yoga Sutra 1.1 word by word')">Yoga Sutra 1.1 →</button>
+    <button class="btn-ghost" style="font-size:14px;padding:8px 16px;color:white;border-color:rgba(255,255,255,0.3)" onclick="askSuggestion('How do I write my name in Devanagari?')">Write my name in Devanagari →</button>
+    <button class="btn-ghost" style="font-size:14px;padding:8px 16px;color:white;border-color:rgba(255,255,255,0.3)" onclick="askSuggestion('What is sandhi and why does it matter?')">What is Sandhi? →</button>
+    <button class="btn-ghost" style="font-size:14px;padding:8px 16px;color:white;border-color:rgba(255,255,255,0.3)" onclick="askSuggestion('Explain Bhagavatam 1.1.1 in simple English')">Bhagavatam 1.1.1 →</button>
+  </div>
+</section>
+
+<!-- AUDIO PIPELINE SECTION -->
+<section id="audio">
+  <div class="section-label">Pronunciation Engine</div>
+  <h2>Hear it the way the Rishis spoke it.</h2>
+  <p class="section-sub">Authentic vedic pronunciation with udatta, anudatta, and svarita tones — not robot TTS.</p>
+
+  <div class="audio-grid">
+    <div class="pipeline-steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h4>Source Audio</h4>
+          <p>Public domain Vedic recitations from trained pandits. Archive.org, IGNCA, Sanskrit Documents Project.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h4>Voice Cloning</h4>
+          <p>ElevenLabs Professional voice trained on authentic recordings. Preserves tonal patterns and rhythm.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h4>Phoneme Mapping</h4>
+          <p>Custom pronunciation dictionary for Sanskrit phonemes not in standard TTS — retroflex consonants, aspirates, nasals.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <h4>Pronunciation Scoring</h4>
+          <p>OpenAI Whisper transcribes learner speech. Claude compares phoneme sequences and generates feedback.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-card">
+      <div class="progress-name">LEARNER PROFILE · Session 7</div>
+
+      <div class="progress-item">
+        <div class="progress-label"><span>Script recognition</span><span style="color:var(--saffron)">78%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:78%"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-label"><span>Pronunciation accuracy</span><span style="color:var(--saffron)">61%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:61%"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-label"><span>Vocabulary acquired</span><span style="color:var(--saffron)">43 roots</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:43%"></div></div>
+      </div>
+      <div class="progress-item">
+        <div class="progress-label"><span>Grammar rules mastered</span><span style="color:var(--saffron)">12 / 40</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:30%"></div></div>
+      </div>
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+        <div style="font-size:13px;color:var(--muted);margin-bottom:10px">Words mastered this week:</div>
+        <div class="vocab-words">
+          <span class="vocab-word">योग</span><span class="vocab-word">ज्ञान</span>
+          <span class="vocab-word">भक्ति</span><span class="vocab-word">कर्म</span>
+          <span class="vocab-word">आत्मन्</span><span class="vocab-word">ब्रह्म</span>
+          <span class="vocab-word">धर्म</span><span class="vocab-word">अहिंसा</span>
+        </div>
+      </div>
+      <div style="margin-top:16px;background:var(--saffron-light);border-radius:8px;padding:12px;font-size:14px;color:var(--muted)">
+        💡 <strong style="color:var(--text)">AI Insight:</strong> You struggle with retroflex consonants (ट, ठ, ड). 
+        Try this: press your tongue on the roof of your mouth, not behind your teeth. Practice: <span style="font-family:'Tiro Devanagari Sanskrit',serif">टा ठा डा</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAKE.COM WORKFLOW -->
+<section class="workflow-section">
+  <div style="padding:80px 64px">
+    <div class="section-label">Automation</div>
+    <h2 style="margin-bottom:8px">Make.com workflow</h2>
+    <p style="color:rgba(255,255,255,0.6);margin-bottom:48px;font-size:18px">Every learner interaction — automated end to end.</p>
+
+    <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;margin-bottom:32px">
+      <div class="workflow-grid">
+        <div class="wf-step">
+          <div class="wf-icon">🌐</div>
+          <h4>gyandootai.com</h4>
+          <p>User submits question or voice recording via website form</p>
+          <span class="wf-tag">Webhook trigger</span>
+        </div>
+        <div class="wf-step">
+          <div class="wf-icon">⚙️</div>
+          <h4>Make.com</h4>
+          <p>Fetches learner profile from DB, builds personalized context</p>
+          <span class="wf-tag">HTTP + DB module</span>
+        </div>
+        <div class="wf-step">
+          <div class="wf-icon">🤖</div>
+          <h4>Claude API</h4>
+          <p>Sanskrit-aware system prompt + RAG context → personalized answer</p>
+          <span class="wf-tag">claude-sonnet-4-6</span>
+        </div>
+        <div class="wf-step">
+          <div class="wf-icon">🔊</div>
+          <h4>Audio + Delivery</h4>
+          <p>ElevenLabs generates audio. Response + audio URL sent to learner.</p>
+          <span class="wf-tag">ElevenLabs API</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:20px">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#8FD4A8;margin-bottom:12px;letter-spacing:0.08em">WORKFLOW 1 · ONBOARDING</div>
+        <p style="color:rgba(255,255,255,0.7);font-size:15px">New signup → Goal survey → Claude generates personalized Day 1 curriculum → Email delivery → Dashboard populated</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:20px">
+        <div style="font-family:'DM Mono',monospace;font-size:11px;color:#8FD4A8;margin-bottom:12px;letter-spacing:0.08em">WORKFLOW 2 · WEEKLY REVIEW</div>
+        <p style="color:rgba(255,255,255,0.7);font-size:15px">Every Sunday → Claude analyzes session data → Generates personalized "this week in Sanskrit" → Email + WhatsApp</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 15-DAY PLAN -->
+<section id="plan">
+  <div class="section-label">15-Day Execution Plan</div>
+  <h2>Built in 15 days. 10 hours/day.</h2>
+  <p class="section-sub">Phase-by-phase, day-by-day. Everything you build compounds.</p>
+
+  <div class="day-grid">
+    <div class="day-card phase-1">
+      <div class="day-num">DAY 1</div>
+      <div class="day-title">Foundation</div>
+      <div class="day-tasks">Claude API key · System prompt v1 · Basic webhook in Make.com</div>
+    </div>
+    <div class="day-card phase-1">
+      <div class="day-num">DAY 2</div>
+      <div class="day-title">Sanskrit Page</div>
+      <div class="day-tasks">Deploy this HTML page · Devanagari fonts · Chat UI live</div>
+    </div>
+    <div class="day-card phase-1">
+      <div class="day-num">DAY 3</div>
+      <div class="day-title">Corpus Setup</div>
+      <div class="day-tasks">Download texts · Chunk into JSON · Pinecone account · First embeddings</div>
+    </div>
+    <div class="day-card phase-1">
+      <div class="day-num">DAY 4</div>
+      <div class="day-title">RAG Pipeline</div>
+      <div class="day-tasks">Vector search working · Claude answers from actual texts · Test 20 queries</div>
+    </div>
+    <div class="day-card phase-1">
+      <div class="day-num">DAY 5</div>
+      <div class="day-title">Audio Engine</div>
+      <div class="day-tasks">ElevenLabs account · Voice clone from archive.org audio · First TTS test</div>
+    </div>
+    <div class="day-card phase-2">
+      <div class="day-num">DAY 6</div>
+      <div class="day-title">Audio Integration</div>
+      <div class="day-tasks">Audio button live on shloka cards · Make.com ElevenLabs module</div>
+    </div>
+    <div class="day-card phase-2">
+      <div class="day-num">DAY 7</div>
+      <div class="day-title">User Profiles</div>
+      <div class="day-tasks">Airtable / Supabase schema · Learner state saved · Profile fed into prompts</div>
+    </div>
+    <div class="day-card phase-2">
+      <div class="day-num">DAY 8</div>
+      <div class="day-title">Onboarding Flow</div>
+      <div class="day-tasks">Goal survey → Claude generates Day 1 plan → Email delivery live</div>
+    </div>
+    <div class="day-card phase-2">
+      <div class="day-num">DAY 9</div>
+      <div class="day-title">Word Exploder</div>
+      <div class="day-tasks">Tap any Sanskrit word → root + meaning + audio popup</div>
+    </div>
+    <div class="day-card phase-2">
+      <div class="day-num">DAY 10</div>
+      <div class="day-title">Progress System</div>
+      <div class="day-tasks">Track vocabulary · Session history · Progress dashboard live</div>
+    </div>
+    <div class="day-card phase-3">
+      <div class="day-num">DAY 11</div>
+      <div class="day-title">Whisper STT</div>
+      <div class="day-tasks">OpenAI Whisper API · Record learner audio · Transcription pipeline</div>
+    </div>
+    <div class="day-card phase-3">
+      <div class="day-num">DAY 12</div>
+      <div class="day-title">Pronunciation Score</div>
+      <div class="day-tasks">Compare phonemes · Claude feedback generator · Score display UI</div>
+    </div>
+    <div class="day-card phase-3">
+      <div class="day-num">DAY 13</div>
+      <div class="day-title">Weekly Review</div>
+      <div class="day-tasks">Make.com Sunday trigger · Claude weekly summary → Email + WhatsApp</div>
+    </div>
+    <div class="day-card phase-3">
+      <div class="day-num">DAY 14</div>
+      <div class="day-title">QA + Polish</div>
+      <div class="day-tasks">Test all 3 user types · Fix audio gaps · Mobile responsive check</div>
+    </div>
+    <div class="day-card phase-3">
+      <div class="day-num">DAY 15</div>
+      <div class="day-title">Launch 🚀</div>
+      <div class="day-tasks">First 10 beta users · Onboarding emails sent · Feedback loop active</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-brand">GyandootAI</span>
+  <span>संस्कृतं जयतु · Sanskrit lives on · © 2026</span>
+  <span><a href="/index.html" style="color:#E8A870;text-decoration:none">← Back to Question Papers</a></span>
+</footer>
+
+<script>
+// CHAT FUNCTIONALITY
+const CLAUDE_SYSTEM = `You are a Sanskrit Guru and AI tutor for GyandootAI, an Indian edutech platform. 
+You specialize in:
+- Devanagari script teaching
+- Sanskrit grammar (Panini's system simplified)
+- Bhagavad Gita, Bhagavatam, Yoga Sutras of Patanjali
+- Vedic pronunciation (udatta, anudatta, svarita)
+- Word etymology and roots (dhatus)
+Always include the Sanskrit word in Devanagari script when relevant.
+Keep responses warm, encouraging, and appropriately deep — not too basic, not overwhelming.
+When breaking down a word, show: Devanagari form → IAST transliteration → root (dhatu) → meaning.`;
+
+async function callClaude(userMessage, history) {
+  const messages = history.map(m => ({role: m.role, content: m.content}));
+  messages.push({role: 'user', content: userMessage});
+  
+  try {
+    const res = await fetch('https://young-smoke-6f65.gyandootai.workers.dev', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1000,
+        system: CLAUDE_SYSTEM,
+        messages: messages
+      })
+    });
+    const data = await res.json();
+    return data.content?.[0]?.text || 'Sorry, I could not respond. Please try again.';
+  } catch(e) {
+    return 'Connection error. Please check your API key and try again.';
+  }
+}
+
+let chatHistory = [
+  {role: 'user', content: 'What does "Yoga" actually mean in Sanskrit?'},
+  {role: 'assistant', content: 'Beautiful question! योग (Yoga) comes from the root युज् (yuj) meaning "to yoke, join, or unite." Patanjali defines it in Sutra 1.2: योगश्चित्तवृत्तिनिरोधः — "Yoga is the cessation of the fluctuations of the mind."'}
+];
+
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  
+  const msgs = document.getElementById('chat-messages');
+  
+  // Add user message
+  const userDiv = document.createElement('div');
+  userDiv.className = 'msg msg-user fade-up';
+  userDiv.textContent = msg;
+  msgs.appendChild(userDiv);
+  msgs.scrollTop = msgs.scrollHeight;
+  
+  // Typing indicator
+  const typingDiv = document.createElement('div');
+  typingDiv.className = 'msg msg-ai';
+  typingDiv.innerHTML = '<span class="typing-cursor" style="color:rgba(255,255,255,0.4);font-family:\'DM Mono\',monospace;font-size:14px">thinking</span>';
+  msgs.appendChild(typingDiv);
+  msgs.scrollTop = msgs.scrollHeight;
+  
+  const response = await callClaude(msg, chatHistory);
+  
+  typingDiv.className = 'msg msg-ai fade-up';
+  typingDiv.innerHTML = response.replace(/\n/g, '<br/>');
+  
+  chatHistory.push({role: 'user', content: msg});
+  chatHistory.push({role: 'assistant', content: response});
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function askSuggestion(text) {
+  document.getElementById('chat-input').value = text;
+  sendMessage();
+  document.getElementById('chat').scrollIntoView({behavior:'smooth'});
+}
+
+// WORD EXPLAINER
+function explainWord(word, explanation) {
+  const existing = document.getElementById('word-popup');
+  if (existing) existing.remove();
+  
+  const popup = document.createElement('div');
+  popup.id = 'word-popup';
+  popup.style.cssText = `
+    position:fixed;bottom:24px;right:24px;
+    background:var(--deep);color:white;
+    border-radius:12px;padding:20px;
+    max-width:300px;z-index:999;
+    box-shadow:0 16px 48px rgba(0,0,0,0.3);
+    font-size:15px;line-height:1.6;
+    border:1px solid rgba(255,255,255,0.1);
+    animation:fadeUp 0.3s ease both;
+  `;
+  popup.innerHTML = `
+    <div style="font-family:'Tiro Devanagari Sanskrit',serif;font-size:28px;color:#E8A870;margin-bottom:8px">${word}</div>
+    <div style="color:rgba(255,255,255,0.8)">${explanation}</div>
+    <button onclick="this.parentElement.remove()" style="margin-top:12px;background:rgba(255,255,255,0.1);border:none;color:white;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px">Close</button>
+  `;
+  document.body.appendChild(popup);
+  setTimeout(() => popup.remove(), 8000);
+}
+
+// AUDIO SIMULATION
+function playAudio() {
+  const btn = document.getElementById('audio-label');
+  btn.textContent = '▶ Playing... (connect ElevenLabs API for real audio)';
+  setTimeout(() => btn.textContent = 'Listen: Vedic recitation', 3000);
+}
+
+// PATH SELECTION
+function setPath(path) {
+  const questions = {
+    script: 'I am a complete beginner. Teach me the Devanagari script starting from vowels.',
+    grammar: 'I know the script. Explain Sanskrit grammar — start with noun cases (vibhakti).',
+    texts: 'I want to read the Yoga Sutras of Patanjali. Start with Sutra 1.1 and break it down word by word.'
+  };
+  document.getElementById('chat-input').value = questions[path];
+  document.getElementById('chat').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
