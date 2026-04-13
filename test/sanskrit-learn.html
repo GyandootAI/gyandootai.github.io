@@ -705,6 +705,19 @@ let chatHistory = [
   {role: 'assistant', content: 'Beautiful question! योग (Yoga) comes from the root युज् (yuj) meaning "to yoke, join, or unite." Patanjali defines it in Sutra 1.2: योगश्चित्तवृत्तिनिरोधः — "Yoga is the cessation of the fluctuations of the mind."'}
 ];
 
+
+function renderMarkdown(text) {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^## (.+)$/gm, '<div style="font-size:17px;font-weight:600;margin:12px 0 6px;color:rgba(255,255,255,0.95)">$1</div>')
+    .replace(/^### (.+)$/gm, '<div style="font-size:15px;font-weight:600;margin:10px 0 4px;color:rgba(255,255,255,0.85)">$1</div>')
+    .replace(/^---+$/gm, '<hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:10px 0"/>')
+    .replace(/^([0-9]+\. .+)$/gm, '<div style="margin:3px 0;padding-left:8px">$1</div>')
+    .replace(/
+/g, '<br/>');
+}
+
 async function sendMessage() {
   const input = document.getElementById('chat-input');
   const msg = input.value.trim();
@@ -730,7 +743,7 @@ async function sendMessage() {
   const response = await callClaude(msg, chatHistory);
   
   typingDiv.className = 'msg msg-ai fade-up';
-  typingDiv.innerHTML = response.replace(/\n/g, '<br/>');
+  typingDiv.innerHTML = renderMarkdown(response);
   
   chatHistory.push({role: 'user', content: msg});
   chatHistory.push({role: 'assistant', content: response});
