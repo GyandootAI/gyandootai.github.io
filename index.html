@@ -1498,7 +1498,7 @@ footer {
         <p class="question-number">Question 2 of 12</p>
         <p class="question-label">Your email address?</p>
         <p class="question-hint">Your paper will be delivered here as two Google Docs within minutes.</p>
-        <input type="email" class="form-input" id="q2" placeholder="e.g. priya@school.com" autocomplete="email">
+        <input type="email" class="form-input" id="q2" placeholder="e.g. priya@school.com" autocomplete="email" oninvalid="this.setCustomValidity('Please enter a valid email address — e.g. priya@school.com')" oninput="this.setCustomValidity('')">
         <div class="error-msg" id="q2-error">Please enter a valid email address.</div>
         <div class="form-nav">
           <button class="btn-back" onclick="prevQuestion(2)">← Back</button>
@@ -1530,7 +1530,7 @@ footer {
           <button class="choice-btn" onclick="selectChoice('q4','ICSE / ISC',this)">ICSE / ISC</button>
           <button class="choice-btn" onclick="selectChoice('q4','Maharashtra Board',this)">Maharashtra</button>
           <button class="choice-btn" onclick="selectChoice('q4','Tamil Nadu Board',this)">Tamil Nadu</button>
-          <button class="choice-btn" onclick="selectChoice('q4','Karnataka Board (PUC)',this)">Karnataka (PUC)</button>
+          <button class="choice-btn" onclick="selectChoice('q4','Karnataka Board (PUC)',this)">Karnataka</button>
           <button class="choice-btn" onclick="selectChoice('q4','Andhra Pradesh Board',this)">Andhra Pradesh</button>
           <button class="choice-btn" onclick="selectChoice('q4','Telangana Board',this)">Telangana</button>
           <button class="choice-btn" onclick="selectChoice('q4','Rajasthan Board',this)">Rajasthan</button>
@@ -1591,6 +1591,7 @@ footer {
           <button class="choice-btn" onclick="selectChoice('q6','Statistics',this)">Statistics</button>
           <button class="choice-btn" onclick="selectChoice('q6','Sanskrit',this)">Sanskrit</button>
           <button class="choice-btn" onclick="selectChoice('q6','Computer Science',this)">Computer Science</button>
+          <button class="choice-btn" onclick="selectChoice('q6','Kannada',this)">Kannada</button>
           <button class="choice-btn" onclick="selectChoice('q6','UPSC General Studies',this)">UPSC GS</button>
         </div>
         <div class="error-msg" id="q6-error">Please select a subject.</div>
