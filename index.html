@@ -1974,20 +1974,76 @@ function validateQuestion(n) {
   if (!field) return true;
 
   if (n === 2) {
-    const val = field.value.trim();
-    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    const val = field.value.trim().toLowerCase();
     const errEl = document.getElementById('q2-error');
-    if (!ok) {
-      if (errEl) errEl.style.display = 'block';
+
+    // Blocklist of fake/test/disposable domains
+    const BLOCKED_DOMAINS = [
+      'test.com','test.in','test.co.in','example.com','example.org','example.in','example.net',
+      'mailinator.com','guerrillamail.com','tempmail.com','10minutemail.com','throwaway.email',
+      'trashmail.com','yopmail.com','fake.com','fakemail.com','abc.com','xyz.com','asdf.com',
+      'qwerty.com','email.com','domain.com','sample.com','dummy.com','nothing.com','none.com',
+      'null.com','temp.com','temp-mail.org','sharklasers.com','maildrop.cc','getnada.com'
+    ];
+
+    // Common typos → suggest correction
+    const TYPO_MAP = {
+      'gmial.com':'gmail.com','gmai.com':'gmail.com','gmail.co':'gmail.com',
+      'gamil.com':'gmail.com','gmail.con':'gmail.com','gmail.cm':'gmail.com',
+      'gnail.com':'gmail.com','yahooo.com':'yahoo.com','yaho.com':'yahoo.com',
+      'yahoo.co':'yahoo.com','hotmial.com':'hotmail.com','hotmai.com':'hotmail.com',
+      'outlok.com':'outlook.com','outloo.com':'outlook.com','rediffmal.com':'rediffmail.com'
+    };
+
+    function setError(msg) {
+      if (errEl) {
+        errEl.textContent = msg;
+        errEl.style.display = 'block';
+      }
       field.classList.add('error');
+    }
+
+    // 1. Basic format
+    if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val)) {
+      setError('Please enter a valid email address (e.g. yourname@gmail.com).');
       return false;
     }
+
+    const parts = val.split('@');
+    const local = parts[0];
+    const domain = parts[1];
+
+    // 2. Local part sanity
+    if (local.length < 2) {
+      setError('Email address looks too short. Please use your real email.');
+      return false;
+    }
+    if (/^\d+$/.test(local)) {
+      setError('Please use your actual email, not just numbers.');
+      return false;
+    }
+
+    // 3. Blocked fake/test/disposable domains
+    if (BLOCKED_DOMAINS.indexOf(domain) !== -1) {
+      setError('Please use your real working email. Test or disposable emails are not accepted.');
+      return false;
+    }
+
+    // 4. Typo detection
+    if (TYPO_MAP[domain]) {
+      setError('Did you mean ' + local + '@' + TYPO_MAP[domain] + '? Please check your email.');
+      return false;
+    }
+
+    // 5. Free-trial limit check (existing logic)
     if (isBlocked(val)) {
       showLimitGate(val);
       return false;
     }
+
     if (errEl) errEl.style.display = 'none';
     field.classList.remove('error');
+    field.value = val; // normalize to lowercase in the field
     return true;
   }
 
