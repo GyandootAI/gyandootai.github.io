@@ -1480,12 +1480,18 @@ footer {
         <p style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.3);">or email <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="74130d151a101b1b00151d341319151d185a171b19">[email&#160;protected]</a></p>
       </div>
 
+      <!-- Honeypot — invisible to humans, bots fill it in -->
+      <div style="position:absolute;left:-9999px;opacity:0;pointer-events:none;height:0;overflow:hidden;" aria-hidden="true">
+        <label for="website_url">Website (leave blank)</label>
+        <input type="text" id="website_url" name="website_url" tabindex="-1" autocomplete="off">
+      </div>
+       
       <!-- Q1: Name -->
       <div class="question-slide active" data-question="1">
         <p class="question-number">Question 1 of 12</p>
         <p class="question-label">What is your name?</p>
         <p class="question-hint">This appears on your paper as the authorising teacher.</p>
-        <input type="text" class="form-input" id="q1" placeholder="e.g. Priya Sharma" autocomplete="name">
+        <input type="text" class="form-input" id="q1" placeholder="e.g. Priya Sharma" autocomplete="name" maxlength="80">
         <div class="error-msg" id="q1-error">Please enter your name.</div>
         <div class="form-nav">
           <div></div>
@@ -1498,7 +1504,7 @@ footer {
         <p class="question-number">Question 2 of 12</p>
         <p class="question-label">Your email address?</p>
         <p class="question-hint">Your paper will be delivered here as two Google Docs within minutes.</p>
-        <input type="email" class="form-input" id="q2" placeholder="e.g. priya@school.com" autocomplete="email" oninvalid="this.setCustomValidity('Please enter a valid email address — e.g. priya@school.com')" oninput="this.setCustomValidity('')">
+        <input type="email" class="form-input" id="q2" placeholder="e.g. priya@school.com" autocomplete="email" maxlength="100" oninvalid="this.setCustomValidity('Please enter a valid email address — e.g. priya@school.com')" oninput="this.setCustomValidity('')">
         <div class="error-msg" id="q2-error">Please enter a valid email address.</div>
         <div class="form-nav">
           <button class="btn-back" onclick="prevQuestion(2)">← Back</button>
@@ -1511,7 +1517,7 @@ footer {
         <p class="question-number">Question 3 of 12</p>
         <p class="question-label">Your school name <span class="optional-badge">Optional</span></p>
         <p class="question-hint">We will print this on your paper header. Leave blank if not needed.</p>
-        <input type="text" class="form-input" id="q3" placeholder="e.g. Delhi Public School, Pune">
+        <input type="text" class="form-input" id="q3" placeholder="e.g. Delhi Public School, Pune" maxlength="120">
         <div class="form-nav">
           <button class="btn-back" onclick="prevQuestion(3)">← Back</button>
           <button class="btn-skip" onclick="skipQuestion(3)">Skip →</button>
@@ -1633,7 +1639,7 @@ footer {
         <p class="question-number">Question 8 of 12</p>
         <p class="question-label">Topic or chapter name?</p>
         <p class="question-hint">e.g. "The Portrait of a Lady", "Thermodynamics", "Partnership Accounts", "French Revolution"</p>
-        <input type="text" class="form-input" id="q8" placeholder="Enter topic or chapter name...">
+        <input type="text" class="form-input" id="q8" placeholder="Enter topic or chapter name..." maxlength="150">
         <div class="error-msg" id="q8-error">Please enter a topic or chapter name.</div>
         <div class="form-nav">
           <button class="btn-back" onclick="prevQuestion(8)">← Back</button>
@@ -1706,7 +1712,7 @@ footer {
         <p class="question-number">Question 12 of 12</p>
         <p class="question-label">Any special instructions? <span class="optional-badge">Optional</span></p>
         <p class="question-hint">Examples: "15 MCQ and 5 short answers only" · "Focus more on the French Revolution causes" · "Avoid numericals, only theory" · "Include a case study question" · "HOTS questions only" · "Include a passage-based comprehension" · "More application questions, less recall" · "Avoid Chapter 3, focus on Chapters 1 and 2"</p>
-        <textarea class="form-input" id="q12" placeholder="e.g. 15 MCQ and 5 short answers only, or focus more on causes of World War 2..."></textarea>
+        <textarea class="form-input" id="q12" placeholder="e.g. 15 MCQ and 5 short answers only, or focus more on causes of World War 2..." maxlength="400"></textarea>
         <label style="display:flex;align-items:flex-start;gap:10px;margin-bottom:1.25rem;cursor:pointer;">
           <input type="checkbox" id="termsCheck" style="margin-top:3px;accent-color:var(--saffron);flex-shrink:0;">
           <span style="font-size:12px;color:rgba(255,255,255,0.45);line-height:1.5;">
