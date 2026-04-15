@@ -1824,6 +1824,64 @@ const WHITELIST = [
 const FREE_LIMIT    = 3;
 const FP_SOFT_WARN  = 5;
 const FP_HARD_LIMIT = 8;
+/* ============================================================
+   SECURITY LAYER — CTO HARDENING
+   ============================================================ */
+
+// Secret token — must match Make.com filter exactly
+var SECURITY_TOKEN = 'gyd_9xJm2Lg7Rv4Dz8Hc8Ef6Yt1Lj5Qa';
+
+// Per-session submission rate limit
+var SUBMIT_COOLDOWN_MS = 8000;   // 8 seconds between submits
+var SESSION_MAX_SUBMITS = 5;     // Max 5 submissions per browser session
+var lastSubmitAt = 0;
+var sessionSubmitCount = 0;
+
+// Max input lengths — prevents DB bloat, prompt injection via huge prompts
+var INPUT_LIMITS = {
+  q1:  80,    // Teacher Name
+  q2:  100,   // Email
+  q3:  120,   // School Name
+  q8:  150,   // Topic
+  q12: 400    // Special Instructions
+};
+
+// Sanitize string input — strips control chars, limits length,
+// removes common prompt-injection triggers
+function sanitizeInput(val, maxLen) {
+  if (!val) return '';
+  var s = String(val);
+  // Remove null bytes, control chars (except newline/tab)
+  s = s.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+  // Collapse multiple whitespace
+  s = s.replace(/\s+/g, ' ').trim();
+  // Strip common prompt-injection phrases (belt-and-suspenders)
+  s = s.replace(/ignore\s+(all\s+)?(previous|prior|above)\s+(instructions|prompts)/gi, '');
+  s = s.replace(/system\s*:\s*/gi, '');
+  s = s.replace(/<\s*\/?\s*(script|iframe|object|embed)[^>]*>/gi, '');
+  // Enforce length
+  if (maxLen && s.length > maxLen) s = s.substring(0, maxLen);
+  return s;
+}
+
+// Rate limit check — returns true if submission allowed
+function canSubmitNow() {
+  var now = Date.now();
+  if (sessionSubmitCount >= SESSION_MAX_SUBMITS) {
+    return { ok: false, reason: 'You have reached the maximum submissions for this session. Please refresh the page to continue.' };
+  }
+  if (now - lastSubmitAt < SUBMIT_COOLDOWN_MS) {
+    var wait = Math.ceil((SUBMIT_COOLDOWN_MS - (now - lastSubmitAt)) / 1000);
+    return { ok: false, reason: 'Please wait ' + wait + ' seconds before submitting again.' };
+  }
+  return { ok: true };
+}
+
+// Record a successful submit for rate-limit tracking
+function recordSubmit() {
+  lastSubmitAt = Date.now();
+  sessionSubmitCount++;
+}
 
 /* -- Fingerprint ------------------------------------------- */
 function buildFingerprint() {
