@@ -2159,8 +2159,22 @@ function showLimitGate(email) {
    SUBMIT FORM
    ============================================================ */
 function submitForm() {
-  const email = document.getElementById('q2').value.trim();
+  /* --- 1. HONEYPOT CHECK (silent bot trap) --- */
+  var honeypot = document.getElementById('website_url');
+  if (honeypot && honeypot.value.trim() !== '') {
+    document.querySelectorAll('.question-slide').forEach(function(s) { s.style.display = 'none'; });
+    document.getElementById('successScreen').style.display = 'block';
+    return;
+  }
 
+  /* --- 2. RATE LIMIT CHECK --- */
+  var rate = canSubmitNow();
+  if (!rate.ok) {
+    alert(rate.reason);
+    return;
+  }
+
+  /* --- 3. TERMS CHECK --- */
   const termsCheck = document.getElementById('termsCheck');
   if (termsCheck && !termsCheck.checked) {
     document.getElementById('terms-error').style.display = 'block';
@@ -2168,39 +2182,45 @@ function submitForm() {
   }
   if (termsCheck) document.getElementById('terms-error').style.display = 'none';
 
+  /* --- 4. SANITIZE + VALIDATE EMAIL --- */
+  const email = sanitizeInput(document.getElementById('q2').value.trim().toLowerCase(), INPUT_LIMITS.q2);
+
   if (isBlocked(email)) {
     showLimitGate(email);
     return;
   }
 
+  /* --- 5. BUILD PAYLOAD WITH TOKEN + SANITIZED DATA --- */
   const data = {
-    'Teacher Name':          document.getElementById('q1').value.trim(),
+    'Token':                 SECURITY_TOKEN,
+    'Teacher Name':          sanitizeInput(document.getElementById('q1').value, INPUT_LIMITS.q1),
     'Teacher Email':         email,
-    'School Name':           document.getElementById('q3').value.trim(),
+    'School Name':           sanitizeInput(document.getElementById('q3').value, INPUT_LIMITS.q3),
     'Board':                 document.getElementById('q4').value,
     'Class':                 document.getElementById('q5').value,
     'Subject':               document.getElementById('q6').value,
     'Medium of Instruction': document.getElementById('q7').value,
-    'Topic or Chapter':      document.getElementById('q8').value.trim(),
+    'Topic or Chapter':      sanitizeInput(document.getElementById('q8').value, INPUT_LIMITS.q8),
     'Content Requested':     document.getElementById('q9').value,
     'Total Marks':           document.getElementById('q10').value,
     'Difficulty Level':      document.getElementById('q11').value,
-    'Special Instructions':  document.getElementById('q12').value.trim(),
+    'Special Instructions':  sanitizeInput(document.getElementById('q12').value, INPUT_LIMITS.q12),
     'Device_Fingerprint':    getFingerprint(),
     'Email_Paper_Count':     getEmailCount(email) + 1,
-    'Device_Paper_Count':    getFpCount() + 1
+    'Device_Paper_Count':    getFpCount() + 1,
+    'Submitted_At':          new Date().toISOString(),
+    'User_Agent':            navigator.userAgent.substring(0, 200)
   };
 
-  if (isSoftWarn(email)) {
-    console.log('[GyandootAI] Soft warning: device at', getFpCount() + 1, 'uses');
-  }
-
+  /* --- 6. SEND TO MAKE.COM --- */
   fetch(WEBHOOK_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
-  }).catch(function(err) { console.log('Webhook error:', err); });
+  }).catch(function() { /* silent fail */ });
 
+  /* --- 7. RECORD SUBMIT + UPDATE UI --- */
+  recordSubmit();
   const newCount = addCount(email);
 
   document.querySelectorAll('.question-slide').forEach(function(s) {
