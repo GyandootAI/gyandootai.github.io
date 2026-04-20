@@ -1659,7 +1659,7 @@ footer {
       <div class="question-slide" data-question="7">
         <p class="question-number">Question 7 of 12</p>
         <p class="question-label">Medium of instruction?</p>
-        <p class="question-hint">The language in which your paper should be written. Options shown are based on your selected board.</p>
+        <p class="question-hint" id="q7-hint">The language in which your paper should be written. Options shown are based on your selected board.</p>
         <input type="hidden" id="q7">
         <div class="choices three-col" id="mediumChoices">
           <button class="choice-btn" id="med-english" onclick="selectChoice('q7','English Medium',this)">English</button>
@@ -2013,6 +2013,18 @@ function selectState(stateValue) {
 
 function updateMediumButtons(boardValue) {
   var allowed = BOARD_MEDIUM_MAP[boardValue] || ['english'];
+  var mediumLabels = {
+    'english':'English','hindi':'Hindi',
+    'bilingual':'Bilingual (English + Hindi)','kannada':'Kannada',
+    'marathi':'Marathi','tamil':'Tamil',
+    'telugu':'Telugu','bengali':'Bengali'
+  };
+  var mediumValues = {
+    'english':'English Medium','hindi':'Hindi Medium',
+    'bilingual':'Bilingual (English + Hindi)','kannada':'Kannada Medium',
+    'marathi':'Marathi Medium','tamil':'Tamil Medium',
+    'telugu':'Telugu Medium','bengali':'Bengali Medium'
+  };
   MEDIUM_BTN_IDS.forEach(function(medId) {
     var btn = document.getElementById('med-' + medId);
     if (!btn) return;
@@ -2024,18 +2036,18 @@ function updateMediumButtons(boardValue) {
       btn.classList.remove('selected');
     }
   });
+  var hint = document.getElementById('q7-hint');
   if (allowed.length === 1) {
     var onlyBtn = document.getElementById('med-' + allowed[0]);
     if (onlyBtn) {
       onlyBtn.classList.add('selected');
-      var mediumValues = {
-        'english':'English Medium','hindi':'Hindi Medium',
-        'bilingual':'Bilingual (English + Hindi)','kannada':'Kannada Medium',
-        'marathi':'Marathi Medium','tamil':'Tamil Medium',
-        'telugu':'Telugu Medium','bengali':'Bengali Medium'
-      };
       document.getElementById('q7').value = mediumValues[allowed[0]];
     }
+    if (hint) hint.textContent = boardValue + ' supports ' + mediumLabels[allowed[0]] + ' medium only. Auto-selected for you.';
+  } else {
+    var names = [];
+    for (var i = 0; i < allowed.length; i++) { names.push(mediumLabels[allowed[i]]); }
+    if (hint) hint.textContent = boardValue + ' supports: ' + names.join(', ') + '. Please select one.';
   }
 }
 
