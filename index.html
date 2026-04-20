@@ -1597,6 +1597,7 @@ footer {
       <div class="question-slide" data-question="5">
         <p class="question-number">Question 5 of 12</p>
         <p class="question-label">Which class?</p>
+        <p class="question-hint">Select your class. UPSC aspirants — select UPSC and choose 'UPSC GS' as subject in the next step.</p>
         <input type="hidden" id="q5">
         <div class="choices three-col">
           <button class="choice-btn" onclick="selectChoice('q5','Class 6',this)">Class 6</button>
@@ -1648,6 +1649,7 @@ footer {
           <button class="choice-btn" onclick="selectChoice('q6','Bengali',this)">Bengali</button>
           <button class="choice-btn" onclick="selectChoice('q6','UPSC General Studies',this)">UPSC GS</button>
         </div>
+        <p style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:10px;">Subject not listed? Mention it in Special Instructions (Q12) and we'll do our best.</p>
         <div class="error-msg" id="q6-error">Please select a subject.</div>
         <div class="form-nav">
           <button class="btn-back" onclick="prevQuestion(6)">← Back</button>
@@ -1671,6 +1673,7 @@ footer {
           <button class="choice-btn" id="med-telugu" onclick="selectChoice('q7','Telugu Medium',this)">Telugu</button>
           <button class="choice-btn" id="med-bengali" onclick="selectChoice('q7','Bengali Medium',this)">Bengali</button>
         </div>
+        <p style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:10px;">Need a language not listed here? Select English and mention your preferred language in Special Instructions (Q12).</p>
         <div class="error-msg" id="q7-error">Please select medium of instruction.</div>
         <div class="form-nav">
           <button class="btn-back" onclick="prevQuestion(7)">← Back</button>
@@ -1682,7 +1685,7 @@ footer {
       <div class="question-slide" data-question="8">
         <p class="question-number">Question 8 of 12</p>
         <p class="question-label">Topic or chapter name?</p>
-        <p class="question-hint">e.g. "The Portrait of a Lady", "Thermodynamics", "Partnership Accounts", "French Revolution"</p>
+        <p class="question-hint">Type the exact chapter name from your textbook for best results. e.g. "The Portrait of a Lady", "Thermodynamics", "Partnership Accounts", "French Revolution"</p>
         <input type="text" class="form-input" id="q8" placeholder="Enter topic or chapter name..." maxlength="150">
         <div class="error-msg" id="q8-error">Please enter a topic or chapter name.</div>
         <div class="form-nav">
@@ -1705,6 +1708,7 @@ footer {
           <button class="choice-btn" onclick="selectChoice('q9','Lesson Plan',this)">🗓️ Lesson Plan<br><small style="opacity:0.6">Weekly plan with objectives & activities</small></button>
           <button class="choice-btn" onclick="selectChoice('q9','Revision Summary',this)">📚 Revision Summary<br><small style="opacity:0.6">Key concepts + tips</small></button>
         </div>
+        <p style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:10px;">Worksheet = practice sheet for daily classwork. Lesson Plan = weekly teaching plan with activities. Both include teacher notes.</p>
         <div class="error-msg" id="q9-error">Please select what you need.</div>
         <div class="form-nav">
           <button class="btn-back" onclick="prevQuestion(9)">← Back</button>
@@ -1758,6 +1762,7 @@ footer {
         <p class="question-number">Question 12 of 12</p>
         <p class="question-label">Any special instructions? <span class="optional-badge">Optional</span></p>
         <p class="question-hint">Examples: "15 MCQ and 5 short answers only" · "Focus more on the French Revolution causes" · "Avoid numericals, only theory" · "Include a case study question" · "HOTS questions only" · "Include a passage-based comprehension" · "More application questions, less recall" · "Avoid Chapter 3, focus on Chapters 1 and 2"</p>
+        <p style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:4px;margin-bottom:8px;">You can also use this field to request a language or subject not listed in previous steps.</p>
         <textarea class="form-input" id="q12" placeholder="e.g. 15 MCQ and 5 short answers only, or focus more on causes of World War 2..." maxlength="400"></textarea>
         <label style="display:flex;align-items:flex-start;gap:10px;margin-bottom:1.25rem;cursor:pointer;">
           <input type="checkbox" id="termsCheck" style="margin-top:3px;accent-color:var(--saffron);flex-shrink:0;">
@@ -1946,7 +1951,7 @@ var BOARD_MEDIUM_MAP = {
   'Assam Board':             ['english'],
   'Bihar Board':             ['english','hindi'],
   'Chhattisgarh Board':      ['english','hindi'],
-  'Goa Board':               ['english','marathi'],
+  'Goa Board':               ['english','hindi','marathi'],
   'Gujarat Board':           ['english','hindi'],
   'Haryana Board':           ['english','hindi'],
   'Himachal Pradesh Board':  ['english','hindi'],
@@ -1954,7 +1959,7 @@ var BOARD_MEDIUM_MAP = {
   'Karnataka Board':         ['english','kannada'],
   'Kerala Board':            ['english'],
   'Madhya Pradesh Board':    ['english','hindi'],
-  'Maharashtra Board':       ['english','marathi'],
+  'Maharashtra Board':       ['english','hindi','marathi'],
   'Manipur Board':           ['english'],
   'Meghalaya Board':         ['english'],
   'Mizoram Board':           ['english'],
