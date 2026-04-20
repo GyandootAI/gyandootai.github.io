@@ -1094,6 +1094,23 @@ footer {
 @media (max-width: 480px) {
   .pricing-grid { grid-template-columns: 1fr; }
 }
+/* Disabled medium buttons — greyed out for unavailable board+medium combos */
+.choice-btn.disabled-medium {
+  opacity: 0.25 !important;
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+  position: relative;
+}
+.choice-btn.disabled-medium::after {
+  content: 'Not available for this board';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  color: rgba(255,255,255,0.3);
+  white-space: nowrap;
+}
 </style>
 </head>
 <body>
@@ -1525,23 +1542,49 @@ footer {
         </div>
       </div>
 
-      <!-- Q4: Board — FIRST before Class and Subject -->
+      <!-- Q4: Board — 3 choices + state dropdown -->
       <div class="question-slide" data-question="4">
         <p class="question-number">Question 4 of 12</p>
         <p class="question-label">Which board?</p>
         <p class="question-hint">Select the examination board your school follows.</p>
         <input type="hidden" id="q4">
+        <input type="hidden" id="q4state">
         <div class="choices">
-          <button class="choice-btn" onclick="selectChoice('q4','CBSE',this)">CBSE</button>
-          <button class="choice-btn" onclick="selectChoice('q4','ICSE / ISC',this)">ICSE / ISC</button>
-          <button class="choice-btn" onclick="selectChoice('q4','Maharashtra Board',this)">Maharashtra</button>
-          <button class="choice-btn" onclick="selectChoice('q4','Tamil Nadu Board',this)">Tamil Nadu</button>
-          <button class="choice-btn" onclick="selectChoice('q4','Karnataka Board (PUC)',this)">Karnataka</button>
-          <button class="choice-btn" onclick="selectChoice('q4','Andhra Pradesh Board',this)">Andhra Pradesh</button>
-          <button class="choice-btn" onclick="selectChoice('q4','Telangana Board',this)">Telangana</button>
-          <button class="choice-btn" onclick="selectChoice('q4','Rajasthan Board',this)">Rajasthan</button>
-          <button class="choice-btn" onclick="selectChoice('q4','West Bengal Board',this)">West Bengal</button>
-          <button class="choice-btn" onclick="selectChoice('q4','Other State Board',this)">Other State Board</button>
+          <button class="choice-btn" onclick="selectBoard('CBSE',this)">CBSE</button>
+          <button class="choice-btn" onclick="selectBoard('ICSE / ISC',this)">ICSE / ISC</button>
+          <button class="choice-btn" onclick="selectBoard('State Board',this)">State Board</button>
+        </div>
+        <div id="stateDropdownWrap" style="display:none;margin-top:16px;">
+          <p class="question-hint" style="margin-bottom:8px;">Which state?</p>
+          <select id="stateDropdown" class="form-input" style="padding:12px 16px;font-size:15px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:#fff;width:100%;cursor:pointer;" onchange="selectState(this.value)">
+            <option value="">— Select your state —</option>
+            <option value="Andhra Pradesh Board">Andhra Pradesh</option>
+            <option value="Assam Board">Assam</option>
+            <option value="Bihar Board">Bihar</option>
+            <option value="Chhattisgarh Board">Chhattisgarh</option>
+            <option value="Goa Board">Goa</option>
+            <option value="Gujarat Board">Gujarat</option>
+            <option value="Haryana Board">Haryana</option>
+            <option value="Himachal Pradesh Board">Himachal Pradesh (follows CBSE pattern)</option>
+            <option value="Jharkhand Board">Jharkhand</option>
+            <option value="Karnataka Board">Karnataka</option>
+            <option value="Kerala Board">Kerala</option>
+            <option value="Madhya Pradesh Board">Madhya Pradesh</option>
+            <option value="Maharashtra Board">Maharashtra</option>
+            <option value="Manipur Board">Manipur</option>
+            <option value="Meghalaya Board">Meghalaya</option>
+            <option value="Mizoram Board">Mizoram</option>
+            <option value="Nagaland Board">Nagaland</option>
+            <option value="Odisha Board">Odisha</option>
+            <option value="Punjab Board">Punjab</option>
+            <option value="Rajasthan Board">Rajasthan</option>
+            <option value="Tamil Nadu Board">Tamil Nadu</option>
+            <option value="Telangana Board">Telangana</option>
+            <option value="Tripura Board">Tripura</option>
+            <option value="Uttar Pradesh Board">Uttar Pradesh</option>
+            <option value="Uttarakhand Board">Uttarakhand</option>
+            <option value="West Bengal Board">West Bengal</option>
+          </select>
         </div>
         <div class="error-msg" id="q4-error">Please select a board.</div>
         <div class="form-nav">
@@ -1576,6 +1619,7 @@ footer {
       <div class="question-slide" data-question="6">
         <p class="question-number">Question 6 of 12</p>
         <p class="question-label">Which subject?</p>
+        <p style="font-size:13px;color:var(--saffron-mid);font-weight:500;margin-bottom:12px;">Select one subject per request. Need multiple? Submit separately for each — takes under a minute.</p>
         <input type="hidden" id="q6">
         <div class="choices">
           <button class="choice-btn" onclick="selectChoice('q6','English',this)">English</button>
@@ -1611,21 +1655,21 @@ footer {
         </div>
       </div>
 
-      <!-- Q7: Medium of Instruction — new, important for India -->
+      <!-- Q7: Medium of Instruction — dynamically filtered by board -->
       <div class="question-slide" data-question="7">
         <p class="question-number">Question 7 of 12</p>
         <p class="question-label">Medium of instruction?</p>
-        <p class="question-hint">The language in which your paper should be written.</p>
+        <p class="question-hint">The language in which your paper should be written. Options shown are based on your selected board.</p>
         <input type="hidden" id="q7">
-        <div class="choices three-col">
-          <button class="choice-btn" onclick="selectChoice('q7','English Medium',this)">English</button>
-          <button class="choice-btn" onclick="selectChoice('q7','Hindi Medium',this)">Hindi</button>
-          <button class="choice-btn" onclick="selectChoice('q7','Bilingual (English + Hindi)',this)">Bilingual</button>
-          <button class="choice-btn" onclick="selectChoice('q7','Kannada Medium',this)">Kannada</button>
-          <button class="choice-btn" onclick="selectChoice('q7','Marathi Medium',this)">Marathi</button>
-          <button class="choice-btn" onclick="selectChoice('q7','Tamil Medium',this)">Tamil</button>
-          <button class="choice-btn" onclick="selectChoice('q7','Telugu Medium',this)">Telugu</button>
-          <button class="choice-btn" onclick="selectChoice('q7','Bengali Medium',this)">Bengali</button>
+        <div class="choices three-col" id="mediumChoices">
+          <button class="choice-btn" id="med-english" onclick="selectChoice('q7','English Medium',this)">English</button>
+          <button class="choice-btn" id="med-hindi" onclick="selectChoice('q7','Hindi Medium',this)">Hindi</button>
+          <button class="choice-btn" id="med-bilingual" onclick="selectChoice('q7','Bilingual (English + Hindi)',this)">Bilingual</button>
+          <button class="choice-btn" id="med-kannada" onclick="selectChoice('q7','Kannada Medium',this)">Kannada</button>
+          <button class="choice-btn" id="med-marathi" onclick="selectChoice('q7','Marathi Medium',this)">Marathi</button>
+          <button class="choice-btn" id="med-tamil" onclick="selectChoice('q7','Tamil Medium',this)">Tamil</button>
+          <button class="choice-btn" id="med-telugu" onclick="selectChoice('q7','Telugu Medium',this)">Telugu</button>
+          <button class="choice-btn" id="med-bengali" onclick="selectChoice('q7','Bengali Medium',this)">Bengali</button>
         </div>
         <div class="error-msg" id="q7-error">Please select medium of instruction.</div>
         <div class="form-nav">
@@ -1892,6 +1936,110 @@ function recordSubmit() {
 }
 
 /* -- Fingerprint ------------------------------------------- */
+/* ============================================================
+   BOARD → MEDIUM MAPPING + STATE BOARD LOGIC
+   ============================================================ */
+var BOARD_MEDIUM_MAP = {
+  'CBSE':                    ['english','hindi','bilingual'],
+  'ICSE / ISC':              ['english'],
+  'Andhra Pradesh Board':    ['english','telugu'],
+  'Assam Board':             ['english'],
+  'Bihar Board':             ['english','hindi'],
+  'Chhattisgarh Board':      ['english','hindi'],
+  'Goa Board':               ['english','marathi'],
+  'Gujarat Board':           ['english','hindi'],
+  'Haryana Board':           ['english','hindi'],
+  'Himachal Pradesh Board':  ['english','hindi'],
+  'Jharkhand Board':         ['english','hindi'],
+  'Karnataka Board':         ['english','kannada'],
+  'Kerala Board':            ['english'],
+  'Madhya Pradesh Board':    ['english','hindi'],
+  'Maharashtra Board':       ['english','marathi'],
+  'Manipur Board':           ['english'],
+  'Meghalaya Board':         ['english'],
+  'Mizoram Board':           ['english'],
+  'Nagaland Board':          ['english'],
+  'Odisha Board':            ['english'],
+  'Punjab Board':            ['english','hindi'],
+  'Rajasthan Board':         ['english','hindi'],
+  'Tamil Nadu Board':        ['english','tamil'],
+  'Telangana Board':         ['english','telugu'],
+  'Tripura Board':           ['english','bengali'],
+  'Uttar Pradesh Board':     ['english','hindi'],
+  'Uttarakhand Board':       ['english','hindi'],
+  'West Bengal Board':       ['english','bengali']
+};
+var MEDIUM_BTN_IDS = ['english','hindi','bilingual','kannada','marathi','tamil','telugu','bengali'];
+
+function selectBoard(boardValue, btn) {
+  btn.closest('.choices').querySelectorAll('.choice-btn').forEach(function(b) {
+    b.classList.remove('selected');
+  });
+  btn.classList.add('selected');
+  var stateWrap = document.getElementById('stateDropdownWrap');
+  var stateDropdown = document.getElementById('stateDropdown');
+  if (boardValue === 'State Board') {
+    stateWrap.style.display = 'block';
+    stateDropdown.value = '';
+    document.getElementById('q4').value = '';
+    document.getElementById('q4state').value = '';
+  } else {
+    stateWrap.style.display = 'none';
+    stateDropdown.value = '';
+    document.getElementById('q4').value = boardValue;
+    document.getElementById('q4state').value = '';
+    updateMediumButtons(boardValue);
+  }
+  document.getElementById('q7').value = '';
+  document.querySelectorAll('#mediumChoices .choice-btn').forEach(function(b) {
+    b.classList.remove('selected');
+  });
+  var err = document.getElementById('q4-error');
+  if (err) err.style.display = 'none';
+}
+
+function selectState(stateValue) {
+  if (!stateValue) return;
+  document.getElementById('q4').value = stateValue;
+  document.getElementById('q4state').value = stateValue;
+  updateMediumButtons(stateValue);
+  document.getElementById('q7').value = '';
+  document.querySelectorAll('#mediumChoices .choice-btn').forEach(function(b) {
+    b.classList.remove('selected');
+  });
+  var err = document.getElementById('q4-error');
+  if (err) err.style.display = 'none';
+}
+
+function updateMediumButtons(boardValue) {
+  var allowed = BOARD_MEDIUM_MAP[boardValue] || ['english'];
+  MEDIUM_BTN_IDS.forEach(function(medId) {
+    var btn = document.getElementById('med-' + medId);
+    if (!btn) return;
+    if (allowed.indexOf(medId) !== -1) {
+      btn.classList.remove('disabled-medium');
+      btn.classList.remove('selected');
+    } else {
+      btn.classList.add('disabled-medium');
+      btn.classList.remove('selected');
+    }
+  });
+  if (allowed.length === 1) {
+    var onlyBtn = document.getElementById('med-' + allowed[0]);
+    if (onlyBtn) {
+      onlyBtn.classList.add('selected');
+      var mediumValues = {
+        'english':'English Medium','hindi':'Hindi Medium',
+        'bilingual':'Bilingual (English + Hindi)','kannada':'Kannada Medium',
+        'marathi':'Marathi Medium','tamil':'Tamil Medium',
+        'telugu':'Telugu Medium','bengali':'Bengali Medium'
+      };
+      document.getElementById('q7').value = mediumValues[allowed[0]];
+    }
+  }
+}
+
+/* -- Fingerprint ------------------------------------------- */
 function buildFingerprint() {
   const cv = document.createElement('canvas');
   const cx = cv.getContext('2d');
@@ -2033,7 +2181,7 @@ function selectChoice(fieldId, value, btn) {
 }
 
 function validateQuestion(n) {
-  const optional = [3, 12];
+  const optional = [3];
   if (optional.includes(n)) return true;
 
   const field = document.getElementById('q' + n);
@@ -2113,26 +2261,81 @@ function validateQuestion(n) {
     return true;
   }
 
-  if (n === 1 || n === 8) {
-    const val = field.value.trim();
-    const errEl = document.getElementById('q' + n + '-error');
-    if (!val) {
-      if (errEl) errEl.style.display = 'block';
+  if (n === 1) {
+    var v1 = field.value.trim();
+    var e1 = document.getElementById('q1-error');
+    if (!v1) {
+      if (e1) e1.style.display = 'block';
       field.classList.add('error');
       return false;
     }
-    if (errEl) errEl.style.display = 'none';
+    if (e1) e1.style.display = 'none';
     field.classList.remove('error');
     return true;
   }
 
-  const val = field.value;
-  const errEl = document.getElementById('q' + n + '-error');
-  if (!val || val.trim() === '') {
-    if (errEl) errEl.style.display = 'block';
+  if (n === 8) {
+    var v8 = field.value.trim();
+    var e8 = document.getElementById('q8-error');
+    if (!v8 || v8.length < 3) {
+      if (e8) {
+        e8.textContent = v8.length > 0 && v8.length < 3
+          ? 'Please enter at least 3 characters for the topic or chapter name.'
+          : 'Please enter a topic or chapter name.';
+        e8.style.display = 'block';
+      }
+      field.classList.add('error');
+      return false;
+    }
+    var vc8 = (v8.match(/[aeiouAEIOU]/g) || []).length;
+    if (v8.length > 5 && vc8 === 0) {
+      if (e8) {
+        e8.textContent = 'This doesn\'t look like a valid topic. Please enter the chapter name from your textbook.';
+        e8.style.display = 'block';
+      }
+      field.classList.add('error');
+      return false;
+    }
+    if (e8) e8.style.display = 'none';
+    field.classList.remove('error');
+    return true;
+  }
+
+  if (n === 12) {
+    var v12 = field.value.trim();
+    if (!v12) return true;
+    var e12 = document.getElementById('q12-error');
+    if (!e12) {
+      e12 = document.createElement('div');
+      e12.id = 'q12-error';
+      e12.className = 'error-msg';
+      field.parentNode.insertBefore(e12, field.nextSibling);
+    }
+    if (v12.length > 0 && v12.length < 3) {
+      e12.textContent = 'Please enter at least 3 characters or leave blank.';
+      e12.style.display = 'block';
+      field.classList.add('error');
+      return false;
+    }
+    var vc12 = (v12.match(/[aeiouAEIOU]/g) || []).length;
+    if (v12.length > 5 && vc12 === 0) {
+      e12.textContent = 'This doesn\'t look like a valid instruction. Please describe what you need in plain language.';
+      e12.style.display = 'block';
+      field.classList.add('error');
+      return false;
+    }
+    if (e12) e12.style.display = 'none';
+    field.classList.remove('error');
+    return true;
+  }
+
+  var valG = field.value;
+  var errG = document.getElementById('q' + n + '-error');
+  if (!valG || valG.trim() === '') {
+    if (errG) errG.style.display = 'block';
     return false;
   }
-  if (errEl) errEl.style.display = 'none';
+  if (errG) errG.style.display = 'none';
   return true;
 }
 
@@ -2140,16 +2343,22 @@ function nextQuestion(n) {
   if (!validateQuestion(n)) return;
   var next = n + 1;
   var contentType = document.getElementById('q9').value;
-  if (contentType === 'Lesson Plan' || contentType === 'Revision Summary') {
+  if (contentType === 'Lesson Plan') {
     if (next === 10) next = 12;
+  }
+  if (contentType === 'Revision Summary') {
+    if (next === 10) next = 11;
   }
   if (next <= totalQuestions) showQuestion(next);
 }
 function prevQuestion(n) {
   var prev = n - 1;
   var contentType = document.getElementById('q9').value;
-  if (contentType === 'Lesson Plan' || contentType === 'Revision Summary') {
+  if (contentType === 'Lesson Plan') {
     if (prev === 11 || prev === 10) prev = 9;
+  }
+  if (contentType === 'Revision Summary') {
+    if (prev === 10) prev = 9;
   }
   if (prev >= 1) showQuestion(prev);
 }
@@ -2157,8 +2366,11 @@ function skipQuestion(n) {
   document.getElementById('q' + n).value = '';
   var next = n + 1;
   var contentType = document.getElementById('q9').value;
-  if (contentType === 'Lesson Plan' || contentType === 'Revision Summary') {
+  if (contentType === 'Lesson Plan') {
     if (next === 10) next = 12;
+  }
+  if (contentType === 'Revision Summary') {
+    if (next === 10) next = 11;
   }
   if (next <= totalQuestions) showQuestion(next);
 }
