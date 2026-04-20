@@ -1479,7 +1479,7 @@ footer {
     <!-- Progress -->
     <div class="form-progress">
       <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-      <span class="progress-text" id="progressText">Step 1 of 12</span>
+      <span class="progress-text" id="progressText">8% complete</span>
     </div>
 
     <!-- Form Card -->
@@ -1505,7 +1505,7 @@ footer {
        
       <!-- Q1: Name -->
       <div class="question-slide active" data-question="1">
-        <p class="question-number">Question 1 of 12</p>
+        <p class="question-number">Your Details</p>
         <p class="question-label">What is your name?</p>
         <p class="question-hint">This appears on your paper as the authorising teacher.</p>
         <input type="text" class="form-input" id="q1" placeholder="e.g. Priya Sharma" autocomplete="name" maxlength="80">
@@ -1518,7 +1518,7 @@ footer {
 
       <!-- Q2: Email -->
       <div class="question-slide" data-question="2">
-        <p class="question-number">Question 2 of 12</p>
+        <p class="question-number">Your Details</p>
         <p class="question-label">Your email address?</p>
         <p class="question-hint">Your paper will be delivered here as two Google Docs within minutes.</p>
         <input type="email" class="form-input" id="q2" placeholder="e.g. priya@school.com" autocomplete="email" maxlength="100" oninvalid="this.setCustomValidity('Please enter a valid email address — e.g. priya@school.com')" oninput="this.setCustomValidity('')">
@@ -1531,7 +1531,7 @@ footer {
 
       <!-- Q3: School Name (Optional) -->
       <div class="question-slide" data-question="3">
-        <p class="question-number">Question 3 of 12</p>
+        <p class="question-number">Your Details</p>
         <p class="question-label">Your school name <span class="optional-badge">Optional</span></p>
         <p class="question-hint">We will print this on your paper header. Leave blank if not needed.</p>
         <input type="text" class="form-input" id="q3" placeholder="e.g. Delhi Public School, Pune" maxlength="120">
@@ -1544,7 +1544,7 @@ footer {
 
       <!-- Q4: Board — 3 choices + state dropdown -->
       <div class="question-slide" data-question="4">
-        <p class="question-number">Question 4 of 12</p>
+        <p class="question-number">Board & Class</p>
         <p class="question-label">Which board?</p>
         <p class="question-hint">Select the examination board your school follows.</p>
         <input type="hidden" id="q4">
@@ -1595,7 +1595,7 @@ footer {
 
       <!-- Q5: Class — after Board -->
       <div class="question-slide" data-question="5">
-        <p class="question-number">Question 5 of 12</p>
+        <p class="question-number">Board & Class</p>
         <p class="question-label">Which class?</p>
         <p class="question-hint">Select your class. UPSC aspirants — select UPSC and choose 'UPSC GS' as subject in the next step.</p>
         <input type="hidden" id="q5">
@@ -1618,7 +1618,7 @@ footer {
 
       <!-- Q6: Subject — after Board + Class -->
       <div class="question-slide" data-question="6">
-        <p class="question-number">Question 6 of 12</p>
+        <p class="question-number">Subject & Language</p>
         <p class="question-label">Which subject?</p>
         <p style="font-size:13px;color:var(--saffron-mid);font-weight:500;margin-bottom:12px;">Select one subject per request. Need multiple? Submit separately for each — takes under a minute.</p>
         <input type="hidden" id="q6">
@@ -1659,7 +1659,7 @@ footer {
 
       <!-- Q7: Medium of Instruction — dynamically filtered by board -->
       <div class="question-slide" data-question="7">
-        <p class="question-number">Question 7 of 12</p>
+        <p class="question-number">Subject & Language</p>
         <p class="question-label">Medium of instruction?</p>
         <p class="question-hint" id="q7-hint">The language in which your paper should be written. Options shown are based on your selected board.</p>
         <input type="hidden" id="q7">
@@ -1683,7 +1683,7 @@ footer {
 
       <!-- Q8: Topic -->
       <div class="question-slide" data-question="8">
-        <p class="question-number">Question 8 of 12</p>
+        <p class="question-number">Paper Details</p>
         <p class="question-label">Topic or chapter name?</p>
         <p class="question-hint">Type the exact chapter name from your textbook for best results. e.g. "The Portrait of a Lady", "Thermodynamics", "Partnership Accounts", "French Revolution"</p>
         <input type="text" class="form-input" id="q8" placeholder="Enter topic or chapter name..." maxlength="150">
@@ -1696,7 +1696,7 @@ footer {
 
       <!-- Q9: Paper type -->
       <div class="question-slide" data-question="9">
-        <p class="question-number">Question 9 of 12</p>
+        <p class="question-number">Paper Details</p>
         <p class="question-label">What do you need?</p>
         <input type="hidden" id="q9">
         <div class="choices">
@@ -1718,7 +1718,7 @@ footer {
 
       <!-- Q10: Total marks -->
       <div class="question-slide" data-question="10">
-        <p class="question-number">Question 10 of 12</p>
+        <p class="question-number">Paper Details</p>
         <p class="question-label">Total marks for the paper?</p>
         <input type="hidden" id="q10">
         <div class="choices three-col">
@@ -1741,7 +1741,7 @@ footer {
 
       <!-- Q11: Difficulty -->
       <div class="question-slide" data-question="11">
-        <p class="question-number">Question 11 of 12</p>
+        <p class="question-number">Paper Details</p>
         <p class="question-label">Difficulty level?</p>
         <input type="hidden" id="q11">
         <div class="choices">
@@ -1759,7 +1759,7 @@ footer {
 
       <!-- Q12: Special instructions (Optional) -->
       <div class="question-slide" data-question="12">
-        <p class="question-number">Question 12 of 12</p>
+        <p class="question-number">Almost Done</p>
         <p class="question-label">Any special instructions? <span class="optional-badge">Optional</span></p>
         <p class="question-hint">Examples: "15 MCQ and 5 short answers only" · "Focus more on the French Revolution causes" · "Avoid numericals, only theory" · "Include a case study question" · "HOTS questions only" · "Include a passage-based comprehension" · "More application questions, less recall" · "Avoid Chapter 3, focus on Chapters 1 and 2"</p>
         <p style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:4px;margin-bottom:8px;">You can also use this field to request a language or subject not listed in previous steps.</p>
@@ -2158,9 +2158,19 @@ let currentQuestion = 1;
 const totalQuestions = 12;
 
 function updateProgress() {
-  const pct = Math.round((currentQuestion / totalQuestions) * 100);
+  var contentType = document.getElementById('q9').value;
+  var totalSteps = totalQuestions;
+  var currentStep = currentQuestion;
+  if (contentType === 'Lesson Plan') {
+    totalSteps = 10;
+    if (currentQuestion > 9) currentStep = currentQuestion - 2;
+  } else if (contentType === 'Revision Summary') {
+    totalSteps = 11;
+    if (currentQuestion > 9) currentStep = currentQuestion - 1;
+  }
+  var pct = Math.round((currentStep / totalSteps) * 100);
   document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('progressText').textContent = 'Step ' + currentQuestion + ' of ' + totalQuestions;
+  document.getElementById('progressText').textContent = pct + '% complete';
 }
 
 function showQuestion(n, skipScroll) {
