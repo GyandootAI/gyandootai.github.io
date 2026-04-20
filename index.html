@@ -2138,14 +2138,29 @@ function validateQuestion(n) {
 
 function nextQuestion(n) {
   if (!validateQuestion(n)) return;
-  if (n < totalQuestions) ;
+  var next = n + 1;
+  var contentType = document.getElementById('q9').value;
+  if (contentType === 'Lesson Plan' || contentType === 'Revision Summary') {
+    if (next === 10) next = 12;
+  }
+  if (next <= totalQuestions) showQuestion(next);
 }
 function prevQuestion(n) {
-  if (n > 1) showQuestion(n - 1);
+  var prev = n - 1;
+  var contentType = document.getElementById('q9').value;
+  if (contentType === 'Lesson Plan' || contentType === 'Revision Summary') {
+    if (prev === 11 || prev === 10) prev = 9;
+  }
+  if (prev >= 1) showQuestion(prev);
 }
 function skipQuestion(n) {
   document.getElementById('q' + n).value = '';
-  if (n < totalQuestions) ;
+  var next = n + 1;
+  var contentType = document.getElementById('q9').value;
+  if (contentType === 'Lesson Plan' || contentType === 'Revision Summary') {
+    if (next === 10) next = 12;
+  }
+  if (next <= totalQuestions) showQuestion(next);
 }
 
 /* ============================================================
